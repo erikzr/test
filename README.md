@@ -69,7 +69,7 @@ Proyek ini dilisensikan di bawah lisensi MIT - lihat file `LICENSE` untuk detail
 
 ## Kontak
 
-Jika ada pertanyaan atau masalah, silakan hubungi: [email@example.com](mailto:email@example.com)
+Jika ada pertanyaan atau masalah, silakan hubungi: [email@example.com](mailto:muhammaderikzubairrohman@gmail.com)
 
 ---
 
