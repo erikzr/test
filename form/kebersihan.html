@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kebersihan Interior & Eksterior</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        fieldset {
+            border: 1.5px solid #0e0e0e;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: transparent;
+        }
+
+        legend {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .form-group button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: normal;
+        }
+
+        .radio-group input[type="radio"] {
+            margin: 0;
+        }
+
+        .baik {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .tidak-baik {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .file-upload {
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .file-upload p {
+            margin: 0 0 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .file-upload fieldset {
+            border: none;
+            /* Menghapus garis hitam */
+            margin: 0;
+            padding: 0;
+        }
+
+        .file-upload legend {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .file-upload label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .file-upload input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+
+        .file-upload input[type="file"]::file-selector-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .file-upload input[type="file"]::file-selector-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Kebersihan Interior & Eksterior</h1>
+        <p>Pastikan kebersihan Interior dan Eksterior Bersih!</p>
+        <form>
+            <!-- Bagian Kebersihan Kursi -->
+            <fieldset>
+                <legend>Kebersihan Kursi</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="kursiBaik" name="kursi" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="kursiTidakBaik" name="kursi" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Bagian Kebersihan Lantai -->
+            <fieldset>
+                <legend>Kebersihan Lantai</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="lantaiBaik" name="lantai" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="lantaiTidakBaik" name="lantai" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Bagian Kebersihan Dinding dalam & Luar Mobil -->
+            <fieldset>
+                <legend>Kebersihan Dinding dalam & Luar Mobil</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="dindingBaik" name="dinding" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="dindingTidakBaik" name="dinding" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Bagian Kebersihan Kap Mesin -->
+            <fieldset>
+                <legend>Kebersihan Kap Mesin</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="kapBaik" name="kap" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="kapTidakBaik" name="kap" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Bagian Upload File -->
+            <div class="file-upload">
+                <fieldset>
+                    <legend>Upload Laporan Kebersihan (maks. 5 file, 10 MB per file)</legend>
+                    <div class="form-group">
+                        <label for="fileUpload">Pilih file:</label>
+                        <p>Upload maksimum 5 file yang didukung: gambar, video, atau dokumen. Maksimal 10 MB per file.
+                        </p>
+                        <input type="file" id="fileUpload" name="fileUpload[]"
+                            accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.mpg,.mpeg,.pdf,.doc,.docx" multiple>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Tombol Kirim -->
+            <div class="form-group">
+                <button type="submit">Kirim</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
