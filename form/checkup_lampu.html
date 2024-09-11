@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemeriksaan Penerangan Kendaraan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+        fieldset {
+            border: 1.5px solid #0e0e0e; /* Menebalkan garis */
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: transparent; /* Membuat background transparan */
+        }
+        legend {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .form-group button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: normal;
+        }
+        .radio-group input[type="radio"] {
+            margin: 0;
+        }
+        .baik {
+            background-color: #d4edda; /* Hijau muda untuk "Baik" */
+            color: #155724; /* Warna teks hijau gelap */
+        }
+        .tidak-baik {
+            background-color: #f8d7da; /* Merah muda untuk "Tidak Baik" */
+            color: #721c24; /* Warna teks merah gelap */
+        }
+        .upload-box {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-top: 15px;
+            box-shadow: 0 0 5px rgb(0, 0, 0);
+        }
+        .upload-box p {
+            margin: 0 0 10px;
+            font-size: 14px;
+            color: #555;
+        }
+        .upload-box input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kondisi Penerangan Kendaraan</h1>
+        <p>Harap diperiksa secara berkala dan berfungsi semestinya.</p>
+        <form>
+            <!-- Bagian Lampu Utama -->
+            <fieldset>
+                <legend>Lampu Utama</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="lampuUtamaBaik" name="lampuUtama" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="lampuUtamaTidakBaik" name="lampuUtama" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Bagian Lampu Sein -->
+            <fieldset>
+                <legend>Lampu Sein</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="lampuSeinBaik" name="lampuSein" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="lampuSeinTidakBaik" name="lampuSein" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Bagian Lampu Rem -->
+            <fieldset>
+                <legend>Lampu Rem</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="lampuRemBaik" name="lampuRem" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="lampuRemTidakBaik" name="lampuRem" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Bagian Lampu, Klakson & Pendukung lainnya -->
+            <fieldset>
+                <legend>Lampu, Klakson & Pendukung lainnya</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="lampuKlaksonBaik" name="lampuKlakson" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="lampuKlaksonTidakBaik" name="lampuKlakson" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Bagian Upload File -->
+            <div class="upload-box">
+                <div class="form-group">
+                    <label for="laporanPenerangan">Laporan Kondisi Penerangan *</label>
+                    <p>Upload maksimum 5 file yang didukung: gambar, video, atau dokumen. Maksimal 10 MB per file.</p>
+                    <input type="file" id="laporanPenerangan" name="laporanPenerangan[]" multiple accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.pdf,.doc,.docx">
+                </div>
+            </div>
+
+            <!-- Tombol Kirim -->
+            <div class="form-group">
+                <button type="submit">Kirim</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

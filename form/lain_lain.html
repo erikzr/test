@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Kendaraan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        fieldset {
+            border: 1.5px solid #0e0e0e;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+        }
+
+        legend {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .form-group button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: normal;
+        }
+
+        .radio-group input[type="radio"] {
+            margin: 0;
+        }
+
+        .baik {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .tidak-baik {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .file-upload {
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .file-upload p {
+            margin: 0 0 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .file-upload fieldset {
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .file-upload legend {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .file-upload label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .file-upload input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+
+        .file-upload input[type="file"]::file-selector-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .file-upload input[type="file"]::file-selector-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Laporan Kendaraan</h1>
+
+        <!-- Bagian Lain - Lain -->
+        <div class="additional-section">
+            <fieldset>
+                <legend>Lain - Lain</legend>
+
+                <!-- STNK masih berlaku -->
+                <div class="form-group">
+                    <label>STNK masih berlaku</label>
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="stnkBaik" name="stnk" value="Baik" required>
+                            Baik ( Masih Berlaku )
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="stnkTidakBaik" name="stnk" value="Tidak Baik" required>
+                            Tidak Baik ( Expired )
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Apar -->
+                <div class="form-group">
+                    <label>Apar</label>
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="aparBaik" name="apar" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="aparTidakBaik" name="apar" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Kotak P3K -->
+                <div class="form-group">
+                    <label>Kotak P3K</label>
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="p3kBaik" name="p3k" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="p3kTidakBaik" name="p3k" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Kunci Roda -->
+                <div class="form-group">
+                    <label>Kunci Roda</label>
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="kunciRodaBaik" name="kunciRoda" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="kunciRodaTidakBaik" name="kunciRoda" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Air Radiator -->
+                <div class="form-group">
+                    <label>Air Radiator</label>
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="airRadiatorBaik" name="airRadiator" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="airRadiatorTidakBaik" name="airRadiator" value="Tidak Baik"
+                                required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Cek Bahan Bakar Kendaraan -->
+                <div class="form-group">
+                    <label>Cek Bahan Bakar Kendaraan</label>
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="bahanBakarBaik" name="bahanBakar" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="bahanBakarTidakBaik" name="bahanBakar" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Cek Tekanan Angin dan Kondisi Ban -->
+                <div class="form-group">
+                    <label>Cek Tekanan Angin dan Kondisi Ban</label>
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="banBaik" name="ban" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="banTidakBaik" name="ban" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Kondisi Rem/Handrem -->
+                <div class="form-group">
+                    <label>Kondisi Rem/Handrem</label>
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="remBaik" name="rem" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="remTidakBaik" name="rem" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- Bagian Upload File -->
+        <div class="file-upload">
+            <fieldset>
+                <legend>Upload Laporan (maks. 5 file, 10 MB per file)</legend>
+                <div class="form-group">
+                    <label for="fileUpload">Pilih file:</label>
+                    <p>Upload maksimum 5 file yang didukung: gambar, video, atau dokumen. Maksimal 10 MB per file.</p>
+                    <input type="file" id="fileUpload" name="fileUpload[]"
+                        accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.mpg,.mpeg,.pdf,.doc,.docx" multiple>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Kirim Laporan</button>
+        </div>
+    </div>
+</body>
+
+</html>
