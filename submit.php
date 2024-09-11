@@ -55,7 +55,9 @@ $sql = "INSERT INTO kelayakan_mobil (
         )";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Data berhasil disimpan.";
+    // Redirect ke halaman terima kasih atau halaman lain setelah berhasil
+    header("Location: checkup_oli.html");
+    exit();
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
