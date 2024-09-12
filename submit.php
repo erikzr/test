@@ -41,26 +41,34 @@ $foto_accu = uploadGambar('foto_accu');
 $foto_kebersihan = uploadGambar('foto_kebersihan');
 $foto_cek_lain = uploadGambar('foto_cek_lain');
 
-// SQL untuk menyimpan data
-$sql = "INSERT INTO kelayakan_mobil (
+// Menggunakan prepared statements untuk keamanan
+$stmt = $conn->prepare("INSERT INTO kelayakan_mobil (
             nama_petugas, plat_mobil, hari, oli_mesin, oli_power_stering, oli_transmisi, oli_rem, foto_oli,
             lampu_utama, lampu_sen, lampu_rem, klakson, foto_penerangan,
             kondisi_accu, foto_accu, kebersihan_lantai, kebersihan_kursi, kebersihan_dinding, kebersihan_kap_mesin, foto_kebersihan,
             cek_stnk, cek_apar, cek_p3k, cek_kunci_roda, cek_air_radiator, cek_bahan_bakar, cek_tekanan_ban, cek_rem, foto_cek_lain
-        ) VALUES (
-            '$nama_petugas', '$plat_mobil', '$hari', '$oli_mesin', '$oli_power_stering', '$oli_transmisi', '$oli_rem', '$foto_oli',
-            '$lampu_utama', '$lampu_sen', '$lampu_rem', '$klakson', '$foto_penerangan',
-            '$kondisi_accu', '$foto_accu', '$kebersihan_lantai', '$kebersihan_kursi', '$kebersihan_dinding', '$kebersihan_kap_mesin', '$foto_kebersihan',
-            '$cek_stnk', '$cek_apar', '$cek_p3k', '$cek_kunci_roda', '$cek_air_radiator', '$cek_bahan_bakar', '$cek_tekanan_ban', '$cek_rem', '$foto_cek_lain'
-        )";
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+<<<<<<< HEAD
 if ($conn->query($sql) === TRUE) {
     // Redirect ke halaman terima kasih dengan query string
     header("Location: checkup_oli.html?status=success");
+=======
+$stmt->bind_param("sssssssssssssssssssssssssssss", 
+    $nama_petugas, $plat_mobil, $hari, $oli_mesin, $oli_power_stering, $oli_transmisi, $oli_rem, $foto_oli,
+    $lampu_utama, $lampu_sen, $lampu_rem, $klakson, $foto_penerangan,
+    $kondisi_accu, $foto_accu, $kebersihan_lantai, $kebersihan_kursi, $kebersihan_dinding, $kebersihan_kap_mesin, $foto_kebersihan,
+    $cek_stnk, $cek_apar, $cek_p3k, $cek_kunci_roda, $cek_air_radiator, $cek_bahan_bakar, $cek_tekanan_ban, $cek_rem, $foto_cek_lain);
+
+if ($stmt->execute()) {
+    // Redirect ke halaman terima kasih atau halaman lain setelah berhasil
+    header("Location: checkup_oli.html");
+>>>>>>> 8893eb0f72e448f1df795866d12093c62bfa076b
     exit();
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error: " . $stmt->error;
 }
 
+$stmt->close();
 $conn->close();
 ?>
