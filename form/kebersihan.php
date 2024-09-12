@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Kendaraan</title>
+    <title>Kebersihan Interior & Eksterior</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,6 +28,12 @@
             text-align: center;
         }
 
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
         .form-group {
             margin-bottom: 15px;
         }
@@ -47,7 +53,7 @@
             border-radius: 4px;
             padding: 10px;
             margin-bottom: 15px;
-            background-color: #f9f9f9;
+            background-color: transparent;
         }
 
         legend {
@@ -113,6 +119,7 @@
 
         .file-upload fieldset {
             border: none;
+            /* Menghapus garis hitam */
             margin: 0;
             padding: 0;
         }
@@ -155,152 +162,105 @@
 
 <body>
     <div class="container">
-        <h1>Laporan Kendaraan</h1>
+        <h1>Kebersihan Interior & Eksterior</h1>
+        <p>Pastikan kebersihan Interior dan Eksterior Bersih!</p>
 
-        <!-- Bagian Lain - Lain -->
-        <div class="additional-section">
+        <?php
+        session_start(); // Lanjutkan sesi
+
+        // Simpan data dari halaman sebelumnya
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $_SESSION['data']['kondisi_accu'] = $_POST['kondisi_accu'];
+        }
+        ?>
+        <form method="post" action="lain_lain.php">
+        <!-- Bagian Kebersihan Kursi -->
             <fieldset>
-                <legend>Lain - Lain</legend>
-
-                <!-- STNK masih berlaku -->
+                <legend>Kebersihan Kursi</legend>
                 <div class="form-group">
-                    <label>STNK masih berlaku</label>
                     <div class="radio-group">
                         <label class="baik">
-                            <input type="radio" id="stnkBaik" name="stnk" value="Baik" required>
-                            Baik ( Masih Berlaku )
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="stnkTidakBaik" name="stnk" value="Tidak Baik" required>
-                            Tidak Baik ( Expired )
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Apar -->
-                <div class="form-group">
-                    <label>Apar</label>
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="aparBaik" name="apar" value="Baik" required>
+                            <input type="radio" id="kursiBaik" name="kursi" value="Baik" required>
                             Baik
                         </label>
                         <label class="tidak-baik">
-                            <input type="radio" id="aparTidakBaik" name="apar" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Kotak P3K -->
-                <div class="form-group">
-                    <label>Kotak P3K</label>
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="p3kBaik" name="p3k" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="p3kTidakBaik" name="p3k" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Kunci Roda -->
-                <div class="form-group">
-                    <label>Kunci Roda</label>
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="kunciRodaBaik" name="kunciRoda" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="kunciRodaTidakBaik" name="kunciRoda" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Air Radiator -->
-                <div class="form-group">
-                    <label>Air Radiator</label>
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="airRadiatorBaik" name="airRadiator" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="airRadiatorTidakBaik" name="airRadiator" value="Tidak Baik"
-                                required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Cek Bahan Bakar Kendaraan -->
-                <div class="form-group">
-                    <label>Cek Bahan Bakar Kendaraan</label>
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="bahanBakarBaik" name="bahanBakar" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="bahanBakarTidakBaik" name="bahanBakar" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Cek Tekanan Angin dan Kondisi Ban -->
-                <div class="form-group">
-                    <label>Cek Tekanan Angin dan Kondisi Ban</label>
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="banBaik" name="ban" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="banTidakBaik" name="ban" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Kondisi Rem/Handrem -->
-                <div class="form-group">
-                    <label>Kondisi Rem/Handrem</label>
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="remBaik" name="rem" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="remTidakBaik" name="rem" value="Tidak Baik" required>
+                            <input type="radio" id="kursiTidakBaik" name="kursi" value="Tidak Baik" required>
                             Tidak Baik
                         </label>
                     </div>
                 </div>
             </fieldset>
-        </div>
 
-        <!-- Bagian Upload File -->
-        <div class="file-upload">
+            <!-- Bagian Kebersihan Lantai -->
             <fieldset>
-                <legend>Upload Laporan (maks. 5 file, 10 MB per file)</legend>
+                <legend>Kebersihan Lantai</legend>
                 <div class="form-group">
-                    <label for="fileUpload">Pilih file:</label>
-                    <p>Upload maksimum 5 file yang didukung: gambar, video, atau dokumen. Maksimal 10 MB per file.</p>
-                    <input type="file" id="fileUpload" name="fileUpload[]"
-                        accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.mpg,.mpeg,.pdf,.doc,.docx" multiple>
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="lantaiBaik" name="lantai" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="lantaiTidakBaik" name="lantai" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
                 </div>
             </fieldset>
-        </div>
 
-        <div class="form-group">
-            <button type="submit">Kirim Laporan</button>
-        </div>
+            <!-- Bagian Kebersihan Dinding dalam & Luar Mobil -->
+            <fieldset>
+                <legend>Kebersihan Dinding dalam & Luar Mobil</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="dindingBaik" name="dinding" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="dindingTidakBaik" name="dinding" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Bagian Kebersihan Kap Mesin -->
+            <fieldset>
+                <legend>Kebersihan Kap Mesin</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="kapBaik" name="kap" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="kapTidakBaik" name="kap" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Bagian Upload File -->
+            <div class="file-upload">
+                <fieldset>
+                    <legend>Upload Laporan Kebersihan (maks. 5 file, 10 MB per file)</legend>
+                    <div class="form-group">
+                        <label for="fileUpload">Pilih file:</label>
+                        <p>Upload maksimum 5 file yang didukung: gambar, video, atau dokumen. Maksimal 10 MB per file.
+                        </p>
+                        <input type="file" id="fileUpload" name="fileUpload[]"
+                            accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.mpg,.mpeg,.pdf,.doc,.docx" multiple>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Tombol Kirim -->
+            <div class="form-group">
+                <button type="submit">Kirim</button>
+            </div>
+        </form>
     </div>
 </body>
 

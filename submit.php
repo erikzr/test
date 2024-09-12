@@ -49,11 +49,6 @@ $stmt = $conn->prepare("INSERT INTO kelayakan_mobil (
             cek_stnk, cek_apar, cek_p3k, cek_kunci_roda, cek_air_radiator, cek_bahan_bakar, cek_tekanan_ban, cek_rem, foto_cek_lain
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-<<<<<<< HEAD
-if ($conn->query($sql) === TRUE) {
-    // Redirect ke halaman terima kasih dengan query string
-    header("Location: checkup_oli.html?status=success");
-=======
 $stmt->bind_param("sssssssssssssssssssssssssssss", 
     $nama_petugas, $plat_mobil, $hari, $oli_mesin, $oli_power_stering, $oli_transmisi, $oli_rem, $foto_oli,
     $lampu_utama, $lampu_sen, $lampu_rem, $klakson, $foto_penerangan,
@@ -63,7 +58,6 @@ $stmt->bind_param("sssssssssssssssssssssssssssss",
 if ($stmt->execute()) {
     // Redirect ke halaman terima kasih atau halaman lain setelah berhasil
     header("Location: checkup_oli.html");
->>>>>>> 8893eb0f72e448f1df795866d12093c62bfa076b
     exit();
 } else {
     echo "Error: " . $stmt->error;

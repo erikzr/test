@@ -106,7 +106,6 @@
 
         <div class="container">
             <h1>Driver</h1>
-<<<<<<< HEAD:form/driver.php
 
             <?php
             session_start(); // Mulai sesi atau lanjutkan sesi yang ada
@@ -127,9 +126,7 @@
             </form>
 
             <!-- <form class="form">
-=======
             <form class="form" method="post" action="proses_form.php" enctype="multipart/form-data">
->>>>>>> 8893eb0f72e448f1df795866d12093c62bfa076b:form/driver.html
                 <div class="form-group required">
                     <label for="namaPetugas">Nama Petugas</label>
                     <input class="kotak" type="text" id="namaPetugas" name="nama_petugas" required>
@@ -151,10 +148,8 @@
                 </div>
 <<<<<<< HEAD:form/driver.php
             </form> -->
-=======
             </form>
-            
->>>>>>> 8893eb0f72e448f1df795866d12093c62bfa076b:form/driver.html
+
         </div>
     </section>
 </body>

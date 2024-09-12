@@ -105,7 +105,22 @@
 <body>
     <div class="container">
         <h1>Laporan ACCU</h1>
-        <form>
+    <?php
+    session_start(); // Lanjutkan sesi
+
+            // Simpan data dari halaman sebelumnya
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $_SESSION['data']['lampu_utama'] = $_POST['lampu_utama'];
+        $_SESSION['data']['lampu_sen'] = $_POST['lampu_sen'];
+        $_SESSION['data']['lampu_rem'] = $_POST['lampu_rem'];
+        $_SESSION['data']['klakson'] = $_POST['klakson'];
+    }
+    ?>
+
+    <h2>Kondisi Accu</h2>
+    <label>Kondisi Accu:</label>
+
+    <form method="post" action="kebersihan.php">
             <!-- Bagian Cek Tegangan Aki -->
             <fieldset>
                 <legend>Cek Tegangan Aki (Min. 12 Volt)</legend>
@@ -114,11 +129,11 @@
                     <label>ACCU</label>
                     <div class="radio-group">
                         <label class="baik">
-                            <input type="radio" id="accuBaik" name="accu" value="Baik" required>
+                            <input type="radio" id="accuBaik" name="kondisi_accu" value="Baik" required>
                             Baik
                         </label>
                         <label class="tidak-baik">
-                            <input type="radio" id="accuTidakBaik" name="accu" value="Tidak Baik" required>
+                            <input type="radio" id="accuTidakBaik" name="kondisi_accu" value="Tidak Baik" required>
                             Tidak Baik
                         </label>
                     </div>

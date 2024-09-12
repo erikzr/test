@@ -122,7 +122,7 @@
         }
         ?>
 
-        <form method="post" action="form3.php">
+        <form method="post" action="checkup_lampu.php">
                     <!-- Bagian Pemeriksaan Oli -->
                     <fieldset>
                 <legend>Harap diperiksa secara berkala</legend>
@@ -131,11 +131,11 @@
                     <label>Oli Mesin</label>
                     <div class="radio-group">
                         <label class="baik">
-                            <input type="radio" id="oliMesinBaik" name="oliMesin" value="Baik" required>
+                            <input type="radio" id="oliMesinBaik" name="oli_mesin" value="Baik" required>
                             Baik
                         </label>
                         <label class="tidak-baik">
-                            <input type="radio" id="oliMesinTidakBaik" name="oliMesin" value="Tidak Baik" required>
+                            <input type="radio" id="oliMesinTidakBaik" name="oli_mesin" value="Tidak Baik" required>
                             Tidak Baik
                         </label>`
                     </div>
@@ -145,11 +145,11 @@
                     <label>Oli Power Steering</label>
                     <div class="radio-group">
                         <label class="baik">
-                            <input type="radio" id="oliPowerBaik" name="oliPowerSteering" value="Baik" required>
+                            <input type="radio" id="oliPowerBaik" name="oli_power_stering" value="Baik" required>
                             Baik
                         </label>
                         <label class="tidak-baik">
-                            <input type="radio" id="oliPowerTidakBaik" name="oliPowerSteering" value="Tidak Baik" required>
+                            <input type="radio" id="oliPowerTidakBaik" name="oli_power_stering" value="Tidak Baik" required>
                             Tidak Baik
                         </label>
                     </div>
@@ -159,11 +159,11 @@
                     <label>Oli Transmisi</label>
                     <div class="radio-group">
                         <label class="baik">
-                            <input type="radio" id="oliTransmisiBaik" name="oliTransmisi" value="Baik" required>
+                            <input type="radio" id="oliTransmisiBaik" name="oli_transmisi" value="Baik" required>
                             Baik
                         </label>
                         <label class="tidak-baik">
-                            <input type="radio" id="oliTransmisiTidakBaik" name="oliTransmisi" value="Tidak Baik" required>
+                            <input type="radio" id="oliTransmisiTidakBaik" name="oli_transmisi" value="Tidak Baik" required>
                             Tidak Baik
                         </label>
                     </div>
@@ -173,11 +173,11 @@
                     <label>Minyak Rem</label>
                     <div class="radio-group">
                         <label class="baik">
-                            <input type="radio" id="minyakRemBaik" name="minyakRem" value="Baik" required>
+                            <input type="radio" id="minyakRemBaik" name="oli_rem" value="Baik" required>
                             Baik
                         </label>
                         <label class="tidak-baik">
-                            <input type="radio" id="minyakRemTidakBaik" name="minyakRem" value="Tidak Baik" required>
+                            <input type="radio" id="minyakRemTidakBaik" name="oli_rem" value="Tidak Baik" required>
                             Tidak Baik
                         </label>
                     </div>

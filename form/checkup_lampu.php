@@ -108,18 +108,30 @@
     <div class="container">
         <h1>Kondisi Penerangan Kendaraan</h1>
         <p>Harap diperiksa secara berkala dan berfungsi semestinya.</p>
-        <form>
-            <!-- Bagian Lampu Utama -->
+
+            <?php
+            session_start(); // Lanjutkan sesi
+
+            // Simpan data dari halaman sebelumnya
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $_SESSION['data']['oli_mesin'] = $_POST['oli_mesin'];
+                $_SESSION['data']['oli_power_stering'] = $_POST['oli_power_stering'];
+                $_SESSION['data']['oli_transmisi'] = $_POST['oli_transmisi'];
+                $_SESSION['data']['oli_rem'] = $_POST['oli_rem'];
+            }
+            ?>
+        <form method="post" action="checkup_aki.php">
+        <!-- Bagian Lampu Utama -->
             <fieldset>
                 <legend>Lampu Utama</legend>
                 <div class="form-group">
                     <div class="radio-group">
                         <label class="baik">
-                            <input type="radio" id="lampuUtamaBaik" name="lampuUtama" value="Baik" required>
+                            <input type="radio" id="lampuUtamaBaik" name="lampu_utama" value="Baik" required>
                             Baik
                         </label>
                         <label class="tidak-baik">
-                            <input type="radio" id="lampuUtamaTidakBaik" name="lampuUtama" value="Tidak Baik" required>
+                            <input type="radio" id="lampuUtamaTidakBaik" name="lampu_utama" value="Tidak Baik" required>
                             Tidak Baik
                         </label>
                     </div>
@@ -132,11 +144,11 @@
                 <div class="form-group">
                     <div class="radio-group">
                         <label class="baik">
-                            <input type="radio" id="lampuSeinBaik" name="lampuSein" value="Baik" required>
+                            <input type="radio" id="lampuSeinBaik" name="lampu_sen" value="Baik" required>
                             Baik
                         </label>
                         <label class="tidak-baik">
-                            <input type="radio" id="lampuSeinTidakBaik" name="lampuSein" value="Tidak Baik" required>
+                            <input type="radio" id="lampuSeinTidakBaik" name="lampu_sen" value="Tidak Baik" required>
                             Tidak Baik
                         </label>
                     </div>
@@ -149,11 +161,11 @@
                 <div class="form-group">
                     <div class="radio-group">
                         <label class="baik">
-                            <input type="radio" id="lampuRemBaik" name="lampuRem" value="Baik" required>
+                            <input type="radio" id="lampuRemBaik" name="lampu_rem" value="Baik" required>
                             Baik
                         </label>
                         <label class="tidak-baik">
-                            <input type="radio" id="lampuRemTidakBaik" name="lampuRem" value="Tidak Baik" required>
+                            <input type="radio" id="lampuRemTidakBaik" name="lampu_rem" value="Tidak Baik" required>
                             Tidak Baik
                         </label>
                     </div>
@@ -166,11 +178,11 @@
                 <div class="form-group">
                     <div class="radio-group">
                         <label class="baik">
-                            <input type="radio" id="lampuKlaksonBaik" name="lampuKlakson" value="Baik" required>
+                            <input type="radio" id="lampuKlaksonBaik" name="klakson" value="Baik" required>
                             Baik
                         </label>
                         <label class="tidak-baik">
-                            <input type="radio" id="lampuKlaksonTidakBaik" name="lampuKlakson" value="Tidak Baik" required>
+                            <input type="radio" id="lampuKlaksonTidakBaik" name="klakson" value="Tidak Baik" required>
                             Tidak Baik
                         </label>
                     </div>
