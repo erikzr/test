@@ -106,7 +106,26 @@
 
         <div class="container">
             <h1>Driver</h1>
-            <form class="form">
+
+            <?php
+            session_start(); // Mulai sesi atau lanjutkan sesi yang ada
+            ?>
+
+            <form class="form" method="post" action="checkup_oli.php" >
+                <h2>Data Pribadi</h2>
+                <label for="nama_petugas">Nama Petugas:</label>
+                <input class="kotak" type="text" id="nama_petugas" name="nama_petugas" required><br><br>
+                
+                <label for="plat_mobil">Plat Mobil:</label>
+                <input class="kotak" type="text" id="plat_mobil" name="plat_mobil" required><br><br>
+                
+                <label for="hari">Hari:</label>
+                <input class="kotak" type="date" id="hari" name="hari" required><br><br>
+
+                <input type="submit" value="Lanjutkan">
+            </form>
+
+            <!-- <form class="form">
                 <div class="form-group required">
                     <label for="namaPetugas">Nama Petugas</label>
                     <input class="kotak" type="text" id="namaPetugas" name="namaPetugas" required>
@@ -126,7 +145,7 @@
                 <div class="form-group">
                     <button type="submit">Kirim</button>
                 </div>
-            </form>
+            </form> -->
         </div>
     </section>
 </body>

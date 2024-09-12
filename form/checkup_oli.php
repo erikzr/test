@@ -111,9 +111,20 @@
 <body>
     <div class="container">
         <h1>Pemeriksaan Oli</h1>
-        <form>
-            <!-- Bagian Pemeriksaan Oli -->
-            <fieldset>
+        <?php
+        session_start(); // Lanjutkan sesi
+
+        // Simpan data dari halaman sebelumnya
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $_SESSION['data']['nama_petugas'] = $_POST['nama_petugas'];
+            $_SESSION['data']['plat_mobil'] = $_POST['plat_mobil'];
+            $_SESSION['data']['hari'] = $_POST['hari'];
+        }
+        ?>
+
+        <form method="post" action="form3.php">
+                    <!-- Bagian Pemeriksaan Oli -->
+                    <fieldset>
                 <legend>Harap diperiksa secara berkala</legend>
                 
                 <div class="form-group">
@@ -126,7 +137,7 @@
                         <label class="tidak-baik">
                             <input type="radio" id="oliMesinTidakBaik" name="oliMesin" value="Tidak Baik" required>
                             Tidak Baik
-                        </label>
+                        </label>`
                     </div>
                 </div>
                 
@@ -187,6 +198,8 @@
                 <button type="submit">Kirim</button>
             </div>
         </form>
+
+
     </div>
 </body>
 </html>
