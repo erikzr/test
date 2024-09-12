@@ -215,6 +215,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD:form/kebersihan.html
     <section>
         <div class="background-container">
             <!-- Background grid effect -->
@@ -725,6 +726,93 @@
                 <!-- Bagian Kebersihan Kursi -->
                 <div class="fieldset-container">
                     <legend>Kebersihan Kursi</legend>
+=======
+    <div class="container">
+        <h1>Kebersihan Interior & Eksterior</h1>
+        <p>Pastikan kebersihan Interior dan Eksterior Bersih!</p>
+
+        <?php
+        session_start(); // Lanjutkan sesi
+
+        // Simpan data dari halaman sebelumnya
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $_SESSION['data']['kondisi_accu'] = $_POST['kondisi_accu'];
+        }
+        ?>
+        <form method="post" action="lain_lain.php">
+        <!-- Bagian Kebersihan Kursi -->
+            <fieldset>
+                <legend>Kebersihan Kursi</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="kursiBaik" name="kursi" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="kursiTidakBaik" name="kursi" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Bagian Kebersihan Lantai -->
+            <fieldset>
+                <legend>Kebersihan Lantai</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="lantaiBaik" name="lantai" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="lantaiTidakBaik" name="lantai" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Bagian Kebersihan Dinding dalam & Luar Mobil -->
+            <fieldset>
+                <legend>Kebersihan Dinding dalam & Luar Mobil</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="dindingBaik" name="dinding" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="dindingTidakBaik" name="dinding" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Bagian Kebersihan Kap Mesin -->
+            <fieldset>
+                <legend>Kebersihan Kap Mesin</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="kapBaik" name="kap" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="kapTidakBaik" name="kap" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Bagian Upload File -->
+            <div class="file-upload">
+                <fieldset>
+                    <legend>Upload Laporan Kebersihan (maks. 5 file, 10 MB per file)</legend>
+>>>>>>> 0b05ceb88e76bd276960558e8a180c4ce7318908:form/kebersihan.php
                     <div class="form-group">
                         <div class="radio-group">
                             <label>

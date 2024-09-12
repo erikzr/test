@@ -189,6 +189,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD:form/checkup_lampu.html
     <section>
         <div class="background-container">
             <!-- Background grid effect -->
@@ -576,6 +577,91 @@
             <span></span>
             <span></span>
             <span></span>
+=======
+    <div class="container">
+        <h1>Kondisi Penerangan Kendaraan</h1>
+        <p>Harap diperiksa secara berkala dan berfungsi semestinya.</p>
+
+            <?php
+            session_start(); // Lanjutkan sesi
+
+            // Simpan data dari halaman sebelumnya
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $_SESSION['data']['oli_mesin'] = $_POST['oli_mesin'];
+                $_SESSION['data']['oli_power_stering'] = $_POST['oli_power_stering'];
+                $_SESSION['data']['oli_transmisi'] = $_POST['oli_transmisi'];
+                $_SESSION['data']['oli_rem'] = $_POST['oli_rem'];
+            }
+            ?>
+        <form method="post" action="checkup_aki.php">
+        <!-- Bagian Lampu Utama -->
+            <fieldset>
+                <legend>Lampu Utama</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="lampuUtamaBaik" name="lampu_utama" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="lampuUtamaTidakBaik" name="lampu_utama" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Bagian Lampu Sein -->
+            <fieldset>
+                <legend>Lampu Sein</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="lampuSeinBaik" name="lampu_sen" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="lampuSeinTidakBaik" name="lampu_sen" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Bagian Lampu Rem -->
+            <fieldset>
+                <legend>Lampu Rem</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="lampuRemBaik" name="lampu_rem" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="lampuRemTidakBaik" name="lampu_rem" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Bagian Lampu, Klakson & Pendukung lainnya -->
+            <fieldset>
+                <legend>Lampu, Klakson & Pendukung lainnya</legend>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <label class="baik">
+                            <input type="radio" id="lampuKlaksonBaik" name="klakson" value="Baik" required>
+                            Baik
+                        </label>
+                        <label class="tidak-baik">
+                            <input type="radio" id="lampuKlaksonTidakBaik" name="klakson" value="Tidak Baik" required>
+                            Tidak Baik
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+>>>>>>> 0b05ceb88e76bd276960558e8a180c4ce7318908:form/checkup_lampu.php
 
             <span></span>
             <span></span>
