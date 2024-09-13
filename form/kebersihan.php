@@ -1,3 +1,10 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Menyimpan data dari form4.php
+    session_start();
+    $_SESSION['accu'] = $_POST['accu'];
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 

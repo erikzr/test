@@ -1,3 +1,13 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Menyimpan data dari form5.php
+    session_start();
+    $_SESSION['kursi'] = $_POST['kursi'];
+    $_SESSION['lantai'] = $_POST['lantai'];
+    $_SESSION['dinding'] = $_POST['dinding'];
+    $_SESSION['kap'] = $_POST['kap'];
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 

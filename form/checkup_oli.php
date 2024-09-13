@@ -1,3 +1,13 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Menyimpan data dari form1.php
+    session_start();
+    $_SESSION['nama_petugas'] = $_POST['nama_petugas'];
+    $_SESSION['plat_mobil'] = $_POST['plat_mobil'];
+    $_SESSION['hari'] = $_POST['hari'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
