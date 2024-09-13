@@ -720,26 +720,17 @@
             <span></span>
             <span></span>
         </div>
+
         <div class="container">
             <h1>Kebersihan Interior & Eksterior</h1>
             <form class="form" method="post" action="form3.php">
                 <!-- Bagian Kebersihan Kursi -->
                 <div class="fieldset-container">
                     <legend>Kebersihan Kursi</legend>
-=======
     <div class="container">
         <h1>Kebersihan Interior & Eksterior</h1>
         <p>Pastikan kebersihan Interior dan Eksterior Bersih!</p>
-
-        <?php
-        session_start(); // Lanjutkan sesi
-
-        // Simpan data dari halaman sebelumnya
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $_SESSION['data']['kondisi_accu'] = $_POST['kondisi_accu'];
-        }
-        ?>
-        <form method="post" action="lain_lain.php">
+       <form method="post" action="lain_lain.php">
         <!-- Bagian Kebersihan Kursi -->
             <fieldset>
                 <legend>Kebersihan Kursi</legend>
@@ -812,7 +803,6 @@
             <div class="file-upload">
                 <fieldset>
                     <legend>Upload Laporan Kebersihan (maks. 5 file, 10 MB per file)</legend>
->>>>>>> 0b05ceb88e76bd276960558e8a180c4ce7318908:form/kebersihan.php
                     <div class="form-group">
                         <div class="radio-group">
                             <label>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capture Photo with Metadata</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #video {
+            border: 1px solid black;
+        }
+        #photo {
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Foto Terkini </h1>
+    <button id="startCamera">Mulai Kamera</button>
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="capture">Ambil Foto</button>
+    <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+    <img id="photo" alt="Captured Photo"/>
+    <script src="app.js"></script>
+</body>
+</html>

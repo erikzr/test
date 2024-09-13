@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Pad</title>
+    <style>
+        body {
+             overflow: hidden;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        #signature {
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+        #controls {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Signature Pad</h1>
+    <canvas id="signature" width="640" height="480"></canvas>
+    <div id="controls">
+        <button id="clear">Clear</button>
+        <button id="save">Save</button>
+    </div>
+    <img id="signatureImage" style="display:none;" alt="Signature"/>
+    <script src="signature.js"></script>
+</body>
+</html>
