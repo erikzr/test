@@ -9,6 +9,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
+        /* Resetting default margin, padding, and box-sizing */
         * {
             margin: 0;
             padding: 0;
@@ -16,6 +17,7 @@
             font-family: 'Quicksand', sans-serif;
         }
 
+        /* Body styling */
         body {
             margin: 0;
             padding: 0;
@@ -27,16 +29,20 @@
             overflow: hidden;
         }
 
+        /* Section styling */
         section {
             position: relative;
             min-height: 100vh;
+            /* Ensure the section takes at least the height of the viewport */
             width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: auto;
+            /* Allow scrolling if needed */
         }
 
+        /* Background container styling */
         .background-container {
             position: absolute;
             width: 100%;
@@ -46,11 +52,13 @@
             grid-template-rows: repeat(auto-fill, minmax(60px, 1fr));
             gap: 2px;
             z-index: 1;
+            /* Ensure background is behind the form */
         }
 
         .background-container span {
             background: #181818;
             aspect-ratio: 1;
+            /* Ensure aspect ratio is 1:1 */
             width: 100%;
             height: 100%;
             transition: 1.5s;
@@ -79,6 +87,7 @@
             }
         }
 
+        /* Container styling */
         .container {
             position: relative;
             background: #fffcfc;
@@ -87,17 +96,21 @@
             width: 100%;
             max-width: 400px;
             z-index: 2;
+            /* Ensure the container is above the background */
             display: flex;
             flex-direction: column;
             align-items: center;
             margin: 20px;
+            /* Ensure container doesn't touch the edges */
         }
 
+        /* Header styling */
         h1 {
             color: #000;
             margin-bottom: 20px;
         }
 
+        /* Form styling */
         .form {
             background: #b8b2b2;
             padding: 20px;
@@ -105,13 +118,16 @@
             width: 100%;
         }
 
+        /* Fieldset container styling */
         .fieldset-container {
             border: 2px solid #000;
             border-radius: 5px;
             padding: 10px;
             margin-bottom: 20px;
             position: relative;
+            /* Position relative to place legend absolutely */
             background: #b8b2b2;
+            /* Match the form background color */
         }
 
         .fieldset-container legend {
@@ -127,6 +143,7 @@
             padding: 0 5px;
         }
 
+        /* Form group styling */
         .form-group {
             border: 1px solid #000;
             padding: 10px;
@@ -163,6 +180,7 @@
             background: #dcdcdc;
         }
 
+        /* File input styling */
         input[type="file"] {
             width: calc(100% - 22px);
             padding: 10px;
@@ -174,6 +192,7 @@
             box-sizing: border-box;
         }
 
+        /* Button styling */
         button {
             background: #0f0;
             color: #000;
@@ -183,13 +202,14 @@
             font-size: 1em;
             cursor: pointer;
             width: 25%;
-            transition: opacity 0.3s ease;
+            /* Ensure button spans the full width of its container */
         }
 
         button:hover {
             opacity: 0.8;
         }
     </style>
+
 </head>
 
 <body>
