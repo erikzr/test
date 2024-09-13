@@ -701,7 +701,7 @@
         <div class="container">
             <h1>Pemeriksaan Oli</h1>
 
-            <form class="form" method="post" action="form3.php">
+            <form class="form" method="post" action="checkup_lampu.php">
                 <!-- Bagian Pemeriksaan Oli -->
                 <div class="fieldset-container">
                     <legend>Harap diperiksa secara berkala</legend>
