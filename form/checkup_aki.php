@@ -1,3 +1,14 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Menyimpan data dari form3.php
+    session_start();
+    $_SESSION['lampuUtama'] = $_POST['lampuUtama'];
+    $_SESSION['lampuSein'] = $_POST['lampuSein'];
+    $_SESSION['lampuRem'] = $_POST['lampuRem'];
+    $_SESSION['lampuKlakson'] = $_POST['lampuKlakson'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 

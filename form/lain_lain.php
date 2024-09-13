@@ -1,3 +1,13 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Menyimpan data dari form5.php
+    session_start();
+    $_SESSION['kursi'] = $_POST['kursi'];
+    $_SESSION['lantai'] = $_POST['lantai'];
+    $_SESSION['dinding'] = $_POST['dinding'];
+    $_SESSION['kap'] = $_POST['kap'];
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -768,8 +778,8 @@
         </div>
         <div class="container">
             <h1>Laporan Kendaraan</h1>
-            <form class="form" method="post" >
-                <!-- Bagian Lain - Lain -->
+            <form action="form7.php" method="post" enctype="multipart/form-data">
+            <!-- Bagian Lain - Lain -->
                 <div class="fieldset-container">
                     <legend>Lain - Lain</legend>
                     <!-- STNK masih berlaku -->
