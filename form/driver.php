@@ -1,3 +1,8 @@
+
+<?php
+            session_start(); // Mulai sesi atau lanjutkan sesi yang ada
+            ?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -737,9 +742,6 @@
         <div class="container">
             <h1>Driver</h1>
 
-            <?php
-            session_start(); // Mulai sesi atau lanjutkan sesi yang ada
-            ?>
             <form class="form" method="post" action="checkup_oli.php" >
                 <h2>Data Pribadi</h2>
                 <label for="nama_petugas">Nama Petugas:</label>
