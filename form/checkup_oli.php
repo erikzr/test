@@ -1,205 +1,798 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pemeriksaan Oli</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
         }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        section {
+            position: relative;
+            min-height: 100vh;
+            /* Ensure the section takes at least the height of the viewport */
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            /* Allow scrolling if needed */
+        }
+
+        .background-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            grid-template-rows: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 2px;
+            z-index: 1;
+            /* Ensure background is behind the form */
+        }
+
+        .background-container span {
+            background: #181818;
+            aspect-ratio: 1;
+            /* Ensure aspect ratio is 1:1 */
+            width: 100%;
+            height: 100%;
+            transition: 1.5s;
+        }
+
+        .background-container span:hover {
+            background: #0f0;
+            transition: 0s;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(#000, #0f0, #000);
+            animation: animate 5s linear infinite;
+        }
+
+        @keyframes animate {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
+            position: relative;
+            background: #fffcfc;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            width: 100%;
+            max-width: 400px;
+            z-index: 2;
+            /* Ensure the container is above the background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            /* Ensure container doesn't touch the edges */
         }
+
         h1 {
-            font-size: 24px;
+            color: #0f0;
             margin-bottom: 20px;
-            text-align: center;
         }
-        .form-group {
-            margin-bottom: 15px;
-            border: 1.5px solid #000; /* Menambahkan border hitam 1.5px */
-            border-radius: 4px;
+
+        .form {
+            background: #b8b2b2;
+            padding: 20px;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .fieldset-container {
+            border: 2px solid rgb(0, 0, 0);
+            border-radius: 5px;
             padding: 10px;
-            background-color: #fff; /* Memastikan latar belakang putih */
+            margin-bottom: 20px;
+            position: relative;
+            /* Position relative to place legend absolutely */
+            background: #b8b2b2;
+            /* Match the form background color */
         }
+
+        .fieldset-container legend {
+            font-weight: 600;
+            color: rgb(0, 0, 0);
+            padding: 0 10px;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: #fffcfc;
+            border: 1px solid rgb(0, 0, 0);
+            border-radius: 5px;
+            padding: 0 5px;
+        }
+
+        .form-group {
+            border: 1px solid rgb(0, 0, 0);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
         .form-group label {
             display: block;
+            color: #000000;
             margin-bottom: 5px;
-            font-weight: bold;
         }
-        .form-group input[type="radio"] {
+
+        input[type="radio"] {
             margin-right: 10px;
         }
-        .form-group input[type="file"] {
-            display: block;
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
+
+        input[type="file"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 0.5px solid #555;
             border-radius: 4px;
+            background: #333;
+            color: #fff;
+            font-size: 1em;
             box-sizing: border-box;
         }
-        fieldset {
-            border: none; /* Menghapus border dari fieldset */
+
+        button {
+            background: #0f0;
+            color: #000;
             padding: 10px;
-            margin-bottom: 15px;
-            background-color: transparent; /* Membuat background transparan */
-            text-align: center; /* Memusatkan teks di dalam fieldset */
-        }
-        legend {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .form-group button {
-            background-color: #007BFF;
-            color: #fff;
             border: none;
-            padding: 10px 15px;
             border-radius: 4px;
+            font-size: 1em;
             cursor: pointer;
-            font-size: 16px;
+            width: 25%;
+            /* Ensure button spans the full width of its container */
         }
-        .form-group button:hover {
-            background-color: #0056b3;
+
+        button:hover {
+            opacity: 0.8;
         }
-        .radio-group {
-            display: flex;
-            flex-direction: column; /* Mengubah flex-direction agar label berjajar vertikal */
-            gap: 10px; /* Jarak antara setiap label */
+
+        @media (max-width: 900px) {
+            .background-container span {
+                width: 100%;
+                height: 100%;
+            }
         }
-        .radio-group label {
-            display: flex;
-            align-items: center;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-weight: normal;
-        }
-        .radio-group input[type="radio"] {
-            margin: 0;
-        }
-        .baik {
-            background-color: #d4edda; /* Hijau muda untuk "Baik" */
-            color: #155724; /* Warna teks hijau gelap */
-        }
-        .tidak-baik {
-            background-color: #f8d7da; /* Merah muda untuk "Tidak Baik" */
-            color: #721c24; /* Warna teks merah gelap */
-        }
-        .upload-box {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: #f9f9f9;
-            padding: 15px;
-            margin-top: 15px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-        .upload-box p {
-            margin: 0 0 10px;
-            font-size: 14px;
-            color: #555;
+
+        @media (max-width: 600px) {
+            .background-container span {
+                width: 100%;
+                height: 100%;
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Pemeriksaan Oli</h1>
-        <?php
-        session_start(); // Lanjutkan sesi
+    <section>
+        <div class="background-container">
+            <!-- Background grid effect -->
+            <!-- Repeat the <span></span> as needed -->
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="container">
+            <h1>Pemeriksaan Oli</h1>
+            <?php
+            session_start(); // Lanjutkan sesi
+            
+            // Simpan data dari halaman sebelumnya
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $_SESSION['data']['nama_petugas'] = $_POST['nama_petugas'];
+                $_SESSION['data']['plat_mobil'] = $_POST['plat_mobil'];
+                $_SESSION['data']['hari'] = $_POST['hari'];
+            }
+            ?>
 
-        // Simpan data dari halaman sebelumnya
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $_SESSION['data']['nama_petugas'] = $_POST['nama_petugas'];
-            $_SESSION['data']['plat_mobil'] = $_POST['plat_mobil'];
-            $_SESSION['data']['hari'] = $_POST['hari'];
-        }
-        ?>
+            <form method="post" action="checkup_lampu.php">
 
-        <form method="post" action="checkup_lampu.php">
+                <form class="form" method="post" action="form3.php">
                     <!-- Bagian Pemeriksaan Oli -->
-                    <fieldset>
-                <legend>Harap diperiksa secara berkala</legend>
-                
-                <div class="form-group">
-                    <label>Oli Mesin</label>
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="oliMesinBaik" name="oli_mesin" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="oliMesinTidakBaik" name="oli_mesin" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>`
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Oli Power Steering</label>
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="oliPowerBaik" name="oli_power_stering" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="oliPowerTidakBaik" name="oli_power_stering" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Oli Transmisi</label>
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="oliTransmisiBaik" name="oli_transmisi" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="oliTransmisiTidakBaik" name="oli_transmisi" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Minyak Rem</label>
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="minyakRemBaik" name="oli_rem" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="minyakRemTidakBaik" name="oli_rem" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-                
-            </fieldset>
+                    <div class="fieldset-container">
+                        <legend>Harap diperiksa secara berkala</legend>
+                        <div class="form-group">
+                            <label>Oli Mesin</label>
+                            <div class="radio-group">
+                                <label class="baik">
+                                    <input type="radio" id="oliMesinBaik" name="oliMesin" value="Baik" required>
+                                    Baik
+                                </label>
+                                <label class="tidak-baik">
+                                    <input type="radio" id="oliMesinTidakBaik" name="oliMesin" value="Tidak Baik"
+                                        required>
+                                    Tidak Baik
+                                </label>
+                            </div>
+                        </div>
 
-            <!-- Bagian Upload File -->
-            <div class="upload-box">
-                <div class="form-group">
-                    <label for="laporanOli">Laporan Kecukupan Oli</label>
-                    <p>Upload maksimum 5 file yang didukung: gambar, video, atau dokumen. Maksimal 10 MB per file.</p>
-                    <input type="file" id="laporanOli" name="laporanOli[]" multiple accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.pdf,.doc,.docx">
-                </div>
-            </div>
+                        <div class="form-group">
+                            <label>Oli Power Steering</label>
+                            <div class="radio-group">
+                                <label class="baik">
+                                    <input type="radio" id="oliPowerBaik" name="oliPowerSteering" value="Baik" required>
+                                    Baik
+                                </label>
+                                <label class="tidak-baik">
+                                    <input type="radio" id="oliPowerTidakBaik" name="oliPowerSteering"
+                                        value="Tidak Baik" required>
+                                    Tidak Baik
+                                </label>
+                            </div>
+                        </div>
 
-            <div class="form-group">
-                <button type="submit">Kirim</button>
-            </div>
-        </form>
+                        <div class="form-group">
+                            <label>Oli Transmisi</label>
+                            <div class="radio-group">
+                                <label class="baik">
+                                    <input type="radio" id="oliTransmisiBaik" name="oliTransmisi" value="Baik" required>
+                                    Baik
+                                </label>
+                                <label class="tidak-baik">
+                                    <input type="radio" id="oliTransmisiTidakBaik" name="oliTransmisi"
+                                        value="Tidak Baik" required>
+                                    Tidak Baik
+                                </label>
+                            </div>
+                        </div>
 
+                        <div class="form-group">
+                            <label>Minyak Rem</label>
+                            <div class="radio-group">
+                                <label class="baik">
+                                    <input type="radio" id="minyakRemBaik" name="minyakRem" value="Baik" required>
+                                    Baik
+                                </label>
+                                <label class="tidak-baik">
+                                    <input type="radio" id="minyakRemTidakBaik" name="minyakRem" value="Tidak Baik"
+                                        required>
+                                    Tidak Baik
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
-    </div>
+                    <!-- Bagian Upload File -->
+                    <div class="form-group">
+                        <label for="laporanOli">Laporan Kecukupan Oli</label>
+                        <p>Upload maksimum 5 file yang didukung: gambar, video, atau dokumen. Maksimal 10 MB per file.
+                        </p>
+                        <input type="file" id="laporanOli" name="laporanOli[]" multiple
+                            accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.pdf,.doc,.docx">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit">Kirim</button>
+                    </div>
+                </form>
+        </div>
+    </section>
 </body>
+
 </html>

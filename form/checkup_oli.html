@@ -700,6 +700,18 @@
         </div>
         <div class="container">
             <h1>Pemeriksaan Oli</h1>
+        <?php
+            session_start(); // Lanjutkan sesi
+                    
+            // Simpan data dari halaman sebelumnya
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $_SESSION['data']['nama_petugas'] = $_POST['nama_petugas'];
+            $_SESSION['data']['plat_mobil'] = $_POST['plat_mobil'];
+            $_SESSION['data']['hari'] = $_POST['hari'];
+            }
+        ?>
+                    
+        <form method="post" action="checkup_lampu.php">
 
             <form class="form" method="post" action="form3.php">
                 <!-- Bagian Pemeriksaan Oli -->
