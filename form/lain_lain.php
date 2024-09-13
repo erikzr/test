@@ -916,7 +916,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </label>
                         </div>
                     </div>
-
+                    
                     <!-- Bagian Upload File -->
                     <div class="form-group">
                         <label for="fileUpload">Laporan Kebersihan</label>
@@ -925,7 +925,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="file" id="fileUpload" name="fileUpload[]"
                             accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.mpg,.mpeg,.pdf,.doc,.docx" multiple>
                     </div>
-
+                   
                     <!-- Submit Button -->
                     <button href="berhasil.php" type="submit">Kirim</button>
                 </div>

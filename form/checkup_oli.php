@@ -777,7 +777,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- Bagian Upload File -->
                 <div class="form-group">
-                    <label for="laporanOli">Laporan Kecukupan Oli</label>
+                    <legend><label for="laporanOli">Laporan Kecukupan Oli</label></legend>
                     <p>Upload maksimum 5 file yang didukung: gambar, video, atau dokumen. Maksimal 10 MB per file.</p>
                     <input type="file" id="laporanOli" name="laporanOli[]" multiple
                         accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.pdf,.doc,.docx">
