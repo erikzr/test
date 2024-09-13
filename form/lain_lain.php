@@ -805,8 +805,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="container">
             <h1>Laporan Kendaraan</h1>
-            <form class="form" method="post">
-                <!-- Bagian Lain - Lain -->
+            <form action="form7.php" method="post" enctype="multipart/form-data">
+            <!-- Bagian Lain - Lain -->
                 <div class="fieldset-container">
                     <legend>Lain - Lain</legend>
                     <!-- STNK masih berlaku -->

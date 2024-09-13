@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <h2>Terima Kasih</h2>
-<p>Data telah berhasil dikirim. Terima ka.</p>
+<p>Data telah berhasil dikirim. Terima kasih telah mengisi form check-up kendaraan.</p>
 
 </body>
 </html>
