@@ -19,13 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 lampuKlakson, accu, kursi, lantai, dinding, kap,
                 stnk, apar, p3k, kunciRoda, airRadiator, bahanBakar, oli
             ) VALUES (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
             )";
 
+    // Pastikan bahwa string tipe data memiliki jumlah karakter yang sesuai dengan jumlah parameter yang akan di-bind
     $stmt = $conn->prepare($sql);
     if ($stmt) {
         $stmt->bind_param(
-            "sssssssssssssssssssssss",
+            "sssssssssssssssssssssss",  // Sesuaikan jumlah 's' dengan jumlah parameter yang di-bind
             $_SESSION['nama_petugas'],
             $_SESSION['plat_mobil'],
             $_SESSION['hari'],
