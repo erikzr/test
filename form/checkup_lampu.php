@@ -96,7 +96,7 @@
         }
 
         h1 {
-            color: #0f0;
+            color: #000;
             margin-bottom: 20px;
         }
 

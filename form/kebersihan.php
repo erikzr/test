@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kebersihan Interior & Eksterior</title>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
@@ -75,7 +74,6 @@
             0% {
                 transform: translateY(-100%);
             }
-
             100% {
                 transform: translateY(100%);
             }
@@ -96,7 +94,7 @@
         }
 
         h1 {
-            color: #0f0;
+            color: #000;
             margin-bottom: 20px;
         }
 
@@ -142,29 +140,23 @@
             margin-bottom: 5px;
         }
 
-                .radio-group {
+        .radio-group {
             display: flex;
             flex-direction: column;
-            /* Mengatur orientasi menjadi kolom */
             align-items: flex-start;
-            /* Menyelaraskan elemen ke kiri */
             gap: 5px;
-            /* Mengurangi jarak antar elemen radio */
         }
 
         .radio-group label {
             display: flex;
             align-items: center;
             margin: 0;
-            /* Menghapus margin default untuk mendekatkan opsi */
             padding: 0;
-            /* Menghapus padding jika ada */
             font-weight: normal;
         }
 
         .radio-group input[type="radio"] {
             margin-right: 5px;
-            /* Menjaga jarak kecil antara radio button dan label text */
         }
 
         .radio-group label:hover {
@@ -197,512 +189,13 @@
         button:hover {
             opacity: 0.8;
         }
-
-        @media (max-width: 900px) {
-            .background-container span {
-                width: 100%;
-                height: 100%;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .background-container span {
-                width: 100%;
-                height: 100%;
-            }
-        }
     </style>
 </head>
 
 <body>
-<<<<<<< HEAD:form/kebersihan.html
     <section>
         <div class="background-container">
             <!-- Background grid effect -->
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
             <span></span>
             <span></span>
             <span></span>
@@ -723,86 +216,10 @@
 
         <div class="container">
             <h1>Kebersihan Interior & Eksterior</h1>
-            <form class="form" method="post" action="form3.php">
+            <form class="form" method="post" action="lain_lain.php">
                 <!-- Bagian Kebersihan Kursi -->
                 <div class="fieldset-container">
                     <legend>Kebersihan Kursi</legend>
-    <div class="container">
-        <h1>Kebersihan Interior & Eksterior</h1>
-        <p>Pastikan kebersihan Interior dan Eksterior Bersih!</p>
-       <form method="post" action="lain_lain.php">
-        <!-- Bagian Kebersihan Kursi -->
-            <fieldset>
-                <legend>Kebersihan Kursi</legend>
-                <div class="form-group">
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="kursiBaik" name="kursi" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="kursiTidakBaik" name="kursi" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
-
-            <!-- Bagian Kebersihan Lantai -->
-            <fieldset>
-                <legend>Kebersihan Lantai</legend>
-                <div class="form-group">
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="lantaiBaik" name="lantai" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="lantaiTidakBaik" name="lantai" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
-
-            <!-- Bagian Kebersihan Dinding dalam & Luar Mobil -->
-            <fieldset>
-                <legend>Kebersihan Dinding dalam & Luar Mobil</legend>
-                <div class="form-group">
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="dindingBaik" name="dinding" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="dindingTidakBaik" name="dinding" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
-
-            <!-- Bagian Kebersihan Kap Mesin -->
-            <fieldset>
-                <legend>Kebersihan Kap Mesin</legend>
-                <div class="form-group">
-                    <div class="radio-group">
-                        <label class="baik">
-                            <input type="radio" id="kapBaik" name="kap" value="Baik" required>
-                            Baik
-                        </label>
-                        <label class="tidak-baik">
-                            <input type="radio" id="kapTidakBaik" name="kap" value="Tidak Baik" required>
-                            Tidak Baik
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
-
-            <!-- Bagian Upload File -->
-            <div class="file-upload">
-                <fieldset>
-                    <legend>Upload Laporan Kebersihan (maks. 5 file, 10 MB per file)</legend>
                     <div class="form-group">
                         <div class="radio-group">
                             <label>
@@ -834,7 +251,7 @@
                     </div>
                 </div>
 
-                <!-- Bagian Kebersihan Dinding dalam & Luar Mobil -->
+                <!-- Bagian Kebersihan Dinding -->
                 <div class="fieldset-container">
                     <legend>Kebersihan Dinding</legend>
                     <div class="form-group">
@@ -869,11 +286,11 @@
                 </div>
 
                 <!-- Bagian Upload File -->
+                <div class="fieldset-container">
                 <div class="form-group">
-                    <label for="fileUpload">Laporan Kebersihan</label>
+                    <legend>Laporan Kebersihan</legend>
                     <p>Upload maksimum 5 file yang didukung: gambar, video, atau dokumen. Maksimal 10 MB per file.</p>
-                    <input type="file" id="fileUpload" name="fileUpload[]"
-                        accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.mpg,.mpeg,.pdf,.doc,.docx" multiple>
+                    <input type="file" id="fileUpload" name="fileUpload[]" accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.mpg,.mpeg,.pdf,.doc,.docx" multiple>
                 </div>
 
                 <!-- Tombol Kirim -->
