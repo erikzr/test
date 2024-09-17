@@ -15,17 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pemeriksaan Oli</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="form.css">
-
-
 </head>
 
 <body>
     <section>
         <div class="background-container">
             <!-- Background grid effect -->
-            <!-- Repeat the <span></span> as needed -->
             <span></span>
             <span></span>
             <span></span>
@@ -414,25 +412,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <span></span>
             <span></span>
             <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+
             <span></span>
             <span></span>
             <span></span>
@@ -528,9 +508,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form class="form" method="post" action="checkup_lampu.php">
                 <!-- Bagian Pemeriksaan Oli -->
                 <div class="fieldset-container">
-                    <legend>Harap diperiksa secara berkala</legend>
+                    <legend>Oli Mesin</legend>
                     <div class="form-group">
-                        <label>Oli Mesin</label>
                         <div class="radio-group">
                             <label class="baik">
                                 <input type="radio" id="oliMesinBaik" name="oliMesin" value="Baik" required>
@@ -542,9 +521,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </label>
                         </div>
                     </div>
+                </div>
 
+                <div class="fieldset-container">
+                    <legend>Oli Power Steering</legend>
                     <div class="form-group">
-                        <label>Oli Power Steering</label>
                         <div class="radio-group">
                             <label class="baik">
                                 <input type="radio" id="oliPowerBaik" name="oliPowerSteering" value="Baik" required>
@@ -557,9 +538,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </label>
                         </div>
                     </div>
+                </div>
 
+                <div class="fieldset-container">
+                    <legend>Oli Transmisi</legend>
                     <div class="form-group">
-                        <label>Oli Transmisi</label>
                         <div class="radio-group">
                             <label class="baik">
                                 <input type="radio" id="oliTransmisiBaik" name="oliTransmisi" value="Baik" required>
@@ -572,9 +555,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </label>
                         </div>
                     </div>
+                </div>
 
+                <div class="fieldset-container">
+                    <legend>Minyak Rem</legend>
                     <div class="form-group">
-                        <label>Minyak Rem</label>
                         <div class="radio-group">
                             <label class="baik">
                                 <input type="radio" id="minyakRemBaik" name="minyakRem" value="Baik" required>
@@ -591,7 +576,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- Bagian Upload File -->
                 <div class="form-group">
-                    <legend><label for="laporanOli">Laporan Kecukupan Oli</label></legend>
+                    <label for="laporanOli">Laporan Kecukupan Oli</label>
                     <p>Upload maksimum 5 file yang didukung: gambar, video, atau dokumen. Maksimal 10 MB per file.</p>
                     <input type="file" id="laporanOli" name="laporanOli[]" multiple
                         accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.pdf,.doc,.docx">
