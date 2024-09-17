@@ -41,6 +41,8 @@
 
             <form class="form" method="post" action="checkup_oli.php" enctype="multipart/form-data">
             <h2>Data Pribadi</h2>
+            <form class="form" method="post" action="checkup_oli.php">
+                <h2>Data Pribadi</h2>
                 <label for="nama_petugas">Nama Petugas:</label>
                 <input class="kotak" type="text" id="nama_petugas" name="nama_petugas" placeholder="nama lengkap"><br><br>
                 
