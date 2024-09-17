@@ -26,7 +26,7 @@
          }
          #timestamp {
              font-style: italic;
-             color: gray;
+             color: black;
              margin-top: 10px;
          }
     </style>
@@ -39,6 +39,8 @@
         <div class="container">
             <h1>Driver</h1>
 
+            <form class="form" method="post" action="checkup_oli.php" enctype="multipart/form-data">
+            <h2>Data Pribadi</h2>
             <form class="form" method="post" action="checkup_oli.php">
                 <h2>Data Pribadi</h2>
                 <label for="nama_petugas">Nama Petugas:</label>
@@ -66,13 +68,15 @@
                 <input class="kotak" type="date" id="hari" name="hari" required><br><br>
 
                 <label for="kamera">FOTO MOBIL TAMPAK DEPAN</label>
-                <div id="kamera-container">
-                    <video id="video" autoplay></video>
-                    <button type="button" onclick="takePhoto()">AMBIL FOTO</button>
-                    <canvas id="canvas" style="display: none;"></canvas>
-                    <img id="photo" src="" alt="Preview Foto">
-                    <div id="timestamp"></div>
-                </div>
+    <div id="kamera-container">
+        <video id="video" autoplay></video>
+        <button type="button" onclick="takePhoto()">AMBIL FOTO</button>
+        <canvas id="canvas" style="display: none;"></canvas>
+        <img id="photo" src="" alt="Preview Foto">
+        <div id="timestamp"></div>
+        
+        <input type="hidden" id="photoData" name="photoData"> <!-- Hidden field to store the base64 photo data -->
+        </div>
                 
                 <input type="submit" value="Lanjutkan">
             </form>
@@ -91,23 +95,27 @@
         }
 
         function takePhoto() {
-            const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
-            const photo = document.getElementById('photo');
-            const timestamp = document.getElementById('timestamp');
-            
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            
-            photo.src = canvas.toDataURL('image/png');
-            photo.style.display = 'block'; // Tampilkan foto
-            
-            const now = new Date();
-            timestamp.textContent = `Timestamp: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
-        }
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const photo = document.getElementById('photo');
+    const timestamp = document.getElementById('timestamp');
+    const photoData = document.getElementById('photoData'); // Hidden input field
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    
+    const context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    photo.src = canvas.toDataURL('image/png');
+    photo.style.display = 'block'; // Tampilkan foto
+    
+    photoData.value = photo.src; // Set the base64 photo data to the hidden input field
+
+    const now = new Date();
+    timestamp.textContent = `Timestamp: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+}
+
 
         window.onload = startCamera;
     </script>

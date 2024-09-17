@@ -1,12 +1,47 @@
 <?php
+session_start();
+
+// Database connection
+try {
+    $pdo = new PDO('mysql:host=localhost;dbname=checkcar', 'root', '');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Menyimpan data dari form1.php
-    session_start();
-    $_SESSION['nama_petugas'] = $_POST['nama_petugas'];
-    $_SESSION['plat_mobil'] = $_POST['plat_mobil'];
-    $_SESSION['hari'] = $_POST['hari'];
+    // Retrieve form data
+    $nama_petugas = $_POST['nama_petugas'];
+    $plat_mobil = $_POST['plat_mobil'];
+    $hari = $_POST['hari'];
+    $photoData = $_POST['photoData'];
+
+    // Decode the base64 photo data
+    $photoData = str_replace('data:image/png;base64,', '', $photoData);
+    $photoData = base64_decode($photoData);
+
+    // Define upload directory and file path
+    $uploadDir = __DIR__ . '/uploads/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true); // Create the directory if it doesn't exist
+    }
+    
+    $filename = uniqid() . '.png';
+    $uploadFile = $uploadDir . $filename;
+
+    // Save the photo to the server
+    if (file_put_contents($uploadFile, $photoData) === false) {
+        die("Failed to save the file.");
+    }
+
+    // Prepare SQL statement to insert data into the database
+    $stmt = $pdo->prepare('INSERT INTO photos (nama_petugas, plat_mobil, hari, photo_filename) VALUES (?, ?, ?, ?)');
+    $stmt->execute([$nama_petugas, $plat_mobil, $hari, $filename]);
+
+    echo "Data and photo uploaded successfully!";
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="id">
