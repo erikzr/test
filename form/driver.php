@@ -39,11 +39,7 @@
         <div class="container">
             <h1>Driver</h1>
 
-<<<<<<< HEAD
             <form class="form" method="post" action="checkup_oli.php">
-=======
-            <form class="form" method="post" action="checkup_oli.php" >
->>>>>>> 2fe966489212c661656b0e8a361e3f62a22073fd
                 <h2>Data Pribadi</h2>
                 <label for="nama_petugas">Nama Petugas:</label>
                 <input class="kotak" type="text" id="nama_petugas" name="nama_petugas" placeholder="nama lengkap"><br><br>
