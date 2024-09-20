@@ -1,7 +1,8 @@
 <?php
+session_start();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Menyimpan data dari form5.php
-    session_start();
     $_SESSION['kursi'] = $_POST['kursi'];
     $_SESSION['lantai'] = $_POST['lantai'];
     $_SESSION['dinding'] = $_POST['dinding'];
@@ -14,16 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Kendaraan</title>
+    <title>Lain - Lain</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
@@ -105,17 +99,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 5px;
             width: 100%;
             max-width: 600px;
+            /* Changed width to match the example */
             z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 20px;
         }
 
         h1 {
             color: #000;
             margin-bottom: 20px;
-            font-size: 24px;
+            font-size: 1.5em;
+            /* Adjusted font size to match the example */
         }
 
         .form {
@@ -126,9 +121,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .fieldset-container {
-            border: 2px solid #000;
+            border: 2px solid rgb(0, 0, 0);
             border-radius: 5px;
-            padding: 15px;
+            padding: 10px;
             margin-bottom: 20px;
             position: relative;
             background: #b8b2b2;
@@ -136,51 +131,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .fieldset-container legend {
             font-weight: 600;
-            color: #000;
+            color: rgb(0, 0, 0);
             padding: 0 10px;
             position: absolute;
             top: -10px;
             left: 10px;
             background: #fffcfc;
-            border: 1px solid #000;
+            border: 1px solid rgb(0, 0, 0);
             border-radius: 5px;
-            padding: 0 5px;
+            font-size: 1.1em;
+            /* Adjusted font size for legend */
         }
 
         .form-group {
-            border: 1px solid #000;
+            border: 1px solid rgb(0, 0, 0);
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 15px;
+            background: #b8b2b2;
         }
 
         .form-group label {
             display: block;
-            color: #000;
+            color: #000000;
             margin-bottom: 5px;
         }
 
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 5px;
-        }
-
-        .radio-group label {
-            display: flex;
-            align-items: center;
-            margin: 0;
-            padding: 0;
-            font-weight: normal;
-        }
-
-        .radio-group input[type="radio"] {
-            margin-right: 5px;
-        }
-
-        .radio-group label:hover {
-            background: #dcdcdc;
+        input[type="radio"] {
+            margin-right: 10px;
         }
 
         input[type="file"] {
@@ -202,12 +180,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 4px;
             font-size: 1em;
             cursor: pointer;
-            width: 25%;
-            transition: opacity 0.3s ease;
+            width: 30%;
+            /* Adjusted width to be consistent */
         }
 
         button:hover {
             opacity: 0.8;
+        }
+
+        .baik {
+            color: #0f0;
+            /* Color for 'Baik' options */
+        }
+
+        .tidak-baik {
+            color: #f00;
+            /* Color for 'Tidak Baik' options */
         }
 
         @media (max-width: 900px) {
@@ -222,110 +210,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 width: 100%;
                 height: 100%;
             }
-        }
-
-        .modal-confirm {
-            color: #434e65;
-            width: 525px;
-        }
-
-        .modal-confirm .modal-content {
-            padding: 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: none;
-        }
-
-        .modal-confirm .modal-header {
-            background: #47c9a2;
-            border-bottom: none;
-            position: relative;
-            text-align: center;
-            margin: -20px -20px 0;
-            border-radius: 5px 5px 0 0;
-            padding: 35px;
-        }
-
-        .modal-confirm h4 {
-            text-align: center;
-            font-size: 36px;
-            margin: 10px 0;
-        }
-
-        .modal-confirm .form-control,
-        .modal-confirm .btn {
-            min-height: 40px;
-            border-radius: 3px;
-        }
-
-        .modal-confirm .close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            color: #fff;
-            text-shadow: none;
-            opacity: 0.5;
-        }
-
-        .modal-confirm .close:hover {
-            opacity: 0.8;
-        }
-
-        .modal-confirm .icon-box {
-            color: #fff;
-            width: 95px;
-            height: 95px;
-            display: inline-block;
-            border-radius: 50%;
-            z-index: 9;
-            border: 5px solid #fff;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .modal-confirm .icon-box i {
-            font-size: 64px;
-            margin: -4px 0 0 -4px;
-        }
-
-        .modal-confirm.modal-dialog {
-            margin-top: 80px;
-        }
-
-        .modal-confirm .btn,
-        .modal-confirm .btn:active {
-            color: #fff;
-            border-radius: 4px;
-            background: #eeb711 !important;
-            text-decoration: none;
-            transition: all 0.4s;
-            line-height: normal;
-            border-radius: 30px;
-            margin-top: 10px;
-            padding: 6px 20px;
-            border: none;
-        }
-
-        .modal-confirm .btn:hover,
-        .modal-confirm .btn:focus {
-            background: #eda645 !important;
-            outline: none;
-        }
-
-        .modal-confirm .btn span {
-            margin: 1px 3px 0;
-            float: left;
-        }
-
-        .modal-confirm .btn i {
-            margin-left: 1px;
-            font-size: 20px;
-            float: right;
-        }
-
-        .trigger-btn {
-            display: inline-block;
-            margin: 100px auto;
         }
     </style>
 </head>
@@ -369,592 +253,128 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <span></span>
             <span></span>
             <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
         </div>
         <div class="container">
-            <h1>Laporan Kendaraan</h1>
-            <form action="form7.php" method="post" enctype="multipart/form-data">
-            <!-- Bagian Lain - Lain -->
+            <h1>Lain - Lain</h1>
+            <form class="form" method="post" action="form7.php" enctype="multipart/form-data">
+                <!-- Bagian STNK -->
                 <div class="fieldset-container">
-                    <legend>Lain - Lain</legend>
-                    <!-- STNK masih berlaku -->
+                    <legend>STNK</legend>
                     <div class="form-group">
-                        <label>STNK masih berlaku</label>
                         <div class="radio-group">
-                            <label>
+                            <label class="baik">
                                 <input type="radio" id="stnkBaik" name="stnk" value="Baik" required>
-                                Baik ( Masih Berlaku )
+                                Baik
                             </label>
-                            <label>
+                            <label class="tidak-baik">
                                 <input type="radio" id="stnkTidakBaik" name="stnk" value="Tidak Baik" required>
-                                Tidak Baik ( Expired )
+                                Tidak Baik
                             </label>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Apar -->
+                <!-- Bagian Apar -->
+                <div class="fieldset-container">
+                    <legend>Apar</legend>
                     <div class="form-group">
-                        <label>Apar</label>
                         <div class="radio-group">
-                            <label>
+                            <label class="baik">
                                 <input type="radio" id="aparBaik" name="apar" value="Baik" required>
                                 Baik
                             </label>
-                            <label>
+                            <label class="tidak-baik">
                                 <input type="radio" id="aparTidakBaik" name="apar" value="Tidak Baik" required>
                                 Tidak Baik
                             </label>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Kotak P3K -->
+                <!-- Bagian Kotak P3K -->
+                <div class="fieldset-container">
+                    <legend>Kotak P3K</legend>
                     <div class="form-group">
-                        <label>Kotak P3K</label>
                         <div class="radio-group">
-                            <label>
+                            <label class="baik">
                                 <input type="radio" id="p3kBaik" name="p3k" value="Baik" required>
                                 Baik
                             </label>
-                            <label>
+                            <label class="tidak-baik">
                                 <input type="radio" id="p3kTidakBaik" name="p3k" value="Tidak Baik" required>
                                 Tidak Baik
                             </label>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Kunci Roda -->
+                <!-- Bagian Kunci Roda -->
+                <div class="fieldset-container">
+                    <legend>Kunci Roda</legend>
                     <div class="form-group">
-                        <label>Kunci Roda</label>
                         <div class="radio-group">
-                            <label>
+                            <label class="baik">
                                 <input type="radio" id="kunciRodaBaik" name="kunciRoda" value="Baik" required>
                                 Baik
                             </label>
-                            <label>
+                            <label class="tidak-baik">
                                 <input type="radio" id="kunciRodaTidakBaik" name="kunciRoda" value="Tidak Baik"
                                     required>
                                 Tidak Baik
                             </label>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Air Radiator -->
+                <!-- Bagian Air Radiator -->
+                <div class="fieldset-container">
+                    <legend>Air Radiator</legend>
                     <div class="form-group">
-                        <label>Air Radiator</label>
                         <div class="radio-group">
-                            <label>
+                            <label class="baik">
                                 <input type="radio" id="airRadiatorBaik" name="airRadiator" value="Baik" required>
                                 Baik
                             </label>
-                            <label>
+                            <label class="tidak-baik">
                                 <input type="radio" id="airRadiatorTidakBaik" name="airRadiator" value="Tidak Baik"
                                     required>
                                 Tidak Baik
                             </label>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Cek Bahan Bakar Kendaraan -->
+                <!-- Bagian Bahan Bakar Kendaraan -->
+                <div class="fieldset-container">
+                    <legend>Bahan Bakar Kendaraan</legend>
                     <div class="form-group">
-                        <label>Cek Bahan Bakar Kendaraan</label>
                         <div class="radio-group">
-                            <label>
+                            <label class="baik">
                                 <input type="radio" id="bahanBakarBaik" name="bahanBakar" value="Baik" required>
                                 Baik
                             </label>
-                            <label>
+                            <label class="tidak-baik">
                                 <input type="radio" id="bahanBakarTidakBaik" name="bahanBakar" value="Tidak Baik"
                                     required>
                                 Tidak Baik
                             </label>
                         </div>
                     </div>
-
-                    <!-- Cek Oli Kendaraan -->
-                    <div class="form-group">
-                        <label>Cek Oli Kendaraan</label>
-                        <div class="radio-group">
-                            <label>
-                                <input type="radio" id="oliBaik" name="oli" value="Baik" required>
-                                Baik
-                            </label>
-                            <label>
-                                <input type="radio" id="oliTidakBaik" name="oli" value="Tidak Baik" required>
-                                Tidak Baik
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <!-- Bagian Upload File -->
-                    <div class="form-group">
-                        <label for="fileUpload">Laporan Kebersihan</label>
-                        <p>Upload maksimum 5 file yang didukung: gambar, video, atau dokumen. Maksimal 10 MB per file.
-                        </p>
-                        <input type="file" id="fileUpload" name="fileUpload[]"
-                            accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.mpg,.mpeg,.pdf,.doc,.docx" multiple>
-                    </div>
-                   
-                    <!-- Submit Button -->
-                    <button href="berhasil.php" type="submit">Kirim</button>
                 </div>
 
-                <!-- </form>
-            <div class="text-center">
-     Button HTML (to Trigger Modal) 
-    <a href="#myModal" class="trigger-btn" data-toggle="modal">Click to Open Success Modal</a>
-</div>
-
- Modal HTML 
-<div id="myModal" class="modal fade">
-    <div class="modal-dialog modal-confirm">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <div class="icon-box">
-                    <i class="material-icons">&#xE876;</i>
+                <!-- Bagian Upload File -->
+                <div class="form-group">
+                    <label for="laporanKondisi">Laporan Kondisi</label>
+                    <p>Upload maksimum 5 file yang didukung: gambar, video, atau dokumen. Maksimal 10 MB per file.</p>
+                    <input type="file" id="laporanKondisi" name="laporanKondisi[]" multiple
+                        accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.pdf,.doc,.docx">
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body text-center">
-                <h4>Great!</h4>	
-                <p>Your account has been created successfully.</p>
-                <button class="btn btn-success" data-dismiss="modal"><span>Start Exploring</span> <i class="material-icons">&#xE5C8;</i></button>
-            </div>
+
+                <div class="form-group">
+                    <button type="submit">Kirim</button>
+                </div>
+            </form>
         </div>
-    </div>
-</div>    
-        </div> -->
     </section>
 </body>
 
