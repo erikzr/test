@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['kunciRoda'] = $_POST['kunciRoda'];
     $_SESSION['airRadiator'] = $_POST['airRadiator'];
     $_SESSION['bahanBakar'] = $_POST['bahanBakar'];
-    $_SESSION['oli'] = $_POST['oli'];
 
     // Proses untuk menyimpan semua data ke database
     include 'config.php'; // Menghubungkan dengan file koneksi database
@@ -78,6 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <h2>Terima Kasih</h2>
 <p>Data telah berhasil dikirim. Terima kasih telah mengisi form check-up kendaraan.</p>
+<a href="../index.html">isi lagi</a>
 
 </body>
 </html>
