@@ -136,6 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input class="kotak" type="date" id="hari" name="hari" required><br><br>
 
                 <label for="kamera">FOTO MOBIL TAMPAK DEPAN</label>
+<<<<<<< HEAD
                 <div style="display: flex; flex-direction: column; align-items: flex-start;">
                     <img id="preview" src="" alt="Pratinjau Gambar" style="display:none;">
                     <input type="file" id="kamera" name="kamera" class="hidden-input" accept="image/*"
@@ -143,6 +144,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button type="button" id="ambil-foto-btn" class="custom-file-button"
                         onclick="document.getElementById('kamera').click();">Ambil Foto</button>
                 </div>
+=======
+                <input type="file" id="kamera" name="kamera" accept="image/*" capture="environment" required onchange="previewImage(event)" onfocus="wkkwkwkw()">
+                <br><br>
+>>>>>>> 8ea2f66faf429476d4107880bb93a63bba7ded04
 
                 <br><br>
 
