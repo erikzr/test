@@ -11,6 +11,8 @@
             padding: 0;
             font-family: Arial, sans-serif;
             text-align: center;
+            overflow: auto; /* Membolehkan scroll */
+            height: auto; /* Pastikan body dan html memiliki tinggi otomatis */
         }
         .container {
             margin-top: 20px;
@@ -33,22 +35,22 @@
 <body>
     <section>
         <div class="container">
-            <h1>Tanda Tangan</h1>
-            <div id="signature-pad"></div>
-            <div class="button-container">
-                <button id="clear">Bersihkan</button>
-                <button id="save">Simpan Tanda Tangan</button>
-            </div>
-            <form id="signature-form" method="post" action="submit_ttd.php" style="display:none;">
-                <input type="hidden" name="signature" id="signature">
+            <h1>Identitas</h1>
+
+            <form class="form" method="post" action="driver.php" enctype="multipart/form-data">
+                <h2>Tanda Tangan</h2>
+                <canvas id="signature" width="640" height="200"></canvas>
+                <div id="controls">
+                    <button type="button" id="clear">Clear</button>
+                    <button type="button" id="save">Save</button>
+                </div>
+                <img id="signatureImage" style="display:none;" alt="Signature"/>
             </form>
         </div>
     </section>
 
     <script>
-        const canvas = document.createElement('canvas');
-        const signaturePad = document.getElementById('signature-pad');
-        signaturePad.appendChild(canvas);
+        const canvas = document.getElementById('signature');
         const ctx = canvas.getContext('2d');
         canvas.width = signaturePad.clientWidth;
         canvas.height = signaturePad.clientHeight;
