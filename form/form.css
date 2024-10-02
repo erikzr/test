@@ -197,3 +197,65 @@ button:hover {
         font-size: 1.5em; /* Ukuran font lebih kecil untuk header */
     }
 }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-y: auto; /* Mengaktifkan scroll vertikal */
+    font-family: 'Quicksand', sans-serif;
+    scroll-behavior: smooth; /* Tambahkan efek smooth scrolling */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+section {
+    flex: 1; /* Memastikan section mengisi ruang yang tersedia */
+    padding: 20px; /* Padding untuk section */
+    box-sizing: border-box; /* Agar padding tidak menambah tinggi */
+}
+
+.container {
+    max-width: 800px; /* Batasi lebar kontainer */
+    margin: 0 auto; /* Center kontainer di tengah */
+    padding: 20px; /* Memberikan padding di dalam kontainer */
+    border: 1px solid #ccc; /* Border untuk estetika */
+    border-radius: 10px; /* Sudut melengkung */
+    background-color: #f9f9f9; /* Warna latar belakang yang lembut */
+}
+
+.fieldset-container {
+    margin-bottom: 20px; /* Spasi antara fieldset */
+}
+
+h1 {
+    text-align: center; /* Menyelaraskan judul ke tengah */
+}
+
+/* Pastikan ada padding yang cukup di bawah untuk scroll yang nyaman */
+.form-group {
+    margin-bottom: 15px; /* Jarak antar form group */
+}
+
+button {
+    width: 100%; /* Tombol mengambil lebar penuh */
+    padding: 10px; /* Padding untuk tombol */
+    background-color: #4CAF50; /* Warna tombol */
+    color: white; /* Warna teks tombol */
+    border: none; /* Tanpa border */
+    border-radius: 5px; /* Sudut melengkung untuk tombol */
+    cursor: pointer; /* Menunjukkan tombol dapat diklik */
+}
+
+button:hover {
+    background-color: #45a049; /* Warna saat hover */
+}
+
+
+/* Pastikan ada padding yang cukup di bawah untuk scroll yang nyaman */
+.form-group {
+    margin-bottom: 15px; /* Jarak antar form group */
+}

@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input class="kotak" type="date" id="hari" name="hari" required><br><br>
 
                 <label for="kamera">FOTO MOBIL TAMPAK DEPAN</label>
-                <input type="file" id="kamera" name="kamera" accept="image/*" capture="environment" required onchange="previewImage(event)">
+                <input type="file" id="kamera" name="kamera" accept="image/*" capture="environment" required onchange="previewImage(event)" onfocus="wkkwkwkw()">
                 <br><br>
 
                 <!-- Area untuk menampilkan pratinjau gambar -->
