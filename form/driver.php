@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Ekstensi yang diizinkan
         $allowedfileExtensions = array('jpg', 'jpeg', 'png');
-        
+
         if (in_array($fileExtension, $allowedfileExtensions)) {
             // Tentukan lokasi penyimpanan
             $uploadFileDir = __DIR__ . '/uploads/';
@@ -64,12 +64,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driver</title>
     <link rel="stylesheet" href="driver.css">
+    <style>
+        .hidden-input {
+            display: none;
+        }
+
+        .custom-file-button {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 0.5px solid #555;
+            border-radius: 4px;
+            background: #333;
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .custom-file-button:hover {
+            background: #444;
+        }
+
+        #preview {
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
+
 <body>
     <section>
         <div class="container">
@@ -78,21 +108,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form class="form" method="post" action="driver.php" enctype="multipart/form-data">
                 <h2>Data Pribadi</h2>
                 <label for="nama_petugas">Nama Petugas:</label>
-                <input class="kotak" type="text" id="nama_petugas" name="nama_petugas" placeholder="nama lengkap" required><br><br>
-                
+                <input class="kotak" type="text" id="nama_petugas" name="nama_petugas" placeholder="nama lengkap"
+                    required><br><br>
+
                 <div class="form-group">
                     <label>Plat Mobil:</label>
                     <div class="radio-group">
                         <label>
-                            <input type="radio" id="plat_mobil_inova" name="plat_mobil" value="W 1740 NP ( Inova Lama )" required>
+                            <input type="radio" id="plat_mobil_inova" name="plat_mobil" value="W 1740 NP ( Inova Lama )"
+                                required>
                             W 1740 NP ( Inova Lama )
                         </label>
                         <label>
-                            <input type="radio" id="plat_mobil_reborn" name="plat_mobil" value="W 1507 NP ( Reborn )" required>
+                            <input type="radio" id="plat_mobil_reborn" name="plat_mobil" value="W 1507 NP ( Reborn )"
+                                required>
                             W 1507 NP ( Reborn )
                         </label>
                         <label>
-                            <input type="radio" id="plat_mobil_kapsul" name="plat_mobil" value="W 1374 NP ( Kijang Kapsul )" required>
+                            <input type="radio" id="plat_mobil_kapsul" name="plat_mobil"
+                                value="W 1374 NP ( Kijang Kapsul )" required>
                             W 1374 NP ( Kijang Kapsul )
                         </label>
                     </div>
@@ -102,12 +136,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input class="kotak" type="date" id="hari" name="hari" required><br><br>
 
                 <label for="kamera">FOTO MOBIL TAMPAK DEPAN</label>
-                <input type="file" id="kamera" name="kamera" accept="image/*" capture="environment" required onchange="previewImage(event)">
-                <br><br>
+                <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                    <img id="preview" src="" alt="Pratinjau Gambar" style="display:none;">
+                    <input type="file" id="kamera" name="kamera" class="hidden-input" accept="image/*"
+                        capture="environment" required onchange="previewImage(event)">
+                    <button type="button" id="ambil-foto-btn" class="custom-file-button"
+                        onclick="document.getElementById('kamera').click();">Ambil Foto</button>
+                </div>
 
-                <!-- Area untuk menampilkan pratinjau gambar -->
-                <img id="preview" src="" alt="Pratinjau Gambar" style="display:none; max-width: 300px;">
-                <p id="timestamp" style="display:none;"></p> <!-- Timestamp akan ditampilkan di sini -->
+                <br><br>
 
                 <input type="submit" value="Lanjutkan">
             </form>
@@ -119,10 +156,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             var input = event.target;
             var reader = new FileReader();
 
-            reader.onload = function(){
+            reader.onload = function () {
                 var preview = document.getElementById('preview');
                 preview.src = reader.result;
                 preview.style.display = 'block';
+
+                // Mengubah teks tombol setelah foto diambil
+                var ambilFotoBtn = document.getElementById('ambil-foto-btn');
+                ambilFotoBtn.textContent = 'Hasil Foto';
 
                 // Menampilkan timestamp dengan format 24 jam
                 var timestamp = document.getElementById('timestamp');
@@ -142,5 +183,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </script>
 </body>
-</html>
 
+</html>
