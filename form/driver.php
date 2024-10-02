@@ -102,11 +102,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input class="kotak" type="date" id="hari" name="hari" required><br><br>
 
                 <label for="kamera">FOTO MOBIL TAMPAK DEPAN</label>
-                <input type="file" id="kamera" name="kamera" accept="image/*" required>
+                <input type="file" id="kamera" name="kamera" accept="image/*" capture="environment" required onchange="previewImage(event)">
+                <br><br>
+
+                <!-- Area untuk menampilkan pratinjau gambar -->
+                <img id="preview" src="" alt="Pratinjau Gambar" style="display:none; max-width: 300px;">
+                <p id="timestamp" style="display:none;"></p> <!-- Timestamp akan ditampilkan di sini -->
 
                 <input type="submit" value="Lanjutkan">
             </form>
         </div>
     </section>
+
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+
+            reader.onload = function(){
+                var preview = document.getElementById('preview');
+                preview.src = reader.result;
+                preview.style.display = 'block';
+
+                // Menampilkan timestamp dengan format 24 jam
+                var timestamp = document.getElementById('timestamp');
+                var now = new Date();
+                var hours = now.getHours().toString().padStart(2, '0'); // Format 24 jam
+                var minutes = now.getMinutes().toString().padStart(2, '0');
+                var seconds = now.getSeconds().toString().padStart(2, '0');
+                var formattedTime = hours + ':' + minutes + ':' + seconds;
+                var formattedDate = now.toLocaleDateString('id-ID'); // Format tanggal lokal Indonesia
+                timestamp.textContent = 'Foto diambil pada: ' + formattedDate + ' ' + formattedTime;
+                timestamp.style.display = 'block';
+            };
+
+            if (input.files && input.files[0]) {
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 </body>
 </html>
+
