@@ -1,67 +1,3 @@
-<?php
-session_start(); // Mulai sesi
-
-// Koneksi database
-try {
-    $pdo = new PDO('mysql:host=localhost;dbname=checkcar', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Koneksi database gagal: " . $e->getMessage());
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Mengambil data dari form
-    $nama_petugas = $_POST['nama_petugas'];
-    $plat_mobil = $_POST['plat_mobil'];
-    $hari = $_POST['hari'];
-
-    // Proses file yang diunggah (foto dari input file)
-    if (isset($_FILES['kamera']) && $_FILES['kamera']['error'] == 0) {
-        $fileTmpPath = $_FILES['kamera']['tmp_name'];
-        $fileName = $_FILES['kamera']['name'];
-        $fileSize = $_FILES['kamera']['size'];
-        $fileType = $_FILES['kamera']['type'];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps));
-
-        // Ekstensi yang diizinkan
-        $allowedfileExtensions = array('jpg', 'jpeg', 'png');
-        
-        if (in_array($fileExtension, $allowedfileExtensions)) {
-            // Tentukan lokasi penyimpanan
-            $uploadFileDir = __DIR__ . '/uploads/';
-            if (!is_dir($uploadFileDir)) {
-                mkdir($uploadFileDir, 0755, true); // Buat folder jika belum ada
-            }
-
-            // Buat nama file unik dan simpan file
-            $newFileName = uniqid() . '.' . $fileExtension;
-            $dest_path = $uploadFileDir . $newFileName;
-
-            if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                // Masukkan data ke database
-                $stmt = $pdo->prepare('INSERT INTO photos (nama_petugas, plat_mobil, hari, photo_filename) VALUES (?, ?, ?, ?)');
-                $stmt->execute([$nama_petugas, $plat_mobil, $hari, $newFileName]);
-
-                // Set data ke sesi jika diperlukan di halaman berikutnya
-                $_SESSION['nama_petugas'] = $nama_petugas;
-                $_SESSION['plat_mobil'] = $plat_mobil;
-                $_SESSION['hari'] = $hari;
-
-                // Redirect ke halaman checkup_oli.php
-                header("Location: checkup_oli.php");
-                exit(); // Pastikan tidak ada kode yang dieksekusi setelah ini
-            } else {
-                echo "Terjadi kesalahan saat mengunggah file.";
-            }
-        } else {
-            echo "Ekstensi file tidak diperbolehkan. Unggah file dengan ekstensi .jpg, .jpeg, atau .png.";
-        }
-    } else {
-        echo "Tidak ada file yang diunggah atau terjadi kesalahan.";
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -73,6 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <section>
         <div class="container">
+        <img src="bmnn.png" alt="Logo" style="width: 80px; height: auto; display: block; margin: 0 auto; transform: translateX(-130px);">
+            
             <h1>Driver</h1>
 
             <form class="form" method="post" action="driver.php" enctype="multipart/form-data">
@@ -143,4 +81,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </body>
 </html>
-
