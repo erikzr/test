@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
             )";
 
-    // Pastikan bahwa string tipe data memiliki jumlah karakter yang sesuai dengan jumlah parameter yang akan di-bind
+    // Siapkan statement
     $stmt = $conn->prepare($sql);
     if ($stmt) {
         $stmt->bind_param(
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <h2>Terima Kasih</h2>
 <p>Data telah berhasil dikirim. Terima kasih telah mengisi form check-up kendaraan.</p>
-<a href="../index.html">isi lagi</a>
+<a href="../index.html">Isi Lagi</a>
 
 </body>
 </html>

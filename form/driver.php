@@ -1,11 +1,105 @@
+<?php
+session_start(); // Mulai sesi
+
+// Koneksi database
+try {
+    $pdo = new PDO('mysql:host=localhost;dbname=checkcar', 'root', '');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Koneksi database gagal: " . $e->getMessage());
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Mengambil data dari form
+    $nama_petugas = $_POST['nama_petugas'];
+    $plat_mobil = $_POST['plat_mobil'];
+    $hari = $_POST['hari'];
+
+    // Proses file yang diunggah (foto dari input file)
+    if (isset($_FILES['kamera']) && $_FILES['kamera']['error'] == 0) {
+        $fileTmpPath = $_FILES['kamera']['tmp_name'];
+        $fileName = $_FILES['kamera']['name'];
+        $fileSize = $_FILES['kamera']['size'];
+        $fileType = $_FILES['kamera']['type'];
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
+
+        // Ekstensi yang diizinkan
+        $allowedfileExtensions = array('jpg', 'jpeg', 'png');
+
+        if (in_array($fileExtension, $allowedfileExtensions)) {
+            // Tentukan lokasi penyimpanan
+            $uploadFileDir = __DIR__ . '/uploads/';
+            if (!is_dir($uploadFileDir)) {
+                mkdir($uploadFileDir, 0755, true); // Buat folder jika belum ada
+            }
+
+            // Buat nama file unik dan simpan file
+            $newFileName = uniqid() . '.' . $fileExtension;
+            $dest_path = $uploadFileDir . $newFileName;
+
+            if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                // Masukkan data ke database
+                $stmt = $pdo->prepare('INSERT INTO photos (nama_petugas, plat_mobil, hari, photo_filename) VALUES (?, ?, ?, ?)');
+                $stmt->execute([$nama_petugas, $plat_mobil, $hari, $newFileName]);
+
+                // Set data ke sesi jika diperlukan di halaman berikutnya
+                $_SESSION['nama_petugas'] = $nama_petugas;
+                $_SESSION['plat_mobil'] = $plat_mobil;
+                $_SESSION['hari'] = $hari;
+
+                // Redirect ke halaman checkup_oli.php
+                header("Location: checkup_oli.php");
+                exit(); // Pastikan tidak ada kode yang dieksekusi setelah ini
+            } else {
+                echo "Terjadi kesalahan saat mengunggah file.";
+            }
+        } else {
+            echo "Ekstensi file tidak diperbolehkan. Unggah file dengan ekstensi .jpg, .jpeg, atau .png.";
+        }
+    } else {
+        echo "Tidak ada file yang diunggah atau terjadi kesalahan.";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driver</title>
     <link rel="stylesheet" href="driver.css">
+    <style>
+        .hidden-input {
+            display: none;
+        }
+
+        .custom-file-button {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 0.5px solid #555;
+            border-radius: 4px;
+            background: #333;
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .custom-file-button:hover {
+            background: #444;
+        }
+
+        #preview {
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
+
 <body>
     <section>
         <div class="container">
@@ -16,21 +110,25 @@
             <form class="form" method="post" action="driver.php" enctype="multipart/form-data">
                 <h2>Data Pribadi</h2>
                 <label for="nama_petugas">Nama Petugas:</label>
-                <input class="kotak" type="text" id="nama_petugas" name="nama_petugas" placeholder="nama lengkap" required><br><br>
-                
+                <input class="kotak" type="text" id="nama_petugas" name="nama_petugas" placeholder="nama lengkap"
+                    required><br><br>
+
                 <div class="form-group">
                     <label>Plat Mobil:</label>
                     <div class="radio-group">
                         <label>
-                            <input type="radio" id="plat_mobil_inova" name="plat_mobil" value="W 1740 NP ( Inova Lama )" required>
+                            <input type="radio" id="plat_mobil_inova" name="plat_mobil" value="W 1740 NP ( Inova Lama )"
+                                required>
                             W 1740 NP ( Inova Lama )
                         </label>
                         <label>
-                            <input type="radio" id="plat_mobil_reborn" name="plat_mobil" value="W 1507 NP ( Reborn )" required>
+                            <input type="radio" id="plat_mobil_reborn" name="plat_mobil" value="W 1507 NP ( Reborn )"
+                                required>
                             W 1507 NP ( Reborn )
                         </label>
                         <label>
-                            <input type="radio" id="plat_mobil_kapsul" name="plat_mobil" value="W 1374 NP ( Kijang Kapsul )" required>
+                            <input type="radio" id="plat_mobil_kapsul" name="plat_mobil"
+                                value="W 1374 NP ( Kijang Kapsul )" required>
                             W 1374 NP ( Kijang Kapsul )
                         </label>
                     </div>
@@ -40,12 +138,20 @@
                 <input class="kotak" type="date" id="hari" name="hari" required><br><br>
 
                 <label for="kamera">FOTO MOBIL TAMPAK DEPAN</label>
+<<<<<<< HEAD
+                <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                    <img id="preview" src="" alt="Pratinjau Gambar" style="display:none;">
+                    <input type="file" id="kamera" name="kamera" class="hidden-input" accept="image/*"
+                        capture="environment" required onchange="previewImage(event)">
+                    <button type="button" id="ambil-foto-btn" class="custom-file-button"
+                        onclick="document.getElementById('kamera').click();">Ambil Foto</button>
+                </div>
+=======
                 <input type="file" id="kamera" name="kamera" accept="image/*" capture="environment" required onchange="previewImage(event)" onfocus="wkkwkwkw()">
                 <br><br>
+>>>>>>> 8ea2f66faf429476d4107880bb93a63bba7ded04
 
-                <!-- Area untuk menampilkan pratinjau gambar -->
-                <img id="preview" src="" alt="Pratinjau Gambar" style="display:none; max-width: 300px;">
-                <p id="timestamp" style="display:none;"></p> <!-- Timestamp akan ditampilkan di sini -->
+                <br><br>
 
                 <input type="submit" value="Lanjutkan">
             </form>
@@ -57,10 +163,14 @@
             var input = event.target;
             var reader = new FileReader();
 
-            reader.onload = function(){
+            reader.onload = function () {
                 var preview = document.getElementById('preview');
                 preview.src = reader.result;
                 preview.style.display = 'block';
+
+                // Mengubah teks tombol setelah foto diambil
+                var ambilFotoBtn = document.getElementById('ambil-foto-btn');
+                ambilFotoBtn.textContent = 'Hasil Foto';
 
                 // Menampilkan timestamp dengan format 24 jam
                 var timestamp = document.getElementById('timestamp');
@@ -80,4 +190,6 @@
         }
     </script>
 </body>
+
 </html>
+
