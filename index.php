@@ -22,13 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     // Prepare and bind
-    $stmt = $conn->prepare("SELECT password, role FROM users WHERE username = ?");
+    $stmt = $conn->prepare("SELECT password, role, name FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($hashed_password, $role);
+        $stmt->bind_result($hashed_password, $role, $full_name);
         $stmt->fetch();
         
         // Verify password (no hashing for demonstration)
@@ -36,13 +36,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Password is correct, set session variables based on role
             $_SESSION['username'] = $username;
             $_SESSION['role'] = $role; // Store the user's role
+            $_SESSION['full_name'] = $full_name; // Store user's full name in session
             
             // Success message
             $alertMessage = "Login successful! Redirecting...";
             $alertType = "success";
 
             // Redirect after a short delay
-            echo "<script>setTimeout(function() { window.location.href = '" . ($role === 'admin' ? "dashboard/index.html" : "dashboard/form/form-wizard asli.html") . "'; }, 2000);</script>";
+            echo "<script>setTimeout(function() { window.location.href = '" . ($role === 'admin' ? "dashboard/index.html" : "dashboard/form/form-wizard asli.php") . "'; }, 2000);</script>";
         } else {
             $alertMessage = "Invalid username or password.";
             $alertType = "danger";
