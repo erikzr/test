@@ -184,11 +184,7 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-<<<<<<< HEAD
                             <h4 class="card-title">Form Pengecekan Kendaraan</h4>
-=======
-                            <h4 class="card-title">Mohon untuk mengisi form di bawah</h4>
->>>>>>> 8c2cdb66773f748fa7200908dd3256db3f2143c5
                         </div>
                         </div>
                         <div class="card-body">
