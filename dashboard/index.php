@@ -286,59 +286,155 @@ $conn->close();
                     </div>
                 </div>
                 
-                <div class="row mt-4">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Pemeriksaan Kendaraan Terbaru</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Nama</th>
-                                                <th>Plat Mobil</th>
-                                                <th>Tanggal</th>
-                                                <th>Oli Mesin</th>
-                                                <th>Oli Power Steering</th>
-                                                <th>Oli Transmisi</th>
-                                                <th>Minyak Rem</th>
-                                                <th>Lampu Utama</th>
-                                                <th>Lampu Sein</th>
-                                                <th>Lampu Rem</th>
-                                                <th>Klakson</th>
-                                                <th>Aki</th>
-                                                <th>Status</th>
-                                                <th>Tindakan</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($inspeksiData as $row): ?>
-                                            <tr>
-                                                <td><?php echo htmlspecialchars($row['nama']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['plat_mobil']); ?></td>
-                                                <td><?php echo date("d/m/Y H:i", strtotime($row['created_at'])); ?></td>
-                                                <td><?php echo htmlspecialchars($row['oli_mesin']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['oli_power_steering']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['oli_transmisi']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['minyak_rem']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['lampu_utama']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['lampu_sein']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['lampu_rem']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['lampu_klakson']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['cek_aki']); ?></td>
-                                                <td><span class="badge <?php echo $row['status'] == 'Aman' ? 'bg-success' : 'bg-danger'; ?>"><?php echo $row['status']; ?></span></td>
-                                                <td><a href="lihat_detail.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-primary">Lihat Detail</a></td>
-                                            </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+               <!-- Tabel Pemeriksaan Kendaraan -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="card-title mb-0">Data Pemeriksaan Kendaraan</h4>
+                <div>
+                    <button class="btn btn-primary" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel me-2"></i>Export Excel
+                    </button>
+                    <button class="btn btn-danger ms-2" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf me-2"></i>Export PDF
+                    </button>
                 </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="inspectionTable">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Petugas</th>
+                                <th>Plat Mobil</th>
+                                <th>Nama Mobil</th>
+                                <th>Tanggal Pemeriksaan</th>
+                                <th>Komponen</th>
+                                <th>Status</th>
+                                <th>Catatan</th>
+                                <th>Foto</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                            $no = 1;
+                            foreach ($inspeksiData as $row): 
+                                // Mendapatkan nama mobil berdasarkan plat
+                                $carName = '';
+                                switch ($row['plat_mobil']) {
+                                    case 'W 1740 NP':
+                                        $carName = 'Inova Lama';
+                                        break;
+                                    case 'W 1507 NP':
+                                        $carName = 'Inova Reborn';
+                                        break;
+                                    case 'W 1374 NP':
+                                        $carName = 'Kijang Kapsul';
+                                        break;
+                                    default:
+                                        $carName = 'Unknown';
+                                }
+
+                                // Menyiapkan daftar komponen
+                                $komponenList = [
+                                    'Oli Mesin' => $row['oli_mesin'],
+                                    'Oli Power Steering' => $row['oli_power_steering'],
+                                    'Oli Transmisi' => $row['oli_transmisi'],
+                                    'Minyak Rem' => $row['minyak_rem'],
+                                    'Lampu Utama' => $row['lampu_utama'],
+                                    'Lampu Sein' => $row['lampu_sein'],
+                                    'Lampu Rem' => $row['lampu_rem'],
+                                    'Klakson' => $row['lampu_klakson'],
+                                    'Aki' => $row['cek_aki']
+                                ];
+                            ?>
+                            <tr>
+                                <td><?php echo $no++; ?></td>
+                                <td><?php echo htmlspecialchars($row['nama']); ?></td>
+                                <td><?php echo htmlspecialchars($row['plat_mobil']); ?></td>
+                                <td><?php echo htmlspecialchars($carName); ?></td>
+                                <td><?php echo date("d/m/Y H:i", strtotime($row['created_at'])); ?></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#komponenModal<?php echo $no; ?>">
+                                        Lihat Komponen
+                                    </button>
+                                    
+                                    <!-- Modal Komponen -->
+                                    <div class="modal fade" id="komponenModal<?php echo $no; ?>" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Detail Komponen</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-sm">
+                                                        <?php foreach ($komponenList as $nama => $status): ?>
+                                                        <tr>
+                                                            <td><?php echo $nama; ?></td>
+                                                            <td>
+                                                                <span class="badge <?php echo strtolower($status) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                                                    <?php echo htmlspecialchars($status); ?>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <?php endforeach; ?>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge <?php echo $row['status'] == 'Aman' ? 'bg-success' : 'bg-danger'; ?>">
+                                        <?php echo $row['status']; ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <?php if (!empty($row['catatan'])): ?>
+                                    <button class="btn btn-sm btn-warning" data-bs-toggle="popover" 
+                                            title="Catatan Pemeriksaan" 
+                                            data-bs-content="<?php echo htmlspecialchars($row['catatan']); ?>">
+                                        <i class="fas fa-sticky-note"></i>
+                                    </button>
+                                    <?php else: ?>
+                                    <span class="text-muted">-</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php if (!empty($row['foto'])): ?>
+                                    <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($row['foto']); ?>')">
+                                        <i class="fas fa-image"></i>
+                                    </button>
+                                    <?php else: ?>
+                                    <span class="text-muted">-</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="detail.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteInspection(<?php echo $row['id']; ?>)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
             
             <footer class="footer">
