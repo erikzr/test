@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $alertType = "success";
 
             // Redirect after a short delay
-            echo "<script>setTimeout(function() { window.location.href = '" . ($role === 'admin' ? "dashboard/index.html" : "dashboard/form/form-wizard asli.php") . "'; }, 2000);</script>";
+            echo "<script>setTimeout(function() { window.location.href = '" . ($role === 'admin' ? "dashboard/index.php" : "dashboard/form/form-wizard asli.php") . "'; }, 2000);</script>";
         } else {
             $alertMessage = "Invalid username or password.";
             $alertType = "danger";
