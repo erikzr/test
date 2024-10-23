@@ -237,7 +237,7 @@ function getCarName($platNomor) {
         <div class="mb-6">
             <div class="border rounded-lg overflow-hidden">
                 <button class="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors" 
-                        onclick="toggleSection('collapseLampu')" 
+                        onclick="toggleSection('collapseInter')" 
                         type="button">
                     <div class="flex items-center space-x-3">
                         <span class="text-xl">🚘</span>
@@ -246,7 +246,7 @@ function getCarName($platNomor) {
                     <i class="fas fa-chevron-down text-gray-500"></i>
                 </button>
                 
-                <div id="collapseLampu" class="block">
+                <div id="collapseInter" class="block">
                     <div class="p-4 space-y-3">
                         <!-- Aki -->
                         <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
@@ -337,7 +337,7 @@ function getCarName($platNomor) {
         <div class="mb-6">
             <div class="border rounded-lg overflow-hidden">
                 <button class="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors" 
-                        onclick="toggleSection('collapseLampu')" 
+                        onclick="toggleSection('collapseDoc')" 
                         type="button">
                     <div class="flex items-center space-x-3">
                         <span class="text-xl">📄</span>
@@ -346,7 +346,7 @@ function getCarName($platNomor) {
                     <i class="fas fa-chevron-down text-gray-500"></i>
                 </button>
                 
-                <div id="collapseLampu" class="block">
+                <div id="collapseDoc" class="block">
                     <div class="p-4 space-y-3">
                         <!-- Aki -->
                         <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
@@ -420,7 +420,7 @@ function getCarName($platNomor) {
         <div class="mb-6">
             <div class="border rounded-lg overflow-hidden">
                 <button class="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors" 
-                        onclick="toggleSection('collapseLampu')" 
+                        onclick="toggleSection('collapseSistem')" 
                         type="button">
                     <div class="flex items-center space-x-3">
                         <span class="text-xl">⚙️</span>
@@ -429,7 +429,7 @@ function getCarName($platNomor) {
                     <i class="fas fa-chevron-down text-gray-500"></i>
                 </button>
                 
-                <div id="collapseLampu" class="block">
+                <div id="collapseSistem" class="block">
                     <div class="p-4 space-y-3">
                         <!-- Aki -->
                         <div class="flex items-center justify-between p-3 bg-gray-50 rounded">

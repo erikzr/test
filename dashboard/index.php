@@ -269,6 +269,58 @@ $conn->close();
                 width: 100%;
             }
         }
+
+            /* komponen lihat detail */
+        .img-fluid.zoomed {
+            transform: scale(1.5);
+            transition: transform 0.3s ease;
+            cursor: zoom-out;
+        }
+
+        .img-fluid {
+            transition: transform 0.3s ease;
+            cursor: zoom-in;
+        }
+
+        .modal-body {
+            overflow: auto;
+            max-height: 80vh;
+        }
+
+        .img-zoom {
+            transform: scale(1.5);
+            transition: transform 0.3s ease;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #e7f1ff;
+            color: #0c63e4;
+        }
+
+        .badge {
+            font-size: 0.875rem;
+        }
+            /* sampai sini komponen lihat detail */
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .table-responsive {
+                font-size: 0.875rem;
+            }
+            
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .btn-group .btn {
+                margin: 2px 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -710,343 +762,8 @@ $conn->close();
         </div>
     </div>
 </div>
-<script>
-    // Initialize image preview modal
-let imagePreviewModal = null;
-let currentImageSrc = '';
 
-document.addEventListener('DOMContentLoaded', function() {
-    imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
-    
-    // Initialize zoom functionality
-    const previewImage = document.getElementById('previewImage');
-    previewImage.addEventListener('click', function() {
-        this.classList.toggle('zoomed');
-    });
-});
-
-function viewImage(imagePath) {
-    try {
-        // Get the elements
-        const previewImage = document.getElementById('previewImage');
-        const downloadLink = document.getElementById('downloadImage');
-        
-        // Construct the full image path if needed
-        // Assuming images are stored in an 'uploads' directory
-        const fullImagePath = imagePath.startsWith('http') ? imagePath : `../form/uploads/${imagePath}`;
-        
-        // Set the image source
-        previewImage.src = fullImagePath;
-        currentImageSrc = fullImagePath;
-        
-        // Set the download link
-        downloadLink.href = fullImagePath;
-        
-        // Show the modal
-        imagePreviewModal.show();
-        
-        // Reset zoom when opening new image
-        previewImage.classList.remove('zoomed');
-        
-        // Handle image load error
-        previewImage.onerror = function() {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Gagal memuat gambar. File mungkin tidak ada atau rusak.'
-            });
-            imagePreviewModal.hide();
-        };
-    } catch (error) {
-        console.error('Error viewing image:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Terjadi kesalahan saat membuka gambar.'
-        });
-    }
-}
-
-// Function to handle keyboard navigation
-document.addEventListener('keydown', function(e) {
-    if (imagePreviewModal && imagePreviewModal._isShown) {
-        if (e.key === 'Escape') {
-            imagePreviewModal.hide();
-        }
-    }
-});
-
-// Prevent right-click on preview image
-document.getElementById('previewImage').addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-});
-
-// Update the table cell where you show the image button
-function updateImageButton(buttonElement, imagePath) {
-    if (imagePath && imagePath.trim() !== '') {
-        buttonElement.innerHTML = `
-            <button class="btn btn-sm btn-primary" onclick="viewImage('${imagePath}')">
-                <i class="fas fa-image"></i>
-            </button>`;
-    } else {
-        buttonElement.innerHTML = '<span class="text-muted">-</span>';
-    }
-}
-// Initialize popovers
-var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-    return new bootstrap.Popover(popoverTriggerEl, {
-        trigger: 'hover'
-    })
-})
-
-// Initialize DataTables
-$(document).ready(function() {
-    $('#inspectionTable').DataTable({
-        responsive: true,
-        dom: 'Bfrtip',
-        buttons: [],
-        order: [[4, 'desc']], // Sort by date column descending
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json'
-        }
-    });
-});
-
-// Export to Excel function
-function exportToExcel() {
-    try {
-        let table = document.getElementById("inspectionTable");
-        let rows = [];
-        
-        // Get headers (excluding the Aksi column)
-        let headers = [];
-        for(let i = 0; i < table.rows[0].cells.length - 1; i++) {
-            headers.push(table.rows[0].cells[i].textContent.trim());
-        }
-        rows.push(headers);
-        
-        // Get data
-        for(let i = 1; i < table.rows.length; i++) {
-            let row = [];
-            for(let j = 0; j < table.rows[i].cells.length - 1; j++) {
-                let cell = table.rows[i].cells[j];
-                
-                // Handle different cell contents
-                let text = '';
-                if (cell.querySelector('.badge')) {
-                    text = cell.querySelector('.badge').textContent.trim();
-                } else if (cell.querySelector('button.btn-info')) {
-                    // For "Lihat Komponen" button, get the modal content
-                    let modalId = cell.querySelector('button').getAttribute('data-bs-target');
-                    let modal = document.querySelector(modalId);
-                    if (modal) {
-                        text = Array.from(modal.querySelectorAll('table tr'))
-                            .map(tr => Array.from(tr.cells).map(td => td.textContent.trim()).join(': '))
-                            .join('; ');
-                    } else {
-                        text = 'Lihat Detail';
-                    }
-                } else {
-                    text = cell.textContent.trim();
-                }
-                row.push(text);
-            }
-            rows.push(row);
-        }
-        
-        // Create workbook
-        let wb = XLSX.utils.book_new();
-        let ws = XLSX.utils.aoa_to_sheet(rows);
-        
-        // Auto-size columns
-        const max_width = rows.reduce((w, r) => Math.max(w, r.length), 0);
-        ws['!cols'] = Array(max_width).fill({ wch: 15 });
-        
-        // Add worksheet to workbook
-        XLSX.utils.book_append_sheet(wb, ws, "Pemeriksaan Kendaraan");
-        
-        // Generate Excel file
-        let today = new Date().toISOString().slice(0,10);
-        XLSX.writeFile(wb, `Laporan_Pemeriksaan_Kendaraan_${today}.xlsx`);
-        
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil',
-            text: 'File Excel berhasil diunduh!'
-        });
-    } catch (error) {
-        console.error('Export Excel error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Gagal',
-            text: 'Terjadi kesalahan saat mengekspor Excel!'
-        });
-    }
-}
-
-// Export to PDF function
-function exportToPDF() {
-    try {
-        const table = document.getElementById('inspectionTable');
-        const today = new Date().toISOString().slice(0,10);
-        
-        // Configure html2canvas
-        html2canvas(table, {
-            scale: 2,
-            logging: false,
-            useCORS: true
-        }).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            
-            // Initialize jsPDF
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({
-                orientation: 'landscape',
-                unit: 'pt',
-                format: 'a4'
-            });
-            
-            // Add title
-            doc.setFontSize(18);
-            doc.text('Laporan Pemeriksaan Kendaraan', 40, 40);
-            doc.setFontSize(12);
-            doc.text(`Tanggal: ${today}`, 40, 60);
-            
-            // Calculate dimensions
-            const imgWidth = doc.internal.pageSize.getWidth() - 80;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            
-            // Add table image
-            doc.addImage(imgData, 'PNG', 40, 80, imgWidth, imgHeight);
-            
-            // Save PDF
-            doc.save(`Laporan_Pemeriksaan_Kendaraan_${today}.pdf`);
-            
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: 'File PDF berhasil diunduh!'
-            });
-        });
-    } catch (error) {
-        console.error('Export PDF error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Gagal',
-            text: 'Terjadi kesalahan saat mengekspor PDF!'
-        });
-    }
-}
-
-// Delete confirmation function
-function deleteInspection(id) {
-    Swal.fire({
-        title: 'Konfirmasi Hapus',
-        text: "Anda yakin ingin menghapus data pemeriksaan ini?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Ya, Hapus!',
-        cancelButtonText: 'Batal'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = `delete.php?id=${id}`;
-        }
-    })
-}
-
-// Function to handle status changes and update overall status
-function updateOverallStatus() {
-    const components = document.querySelectorAll('[data-component-status]');
-    let allGood = true;
-    
-    components.forEach(component => {
-        if (component.dataset.componentStatus === 'buruk') {
-            allGood = false;
-        }
-    });
-    
-    const statusBadge = document.querySelector('#overallStatus');
-    statusBadge.className = `badge ${allGood ? 'bg-success' : 'bg-danger'}`;
-    statusBadge.textContent = allGood ? 'Aman' : 'Perlu Perbaikan';
-}
-
-// Initialize tooltips
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-})
-
-// Handle modal image zoom
-document.getElementById('previewImage').addEventListener('click', function() {
-    this.classList.toggle('img-zoom');
-});
-
-// Print function
-function printInspection(id) {
-    window.open(`print.php?id=${id}`, '_blank', 'width=800,height=600');
-}
-</script>
-
-<!-- Add necessary CSS -->
-<style>
-    /* komponen lihat detail */
-    <style>
-.img-fluid.zoomed {
-    transform: scale(1.5);
-    transition: transform 0.3s ease;
-    cursor: zoom-out;
-}
-
-.img-fluid {
-    transition: transform 0.3s ease;
-    cursor: zoom-in;
-}
-
-.modal-body {
-    overflow: auto;
-    max-height: 80vh;
-}
-
-.img-zoom {
-    transform: scale(1.5);
-    transition: transform 0.3s ease;
-}
-
-.table td, .table th {
-    vertical-align: middle;
-}
-
-.accordion-button:not(.collapsed) {
-    background-color: #e7f1ff;
-    color: #0c63e4;
-}
-
-.badge {
-    font-size: 0.875rem;
-}
-    /* sampai sini komponen lihat detail */
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .table-responsive {
-        font-size: 0.875rem;
-    }
-    
-    .btn-group {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .btn-group .btn {
-        margin: 2px 0;
-    }
-}
-</style>
-            
-            <footer class="footer">
+<footer class="footer">
                 <div class="footer-body">
                     <ul class="left-panel list-inline mb-0 p-0">
                         <li class="list-inline-item"><a href="#">Kebijakan Privasi</a></li>
@@ -1059,30 +776,236 @@ function printInspection(id) {
             </footer>
         </main>
     </div>
-    <script src="../assets/js/core/libs.min.js"></script>
-    <script src="../assets/js/hope-ui.js"></script>
-    <script>
-        <?php foreach ($currentPageItems as $stat): ?>
-        new Chart(document.getElementById('chart-<?php echo str_replace(' ', '-', $stat['plat_mobil']); ?>'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Komponen Baik', 'Perlu Perbaikan'],
-                datasets: [{
-                    data: [<?php echo $stat['persentase_baik']; ?>, <?php echo $stat['persentase_buruk']; ?>],
-                    backgroundColor: ['#28a745', '#dc3545'],
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
+<script>
+    // Initialize image preview modal
+    let imagePreviewModal = null;
+    let currentImageSrc = '';
+
+    document.addEventListener('DOMContentLoaded', function() {
+        imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+        
+        // Initialize zoom functionality
+        const previewImage = document.getElementById('previewImage');
+        if (previewImage) {
+            previewImage.addEventListener('click', function() {
+                this.classList.toggle('zoomed');
+            });
+        }
+
+        // Initialize DataTables
+        $('#inspectionTable').DataTable({
+            responsive: true,
+            dom: 'Bfrtip',
+            buttons: [],
+            order: [[4, 'desc']], // Sort by date column descending
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json'
             }
         });
-        <?php endforeach; ?>
-    </script>
+
+        // Initialize popovers
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl, {
+                trigger: 'hover'
+            })
+        });
+
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+    });
+
+
+
+    // Image viewing functions
+    function viewImage(imagePath) {
+        try {
+            const previewImage = document.getElementById('previewImage');
+            const downloadLink = document.getElementById('downloadImage');
+            
+            const fullImagePath = imagePath.startsWith('http') ? imagePath : `../form/uploads/${imagePath}`;
+            
+            previewImage.src = fullImagePath;
+            currentImageSrc = fullImagePath;
+            downloadLink.href = fullImagePath;
+            
+            imagePreviewModal.show();
+            previewImage.classList.remove('zoomed');
+            
+            previewImage.onerror = function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Gagal memuat gambar. File mungkin tidak ada atau rusak.'
+                });
+                imagePreviewModal.hide();
+            };
+        } catch (error) {
+            console.error('Error viewing image:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Terjadi kesalahan saat membuka gambar.'
+            });
+        }
+    }
+
+    // Export functions
+    function exportToExcel() {
+        try {
+            let table = document.getElementById("inspectionTable");
+            let rows = [];
+            
+            // Get headers (excluding the Aksi column)
+            let headers = [];
+            for(let i = 0; i < table.rows[0].cells.length - 1; i++) {
+                headers.push(table.rows[0].cells[i].textContent.trim());
+            }
+            rows.push(headers);
+            
+            // Get data
+            for(let i = 1; i < table.rows.length; i++) {
+                let row = [];
+                for(let j = 0; j < table.rows[i].cells.length - 1; j++) {
+                    let cell = table.rows[i].cells[j];
+                    
+                    let text = '';
+                    if (cell.querySelector('.badge')) {
+                        text = cell.querySelector('.badge').textContent.trim();
+                    } else if (cell.querySelector('button.btn-info')) {
+                        let modalId = cell.querySelector('button').getAttribute('data-bs-target');
+                        let modal = document.querySelector(modalId);
+                        if (modal) {
+                            text = Array.from(modal.querySelectorAll('table tr'))
+                                .map(tr => Array.from(tr.cells).map(td => td.textContent.trim()).join(': '))
+                                .join('; ');
+                        } else {
+                            text = 'Lihat Detail';
+                        }
+                    } else {
+                        text = cell.textContent.trim();
+                    }
+                    row.push(text);
+                }
+                rows.push(row);
+            }
+            
+            let wb = XLSX.utils.book_new();
+            let ws = XLSX.utils.aoa_to_sheet(rows);
+            
+            const max_width = rows.reduce((w, r) => Math.max(w, r.length), 0);
+            ws['!cols'] = Array(max_width).fill({ wch: 15 });
+            
+            XLSX.utils.book_append_sheet(wb, ws, "Pemeriksaan Kendaraan");
+            
+            let today = new Date().toISOString().slice(0,10);
+            XLSX.writeFile(wb, `Laporan_Pemeriksaan_Kendaraan_${today}.xlsx`);
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'File Excel berhasil diunduh!'
+            });
+        } catch (error) {
+            console.error('Export Excel error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Terjadi kesalahan saat mengekspor Excel!'
+            });
+        }
+    }
+
+    function exportToPDF() {
+        try {
+            const table = document.getElementById('inspectionTable');
+            const today = new Date().toISOString().slice(0,10);
+            
+            html2canvas(table, {
+                scale: 2,
+                logging: false,
+                useCORS: true
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'pt',
+                    format: 'a4'
+                });
+                
+                doc.setFontSize(18);
+                doc.text('Laporan Pemeriksaan Kendaraan', 40, 40);
+                doc.setFontSize(12);
+                doc.text(`Tanggal: ${today}`, 40, 60);
+                
+                const imgWidth = doc.internal.pageSize.getWidth() - 80;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                doc.addImage(imgData, 'PNG', 40, 80, imgWidth, imgHeight);
+                doc.save(`Laporan_Pemeriksaan_Kendaraan_${today}.pdf`);
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'File PDF berhasil diunduh!'
+                });
+            });
+        } catch (error) {
+            console.error('Export PDF error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Terjadi kesalahan saat mengekspor PDF!'
+            });
+        }
+    }
+
+    // Prevent right-click on preview image
+    if (document.getElementById('previewImage')) {
+        document.getElementById('previewImage').addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    }
+
+    // Handle keyboard navigation for image modal
+    document.addEventListener('keydown', function(e) {
+        if (imagePreviewModal && imagePreviewModal._isShown) {
+            if (e.key === 'Escape') {
+                imagePreviewModal.hide();
+            }
+        }
+    });
+
+    // Function to update overall status
+    function updateOverallStatus() {
+        const components = document.querySelectorAll('[data-component-status]');
+        let allGood = true;
+        
+        components.forEach(component => {
+            if (component.dataset.componentStatus === 'buruk') {
+                allGood = false;
+            }
+        });
+        
+        const statusBadge = document.querySelector('#overallStatus');
+        if (statusBadge) {
+            statusBadge.className = `badge ${allGood ? 'bg-success' : 'bg-danger'}`;
+            statusBadge.textContent = allGood ? 'Aman' : 'Perlu Perbaikan';
+        }
+    }
+
+    // Print function
+    function printInspection(id) {
+        window.open(`print.php?id=${id}`, '_blank', 'width=800,height=600');
+    }
+    
+</script>    
+    <script src="../assets/js/core/libs.min.js"></script>
+    <script src="../assets/js/hope-ui.js"></script>
 </body>
 </html>
