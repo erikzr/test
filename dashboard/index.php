@@ -120,7 +120,16 @@ $conn->close();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Dashboard Pemeriksaan Kendaraan</title>
+     <!-- Excel Export Library -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
+    <!-- PDF Export Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- SweetAlert for notifications -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.all.min.js"></script>
+
     <link rel="stylesheet" href="../assets/css/hope-ui.min.css">
     <link rel="stylesheet" href="../assets/css/custom.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -133,29 +142,176 @@ $conn->close();
         .card-stats:hover { transform: scale(1.05); }
         .table-responsive { max-height: 500px; overflow-y: auto; }
         .component-chart { height: 200px; margin-bottom: 20px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-title {
+            color: #333;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .sidebar-body {
+            padding: 15px 0;
+        }
+
+        .navbar-nav {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin: 5px 15px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: #f0f0f0;
+            color: #2196F3;
+        }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 15px;
+            right: 15px;
+            padding: 12px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn i {
+            margin-right: 8px;
+        }
+
+        .logout-btn:hover {
+            background: #ff0000;
+        }
+
+        .toggle-sidebar {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        /* Media Queries */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .toggle-sidebar {
+                display: block;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="wrapper">
-        <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all">
-            <div class="sidebar-header d-flex align-items-center justify-content-start">
-                <a href="#" class="navbar-brand">
-                    <h4 class="logo-title">Dashboard Admin</h4>
-                </a>
+    <button class="toggle-sidebar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all">
+        <div class="sidebar-header d-flex align-items-center justify-content-start">
+            <a href="#" class="navbar-brand">
+                <h4 class="logo-title">Dashboard Admin</h4>
+            </a>
+        </div>
+        <div class="sidebar-body pt-0 data-scrollbar">
+            <div class="sidebar-list">
+                <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span class="item-name">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-users"></i>
+                            <span class="item-name">Users</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-cog"></i>
+                            <span class="item-name">Settings</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <div class="sidebar-body pt-0 data-scrollbar">
-                <div class="sidebar-list">
-                    <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
-                                <i class="fas fa-tachometer-alt"></i>
-                                <span class="item-name">Dashboard</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </aside>
+        </div>
+        <button class="logout-btn" onclick="handleLogout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+        </button>
+    </aside>
         
         <main class="main-content">
             <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
@@ -286,7 +442,8 @@ $conn->close();
                     </div>
                 </div>
                 
-               <!-- Tabel Pemeriksaan Kendaraan -->
+               
+<!-- Tabel Pemeriksaan Kendaraan --><!-- Tabel Pemeriksaan Kendaraan -->
 <div class="row mt-4">
     <div class="col-12">
         <div class="card">
@@ -312,9 +469,11 @@ $conn->close();
                                 <th>Nama Mobil</th>
                                 <th>Tanggal Pemeriksaan</th>
                                 <th>Komponen</th>
+                                <th>Interior</th>
+                                <th>Dokumen & Perlengkapan</th>
+                                <th>Sistem Mekanis</th>
                                 <th>Status</th>
                                 <th>Catatan</th>
-                                <th>Foto</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -322,7 +481,6 @@ $conn->close();
                             <?php 
                             $no = 1;
                             foreach ($inspeksiData as $row): 
-                                // Mendapatkan nama mobil berdasarkan plat
                                 $carName = '';
                                 switch ($row['plat_mobil']) {
                                     case 'W 1740 NP':
@@ -338,17 +496,39 @@ $conn->close();
                                         $carName = 'Unknown';
                                 }
 
-                                // Menyiapkan daftar komponen
+                                // Kelompokkan komponen berdasarkan kategori
                                 $komponenList = [
-                                    'Oli Mesin' => $row['oli_mesin'],
-                                    'Oli Power Steering' => $row['oli_power_steering'],
-                                    'Oli Transmisi' => $row['oli_transmisi'],
-                                    'Minyak Rem' => $row['minyak_rem'],
-                                    'Lampu Utama' => $row['lampu_utama'],
-                                    'Lampu Sein' => $row['lampu_sein'],
-                                    'Lampu Rem' => $row['lampu_rem'],
-                                    'Klakson' => $row['lampu_klakson'],
-                                    'Aki' => $row['cek_aki']
+                                    'Cairan' => [
+                                        'Oli Mesin' => ['status' => $row['oli_mesin'], 'foto' => $row['oli_mesin_foto']],
+                                        'Oli Power Steering' => ['status' => $row['oli_power_steering'], 'foto' => $row['oli_power_steering_foto']],
+                                        'Oli Transmisi' => ['status' => $row['oli_transmisi'], 'foto' => $row['oli_transmisi_foto']],
+                                        'Minyak Rem' => ['status' => $row['minyak_rem'], 'foto' => $row['minyak_rem_foto']]
+                                    ],
+                                    'Lampu' => [
+                                        'Lampu Utama' => ['status' => $row['lampu_utama'], 'foto' => $row['lampu_utama_foto']],
+                                        'Lampu Sein' => ['status' => $row['lampu_sein'], 'foto' => $row['lampu_sein_foto']],
+                                        'Lampu Rem' => ['status' => $row['lampu_rem'], 'foto' => $row['lampu_rem_foto']],
+                                        'Klakson' => ['status' => $row['lampu_klakson'], 'foto' => $row['lampu_klakson_foto']],
+                                        'Aki' => ['status' => $row['cek_aki'], 'foto' => $row['aki_foto']]
+                                    ],
+                                    'Interior' => [
+                                        'Kursi' => ['status' => $row['cek_kursi'], 'foto' => $row['kursi_foto']],
+                                        'Lantai' => ['status' => $row['cek_lantai'], 'foto' => $row['lantai_foto']],
+                                        'Dinding' => ['status' => $row['cek_dinding'], 'foto' => $row['dinding_foto']],
+                                        'Kap' => ['status' => $row['cek_kap'], 'foto' => $row['kap_foto']]
+                                    ],
+                                    'Dokumen' => [
+                                        'STNK' => ['status' => $row['cek_stnk'], 'foto' => $row['stnk_foto']],
+                                        'APAR' => ['status' => $row['cek_apar'], 'foto' => $row['apar_foto']],
+                                        'P3K' => ['status' => $row['cek_p3k'], 'foto' => $row['p3k_foto']],
+                                        'Kunci Roda' => ['status' => $row['cek_kunci_roda'], 'foto' => $row['kunci_roda_foto']]
+                                    ],
+                                    'Sistem' => [
+                                        'Air Radiator' => ['status' => $row['cek_air_radiator'], 'foto' => $row['air_radiator_foto']],
+                                        'Bahan Bakar' => ['status' => $row['cek_bahan_bakar'], 'foto' => $row['bahan_bakar_foto']],
+                                        'Tekanan Ban' => ['status' => $row['cek_tekanan_ban'], 'foto' => $row['tekanan_ban_foto']],
+                                        'Rem' => ['status' => $row['cek_rem'], 'foto' => '']
+                                    ]
                                 ];
                             ?>
                             <tr>
@@ -357,6 +537,8 @@ $conn->close();
                                 <td><?php echo htmlspecialchars($row['plat_mobil']); ?></td>
                                 <td><?php echo htmlspecialchars($carName); ?></td>
                                 <td><?php echo date("d/m/Y H:i", strtotime($row['created_at'])); ?></td>
+                                
+                                <!-- Komponen Button -->
                                 <td>
                                     <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#komponenModal<?php echo $no; ?>">
                                         Lihat Komponen
@@ -364,35 +546,114 @@ $conn->close();
                                     
                                     <!-- Modal Komponen -->
                                     <div class="modal fade" id="komponenModal<?php echo $no; ?>" tabindex="-1">
-                                        <div class="modal-dialog">
+                                        <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Detail Komponen</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <table class="table table-sm">
-                                                        <?php foreach ($komponenList as $nama => $status): ?>
-                                                        <tr>
-                                                            <td><?php echo $nama; ?></td>
-                                                            <td>
-                                                                <span class="badge <?php echo strtolower($status) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
-                                                                    <?php echo htmlspecialchars($status); ?>
-                                                                </span>
-                                                            </td>
-                                                        </tr>
+                                                    <div class="accordion" id="accordionKomponen<?php echo $no; ?>">
+                                                        <?php foreach ($komponenList as $kategori => $items): ?>
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header">
+                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                                                                        data-bs-target="#collapse<?php echo $kategori.$no; ?>">
+                                                                    <?php echo $kategori; ?>
+                                                                </button>
+                                                            </h2>
+                                                            <div id="collapse<?php echo $kategori.$no; ?>" class="accordion-collapse collapse">
+                                                                <div class="accordion-body">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Komponen</th>
+                                                                                    <th>Status</th>
+                                                                                    <th>Foto</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            <?php foreach ($items as $nama => $data): ?>
+                                                                                <tr>
+                                                                                    <td><?php echo $nama; ?></td>
+                                                                                    <td>
+                                                                                        <span class="badge <?php echo strtolower($data['status']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                                                                            <?php echo htmlspecialchars($data['status']); ?>
+                                                                                        </span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <?php if (!empty($data['foto'])): ?>
+                                                                                            <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['foto']); ?>')">
+                                                                                                <i class="fas fa-image"></i>
+                                                                                            </button>
+                                                                                        <?php else: ?>
+                                                                                            <span class="text-muted">-</span>
+                                                                                        <?php endif; ?>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <?php endforeach; ?>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <?php endforeach; ?>
-                                                    </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
+
+                                <!-- Interior Status -->
+                                <td>
+                                    <?php
+                                    $interior_status = array_column($komponenList['Interior'], 'status');
+                                    $all_good = array_reduce($interior_status, function($carry, $item) {
+                                        return $carry && strtolower($item) === 'baik';
+                                    }, true);
+                                    ?>
+                                    <span class="badge <?php echo $all_good ? 'bg-success' : 'bg-danger'; ?>">
+                                        <?php echo $all_good ? 'Baik' : 'Perlu Perbaikan'; ?>
+                                    </span>
+                                </td>
+
+                                <!-- Dokumen Status -->
+                                <td>
+                                    <?php
+                                    $dokumen_status = array_column($komponenList['Dokumen'], 'status');
+                                    $all_good = array_reduce($dokumen_status, function($carry, $item) {
+                                        return $carry && strtolower($item) === 'baik';
+                                    }, true);
+                                    ?>
+                                    <span class="badge <?php echo $all_good ? 'bg-success' : 'bg-danger'; ?>">
+                                        <?php echo $all_good ? 'Lengkap' : 'Tidak Lengkap'; ?>
+                                    </span>
+                                </td>
+
+                                <!-- Sistem Status -->
+                                <td>
+                                    <?php
+                                    $sistem_status = array_column($komponenList['Sistem'], 'status');
+                                    $all_good = array_reduce($sistem_status, function($carry, $item) {
+                                        return $carry && strtolower($item) === 'baik';
+                                    }, true);
+                                    ?>
+                                    <span class="badge <?php echo $all_good ? 'bg-success' : 'bg-danger'; ?>">
+                                        <?php echo $all_good ? 'Baik' : 'Perlu Perbaikan'; ?>
+                                    </span>
+                                </td>
+
+                                <!-- Overall Status -->
                                 <td>
                                     <span class="badge <?php echo $row['status'] == 'Aman' ? 'bg-success' : 'bg-danger'; ?>">
                                         <?php echo $row['status']; ?>
                                     </span>
                                 </td>
+
+                                <!-- Notes -->
                                 <td>
                                     <?php if (!empty($row['catatan'])): ?>
                                     <button class="btn btn-sm btn-warning" data-bs-toggle="popover" 
@@ -404,15 +665,8 @@ $conn->close();
                                     <span class="text-muted">-</span>
                                     <?php endif; ?>
                                 </td>
-                                <td>
-                                    <?php if (!empty($row['foto'])): ?>
-                                    <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($row['foto']); ?>')">
-                                        <i class="fas fa-image"></i>
-                                    </button>
-                                    <?php else: ?>
-                                    <span class="text-muted">-</span>
-                                    <?php endif; ?>
-                                </td>
+
+                                <!-- Actions -->
                                 <td>
                                     <div class="btn-group">
                                         <a href="detail.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info">
@@ -435,7 +689,362 @@ $conn->close();
         </div>
     </div>
 </div>
+
+<!-- Image Preview Modal -->
+<div class="modal fade" id="imagePreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Preview Foto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+            <div class="modal-body text-center">
+                <img id="previewImage" src="" class="img-fluid" alt="Preview" style="max-height: 80vh;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <a id="downloadImage" href="" class="btn btn-sm btn-primary" download>
+                    <i class="fas fa-download"></i> Unduh Foto
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Initialize image preview modal
+let imagePreviewModal = null;
+let currentImageSrc = '';
+
+document.addEventListener('DOMContentLoaded', function() {
+    imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+    
+    // Initialize zoom functionality
+    const previewImage = document.getElementById('previewImage');
+    previewImage.addEventListener('click', function() {
+        this.classList.toggle('zoomed');
+    });
+});
+
+function viewImage(imagePath) {
+    try {
+        // Get the elements
+        const previewImage = document.getElementById('previewImage');
+        const downloadLink = document.getElementById('downloadImage');
+        
+        // Construct the full image path if needed
+        // Assuming images are stored in an 'uploads' directory
+        const fullImagePath = imagePath.startsWith('http') ? imagePath : `../form/uploads/${imagePath}`;
+        
+        // Set the image source
+        previewImage.src = fullImagePath;
+        currentImageSrc = fullImagePath;
+        
+        // Set the download link
+        downloadLink.href = fullImagePath;
+        
+        // Show the modal
+        imagePreviewModal.show();
+        
+        // Reset zoom when opening new image
+        previewImage.classList.remove('zoomed');
+        
+        // Handle image load error
+        previewImage.onerror = function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Gagal memuat gambar. File mungkin tidak ada atau rusak.'
+            });
+            imagePreviewModal.hide();
+        };
+    } catch (error) {
+        console.error('Error viewing image:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Terjadi kesalahan saat membuka gambar.'
+        });
+    }
+}
+
+// Function to handle keyboard navigation
+document.addEventListener('keydown', function(e) {
+    if (imagePreviewModal && imagePreviewModal._isShown) {
+        if (e.key === 'Escape') {
+            imagePreviewModal.hide();
+        }
+    }
+});
+
+// Prevent right-click on preview image
+document.getElementById('previewImage').addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+
+// Update the table cell where you show the image button
+function updateImageButton(buttonElement, imagePath) {
+    if (imagePath && imagePath.trim() !== '') {
+        buttonElement.innerHTML = `
+            <button class="btn btn-sm btn-primary" onclick="viewImage('${imagePath}')">
+                <i class="fas fa-image"></i>
+            </button>`;
+    } else {
+        buttonElement.innerHTML = '<span class="text-muted">-</span>';
+    }
+}
+// Initialize popovers
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl, {
+        trigger: 'hover'
+    })
+})
+
+// Initialize DataTables
+$(document).ready(function() {
+    $('#inspectionTable').DataTable({
+        responsive: true,
+        dom: 'Bfrtip',
+        buttons: [],
+        order: [[4, 'desc']], // Sort by date column descending
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json'
+        }
+    });
+});
+
+// Export to Excel function
+function exportToExcel() {
+    try {
+        let table = document.getElementById("inspectionTable");
+        let rows = [];
+        
+        // Get headers (excluding the Aksi column)
+        let headers = [];
+        for(let i = 0; i < table.rows[0].cells.length - 1; i++) {
+            headers.push(table.rows[0].cells[i].textContent.trim());
+        }
+        rows.push(headers);
+        
+        // Get data
+        for(let i = 1; i < table.rows.length; i++) {
+            let row = [];
+            for(let j = 0; j < table.rows[i].cells.length - 1; j++) {
+                let cell = table.rows[i].cells[j];
+                
+                // Handle different cell contents
+                let text = '';
+                if (cell.querySelector('.badge')) {
+                    text = cell.querySelector('.badge').textContent.trim();
+                } else if (cell.querySelector('button.btn-info')) {
+                    // For "Lihat Komponen" button, get the modal content
+                    let modalId = cell.querySelector('button').getAttribute('data-bs-target');
+                    let modal = document.querySelector(modalId);
+                    if (modal) {
+                        text = Array.from(modal.querySelectorAll('table tr'))
+                            .map(tr => Array.from(tr.cells).map(td => td.textContent.trim()).join(': '))
+                            .join('; ');
+                    } else {
+                        text = 'Lihat Detail';
+                    }
+                } else {
+                    text = cell.textContent.trim();
+                }
+                row.push(text);
+            }
+            rows.push(row);
+        }
+        
+        // Create workbook
+        let wb = XLSX.utils.book_new();
+        let ws = XLSX.utils.aoa_to_sheet(rows);
+        
+        // Auto-size columns
+        const max_width = rows.reduce((w, r) => Math.max(w, r.length), 0);
+        ws['!cols'] = Array(max_width).fill({ wch: 15 });
+        
+        // Add worksheet to workbook
+        XLSX.utils.book_append_sheet(wb, ws, "Pemeriksaan Kendaraan");
+        
+        // Generate Excel file
+        let today = new Date().toISOString().slice(0,10);
+        XLSX.writeFile(wb, `Laporan_Pemeriksaan_Kendaraan_${today}.xlsx`);
+        
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: 'File Excel berhasil diunduh!'
+        });
+    } catch (error) {
+        console.error('Export Excel error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'Terjadi kesalahan saat mengekspor Excel!'
+        });
+    }
+}
+
+// Export to PDF function
+function exportToPDF() {
+    try {
+        const table = document.getElementById('inspectionTable');
+        const today = new Date().toISOString().slice(0,10);
+        
+        // Configure html2canvas
+        html2canvas(table, {
+            scale: 2,
+            logging: false,
+            useCORS: true
+        }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            
+            // Initialize jsPDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'landscape',
+                unit: 'pt',
+                format: 'a4'
+            });
+            
+            // Add title
+            doc.setFontSize(18);
+            doc.text('Laporan Pemeriksaan Kendaraan', 40, 40);
+            doc.setFontSize(12);
+            doc.text(`Tanggal: ${today}`, 40, 60);
+            
+            // Calculate dimensions
+            const imgWidth = doc.internal.pageSize.getWidth() - 80;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            
+            // Add table image
+            doc.addImage(imgData, 'PNG', 40, 80, imgWidth, imgHeight);
+            
+            // Save PDF
+            doc.save(`Laporan_Pemeriksaan_Kendaraan_${today}.pdf`);
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'File PDF berhasil diunduh!'
+            });
+        });
+    } catch (error) {
+        console.error('Export PDF error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'Terjadi kesalahan saat mengekspor PDF!'
+        });
+    }
+}
+
+// Delete confirmation function
+function deleteInspection(id) {
+    Swal.fire({
+        title: 'Konfirmasi Hapus',
+        text: "Anda yakin ingin menghapus data pemeriksaan ini?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = `delete.php?id=${id}`;
+        }
+    })
+}
+
+// Function to handle status changes and update overall status
+function updateOverallStatus() {
+    const components = document.querySelectorAll('[data-component-status]');
+    let allGood = true;
+    
+    components.forEach(component => {
+        if (component.dataset.componentStatus === 'buruk') {
+            allGood = false;
+        }
+    });
+    
+    const statusBadge = document.querySelector('#overallStatus');
+    statusBadge.className = `badge ${allGood ? 'bg-success' : 'bg-danger'}`;
+    statusBadge.textContent = allGood ? 'Aman' : 'Perlu Perbaikan';
+}
+
+// Initialize tooltips
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
+// Handle modal image zoom
+document.getElementById('previewImage').addEventListener('click', function() {
+    this.classList.toggle('img-zoom');
+});
+
+// Print function
+function printInspection(id) {
+    window.open(`print.php?id=${id}`, '_blank', 'width=800,height=600');
+}
+</script>
+
+<!-- Add necessary CSS -->
+<style>
+    /* komponen lihat detail */
+    <style>
+.img-fluid.zoomed {
+    transform: scale(1.5);
+    transition: transform 0.3s ease;
+    cursor: zoom-out;
+}
+
+.img-fluid {
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+}
+
+.modal-body {
+    overflow: auto;
+    max-height: 80vh;
+}
+
+.img-zoom {
+    transform: scale(1.5);
+    transition: transform 0.3s ease;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #e7f1ff;
+    color: #0c63e4;
+}
+
+.badge {
+    font-size: 0.875rem;
+}
+    /* sampai sini komponen lihat detail */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+    
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin: 2px 0;
+    }
+}
+</style>
             
             <footer class="footer">
                 <div class="footer-body">
