@@ -28,10 +28,39 @@
       <link rel="stylesheet" href="../../assets/css/rtl.min.css?v=5.0.0">
 
     <style>
-        .steps{
-            margin-right: 200px;
-            width:200px;
-        }
+html, body {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    width: 100%; /* Ensure body width is 100% */
+}
+
+.steps {
+    margin-right: 0; /* Remove fixed margin to avoid pushing out of viewport */
+    width: 100%; /* Adjust width to be responsive */
+    max-width: 200px; /* Set a max width as needed */
+}
+
+h4 {
+    font-size: 20px;
+}
+
+.form-check-input {
+    border: 2px solid #555; /* Darker border color */
+    background-color: #fff; /* White background for radio button */
+    width: 18px;
+    height: 18px;
+}
+
+.steps {
+    margin: 0; /* Remove margin to keep it centered */
+    padding: 0; /* Remove padding for consistency */
+    max-width: 100%; /* Prevent exceeding the viewport */
+    overflow: hidden; /* Hide overflow */
+    white-space: nowrap; /* Prevent text wrapping */
+    text-overflow: ellipsis; /* Show ellipsis for overflow text */
+    font-size: 24px; /* Set a base font size */
+}
     </style>
 
       
@@ -51,14 +80,7 @@
                 
                 <!--Logo start-->
                 <div class="logo-main">
-                    <div class="logo-normal">
-                        <svg class=" icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
-                            <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"/>
-                            <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
-                            <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
-                        </svg>
-                    </div>
+                    
                     <div class="logo-mini">
                         <svg class=" icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
@@ -72,17 +94,11 @@
                 
                 
                 
-                
+                <img src="../../kmnf.png" alt="Kominfo Logo" class="icon-30">
+
                 <h4 class="logo-title">BMN-Operasional</h4>
             </a>
-            <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
-                <i class="icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4.25 12.2744L19.25 12.2744" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M10.2998 18.2988L4.2498 12.2748L10.2998 6.24976" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                </i>
-            </div>
+            
         </div>
         <div class="sidebar-body pt-0 data-scrollbar">
             <div class="sidebar-list">
@@ -119,12 +135,8 @@
                 <!--Logo start-->
                 <div class="logo-main">
                     <div class="logo-normal">
-                        <svg class="text-primary icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
-                            <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"/>
-                            <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"/>
-                            <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"/>
-                        </svg>
+                    <img src="../../kmnf.png" alt="Kominfo Logo" class="icon-30">
+
                     </div>
                     <div class="logo-mini">
                         <svg class="text-primary icon-30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -506,7 +518,7 @@
                                     <!-- Tombol Navigasi -->
                                     <div class="d-flex justify-content-end mt-4">
                                         <button type="button" name="previous" class="btn btn-dark previous action-button-previous me-1 text-white" value="Previous">Previous</button>
-                                        <button type="button" name="next" class="btn btn-primary next action-button" value="Submit">Submit</button>
+                                        <button type="button" name="next" class="btn btn-primary next action-button" value="Submit">Next</button>
                                     </div>
                                 </div>
                             </fieldset>
@@ -616,7 +628,7 @@
                                     <!-- Tombol Navigasi -->
                                     <div class="d-flex justify-content-end mt-4">
                                         <button type="button" name="previous" class="btn btn-dark previous action-button-previous me-1 text-white" value="Previous">Previous</button>
-                                        <button type="button" name="next" class="btn btn-primary next action-button" value="Submit">Submit</button>
+                                        <button type="button" name="next" class="btn btn-primary next action-button" value="Submit">Next</button>
                                     </div>
                                 </div>
                             </fieldset>

@@ -78,6 +78,8 @@ $conn->close();
             justify-content: center;
             align-items: center;
             background-color: white; /* Change this to your desired background color */
+            overflow-y: none; /* Prevent horizontal scrolling */
+
         }
 
         .wrapper {
@@ -86,6 +88,8 @@ $conn->close();
             padding: 20px; /* Add some padding */
             box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Optional shadow for the card */
             border-radius: 10px; /* Optional rounding for aesthetics */
+            overflow-y: none; /* Hide any overflowing content */
+
         }
 
         .alert {
@@ -100,7 +104,7 @@ $conn->close();
                 <div class="card card-transparent shadow-none d-flex justify-content-center mb-0 auth-card">
                     <div class="card-body z-3 px-md-0 px-lg-4">
                         <a href="index.html" class="navbar-brand d-flex justify-content-center mb-3">
-                            <img src="kominfo.png" alt="Logo Kominfo" style="width: 50px; height: auto;">
+                            <img src="kmnf.png" alt="Logo Kominfo" style="width: 50px; height: auto;">
                         </a>
                         <h2 class="mb-2 text-center">Sign In</h2>
                         <p class="text-center">Masuk untuk melanjutkan.</p>

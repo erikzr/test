@@ -1,0 +1,65 @@
+2024-10-24 10:39:55 - Request received
+POST data: Array
+(
+    [field] => oli_mesin
+    [status] => Kurang Baik
+)
+
+Received data:
+Field: oli_mesin
+Status: Kurang Baik
+ID: 
+
+Error: Data tidak lengkap. Field: oli_mesin, Status: Kurang Baik, ID: 
+2024-10-24 10:40:04 - Request received
+POST data: Array
+(
+    [field] => oli_mesin
+    [status] => Kurang Baik
+)
+
+Received data:
+Field: oli_mesin
+Status: Kurang Baik
+ID: 
+
+Error: Data tidak lengkap. Field: oli_mesin, Status: Kurang Baik, ID: 
+2024-10-24 10:40:50 - Request received
+POST data: Array
+(
+    [field] => oli_mesin
+    [status] => Kurang Baik
+)
+
+Received data:
+Field: oli_mesin
+Status: Kurang Baik
+ID: 
+
+Error: Data tidak lengkap. Field: oli_mesin, Status: Kurang Baik, ID: 
+2024-10-24 10:41:54 - Request received
+POST data: Array
+(
+    [field] => oli_mesin
+    [status] => Kurang Baik
+)
+
+Received data:
+Field: oli_mesin
+Status: Kurang Baik
+ID: 
+
+Error: Data tidak lengkap. Field: oli_mesin, Status: Kurang Baik, ID: 
+2024-10-24 10:47:41 - Request received
+POST data: Array
+(
+    [field] => oli_mesin
+    [status] => Kurang Baik
+)
+
+Received data:
+Field: oli_mesin
+Status: Kurang Baik
+ID: 
+
+Error: Data tidak lengkap. Field: oli_mesin, Status: Kurang Baik, ID: 

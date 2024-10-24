@@ -120,6 +120,9 @@ $conn->close();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Dashboard Pemeriksaan Kendaraan</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" rel="stylesheet">
      <!-- Excel Export Library -->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
@@ -135,140 +138,163 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
+    
     <style>
+        const style = document.createElement('style');
+        style.textContent = `
+            .card {
+                border-radius: 15px;
+                border: none;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+                transition: all 0.3s ease;
+            }
+            
+            .card-header {
+                background-color: transparent;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+                padding: 1.5rem;
+            }
+            
+            .card-body {
+                padding: 1.5rem;
+            }
+            
+            .component-chart {
+                position: relative;
+                margin: auto;
+                height: 250px;
+                width: 100%;
+            }
+            
+            .badge {
+                padding: 0.5em 1em;
+                font-weight: 500;
+                border-radius: 30px;
+            }
+            
+            .list-unstyled li {
+                margin-bottom: 0.5rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .text-muted {
+                color: #6c757d !important;
+            }
+        `;
+        document.head.appendChild(style);
         .status-aman { color: #28a745; }
         .status-perhatian { color: #dc3545; }
         .card-stats { transition: transform .2s; }
         .card-stats:hover { transform: scale(1.05); }
         .table-responsive { max-height: 500px; overflow-y: auto; }
         .component-chart { height: 200px; margin-bottom: 20px; }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* CSS untuk sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    transition: all 0.3s ease;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-        }
+.sidebar.collapsed {
+    width: 60px;
+}
 
-        .sidebar {
-            width: 260px;
-            height: 100vh;
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            transition: all 0.3s ease;
-        }
+.sidebar.collapsed .logo-title,
+.sidebar.collapsed .item-name {
+    display: none;
+}
 
-        .sidebar-header {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-        }
+.sidebar-header {
+    padding: 15px;
+}
 
-        .logo-title {
-            color: #333;
-            font-size: 1.5rem;
-            margin: 0;
-        }
+.sidebar-body {
+    height: calc(100vh - 70px);
+}
 
-        .sidebar-body {
-            padding: 15px 0;
-        }
+.logout-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 15px;
+    width: calc(100% - 30px);
+}
 
-        .navbar-nav {
-            list-style: none;
-        }
+/* Responsive */
+@media (max-width: 991px) {
+    .sidebar {
+        width: 60px;
+    }
+    
+    .sidebar .logo-title,
+    .sidebar .item-name {
+        display: none;
+    }
+    
+    .sidebar:hover {
+        width: 250px;
+    }
+    
+    .sidebar:hover .logo-title,
+    .sidebar:hover .item-name {
+        display: inline;
+    }
+}
 
-        .nav-item {
-            margin: 5px 15px;
-        }
+.logout-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 15px;
+    width: calc(100% - 30px);
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
 
-        .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            color: #333;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
+/* Style saat sidebar collapse */
+.sidebar.collapsed .logout-btn span {
+    display: none;
+}
 
-        .nav-link i {
-            margin-right: 10px;
-            font-size: 1.1rem;
-        }
+.sidebar.collapsed .logout-btn {
+    width: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
-        .nav-link:hover, .nav-link.active {
-            background: #f0f0f0;
-            color: #2196F3;
-        }
+/* Hover effect */
+.logout-btn:hover {
+    opacity: 0.9;
+}
 
-        .logout-btn {
-            position: absolute;
-            bottom: 20px;
-            left: 15px;
-            right: 15px;
-            padding: 12px;
-            background: #ff4444;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .logout-btn i {
-            margin-right: 8px;
-        }
-
-        .logout-btn:hover {
-            background: #ff0000;
-        }
-
-        .toggle-sidebar {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: #2196F3;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        /* Media Queries */
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 240px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .toggle-sidebar {
-                display: block;
-            }
-
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .sidebar {
-                width: 100%;
-            }
-        }
+/* Responsive styling */
+@media (max-width: 991px) {
+    .sidebar .logout-btn span {
+        display: none;
+    }
+    
+    .sidebar .logout-btn {
+        width: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .sidebar:hover .logout-btn {
+        width: calc(100% - 30px);
+        left: 15px;
+        transform: none;
+    }
+    
+    .sidebar:hover .logout-btn span {
+        display: inline;
+    }
+}
 
             /* komponen lihat detail */
         .img-fluid.zoomed {
@@ -321,6 +347,72 @@ $conn->close();
                 margin: 2px 0;
             }
         }
+
+        /* Custom styling untuk SweetAlert */
+.custom-swal-popup {
+    border-radius: 15px !important;
+    padding: 20px !important;
+}
+
+.custom-swal-title {
+    font-size: 24px !important;
+    color: #333 !important;
+}
+
+.custom-swal-confirm-button {
+    padding: 12px 30px !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px !important;
+}
+
+.custom-swal-cancel-button {
+    padding: 12px 30px !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Animasi loading custom */
+.swal2-loading {
+    border-radius: 50% !important;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .custom-swal-popup {
+        background: #1a1a1a !important;
+    }
+    
+    .custom-swal-title {
+        color: #fff !important;
+    }
+    
+    .swal2-html-container {
+        color: #ddd !important;
+    }
+}
+
+.icon-30 {
+    height: 1.875rem;
+    width: 1.875rem;
+    margin-left: -15px; /* Sesuaikan nilai ini */
+}
+
+.logout-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 15px;
+    width: calc(100% - 30px);
+    padding: 4px 2px; /* 4px untuk vertikal, 20px untuk horizontal */
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
     </style>
 </head>
 <body>
@@ -332,7 +424,9 @@ $conn->close();
     <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
             <a href="#" class="navbar-brand">
-                <h4 class="logo-title">Dashboard Admin</h4>
+            <img src="../kmnf.png" alt="Kominfo Logo" class="icon-30">
+
+                <h4 class="logo-title" style="font-size:20px">Dashboard Admin</h4>
             </a>
         </div>
         <div class="sidebar-body pt-0 data-scrollbar">
@@ -359,9 +453,9 @@ $conn->close();
                 </ul>
             </div>
         </div>
-        <button class="logout-btn" onclick="handleLogout()">
+        <button class="logout-btn btn btn-danger w-100" onclick="handleLogout()">
             <i class="fas fa-sign-out-alt"></i>
-            Logout
+            <span class="ms-2">Logout</span>
         </button>
     </aside>
         
@@ -371,9 +465,6 @@ $conn->close();
                     <a href="#" class="navbar-brand">
                         <h4 class="logo-title">Pemeriksaan Kendaraan</h4>
                     </a>
-                    <div class="navbar-tool">
-                        <a href="#" class="btn btn-primary">Keluar</a>
-                    </div>
                 </div>
             </nav>
             
@@ -386,7 +477,7 @@ $conn->close();
                                 <div class="row">
                                     <div class="col">
                                         <h5 class="card-title text-uppercase text-white mb-0">Total Inspeksi</h5>
-                                        <span class="h2 font-weight-bold mb-0"><?php echo $totalInspeksi; ?></span>
+                                        <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo $totalInspeksi; ?></span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-white text-info rounded-circle shadow">
@@ -403,7 +494,7 @@ $conn->close();
                                 <div class="row">
                                     <div class="col">
                                         <h5 class="card-title text-uppercase text-white mb-0">Persentase Aman</h5>
-                                        <span class="h2 font-weight-bold mb-0"><?php echo number_format($persentaseAman, 1); ?>%</span>
+                                        <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo number_format($persentaseAman, 1); ?>%</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-white text-success rounded-circle shadow">
@@ -420,7 +511,7 @@ $conn->close();
                                 <div class="row">
                                     <div class="col">
                                         <h5 class="card-title text-uppercase text-white mb-0">Perlu Perhatian</h5>
-                                        <span class="h2 font-weight-bold mb-0"><?php echo $perluPerhatian; ?></span>
+                                        <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo $perluPerhatian; ?></span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-white text-danger rounded-circle shadow">
@@ -495,7 +586,7 @@ $conn->close();
                 </div>
                 
                
-<!-- Tabel Pemeriksaan Kendaraan --><!-- Tabel Pemeriksaan Kendaraan -->
+<!-- Tabel Pemeriksaan Kendaraan -->
 <div class="row mt-4">
     <div class="col-12">
         <div class="card">
@@ -777,50 +868,190 @@ $conn->close();
         </main>
     </div>
 <script>
-    // Initialize image preview modal
+    document.addEventListener('DOMContentLoaded', function() {
+    // Initialize DataTables
+    $('#inspectionTable').DataTable({
+        responsive: true,
+        dom: 'Bfrtip',
+        buttons: [],
+        order: [[4, 'desc']],
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json'
+        }
+    });
+
+    // Initialize Bootstrap components
+    initializeBootstrapComponents();
+    
+    // Initialize Charts
+    initializeCharts();
+    
+    // Initialize Image Preview
+    initializeImagePreview();
+    
+    // Add card hover effects
+    initializeCardHoverEffects();
+    });
+
+    // Bootstrap Components Initialization
+    function initializeBootstrapComponents() {
+        // Setup Popovers
+        const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+        const popoverList = popoverTriggerList.map(popoverTriggerEl => 
+            new bootstrap.Popover(popoverTriggerEl, { trigger: 'hover' })
+        );
+
+        // Setup Tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        const tooltipList = tooltipTriggerList.map(tooltipTriggerEl => 
+            new bootstrap.Tooltip(tooltipTriggerEl)
+        );
+
+        // Handle Modal States
+        initializeModals();
+    }
+
+    // Modal Management
+    function initializeModals() {
+        function cleanupModalState() {
+            document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+            document.body.classList.remove('modal-open');
+        }
+
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            const modalInstance = new bootstrap.Modal(modal);
+
+            modal.addEventListener('show.bs.modal', () => cleanupModalState());
+            modal.addEventListener('shown.bs.modal', () => {
+                if (document.querySelectorAll('.modal-backdrop').length > 1) {
+                    document.querySelectorAll('.modal-backdrop').forEach((backdrop, index) => {
+                        if (index > 0) backdrop.remove();
+                    });
+                }
+            });
+            modal.addEventListener('hidden.bs.modal', () => cleanupModalState());
+        });
+
+        document.querySelectorAll('[data-bs-dismiss="modal"]').forEach(button => {
+            button.addEventListener('click', () => cleanupModalState());
+        });
+    }
+
+    // Chart Initialization and Management
+    document.addEventListener('DOMContentLoaded', function() {
+    // Fungsi untuk membuat gradient
+    function createGradient(ctx, colorStart, colorEnd) {
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, colorStart);
+        gradient.addColorStop(1, colorEnd);
+        return gradient;
+    }
+
+    // Fungsi untuk membuat chart
+    function createInspectionChart(canvas) {
+        const ctx = canvas.getContext('2d');
+        const cardBody = canvas.closest('.card-body');
+        const cardHeader = canvas.closest('.card').querySelector('.card-header');
+        
+        // Ambil data
+        const persentaseBaik = parseFloat(cardBody.querySelector('.badge.bg-success').textContent.match(/\d+/)[0]);
+        const persentaseBuruk = parseFloat(cardBody.querySelector('.badge.bg-danger').textContent.match(/\d+/)[0]);
+        
+        // Buat gradients
+        const greenGradient = createGradient(ctx, 'rgba(40, 167, 69, 0.9)', 'rgba(40, 167, 69, 0.6)');
+        const redGradient = createGradient(ctx, 'rgba(220, 53, 69, 0.9)', 'rgba(220, 53, 69, 0.6)');
+
+        return new Chart(canvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Komponen Baik', 'Perlu Perbaikan'],
+                datasets: [{
+                    data: [persentaseBaik, persentaseBuruk],
+                    backgroundColor: [greenGradient, redGradient],
+                    borderColor: ['#28a745', '#dc3545'],
+                    borderWidth: 2,
+                    borderRadius: 5,
+                    offset: 5,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                cutout: '65%',
+                animation: {
+                    animateRotate: true,
+                    animateScale: true
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            font: {
+                                size: 12,
+                                family: "'Segoe UI', 'Arial', sans-serif",
+                                weight: 500
+                            },
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12,
+                        bodyFont: {
+                            size: 14
+                        },
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.raw}%`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Status Komponen',
+                        padding: {
+                            top: 10,
+                            bottom: 20
+                        },
+                        font: {
+                            size: 16,
+                            family: "'Segoe UI', 'Arial', sans-serif",
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Inisialisasi semua chart
+    const charts = document.querySelectorAll('.component-chart canvas');
+    const chartInstances = Array.from(charts).map(canvas => createInspectionChart(canvas));
+    
+    // Simpan instances untuk referensi global jika diperlukan
+    window.chartInstances = chartInstances;
+});
+
+    // Image Preview Functionality
     let imagePreviewModal = null;
     let currentImageSrc = '';
 
-    document.addEventListener('DOMContentLoaded', function() {
+    function initializeImagePreview() {
         imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
-        
-        // Initialize zoom functionality
         const previewImage = document.getElementById('previewImage');
+        
         if (previewImage) {
-            previewImage.addEventListener('click', function() {
-                this.classList.toggle('zoomed');
-            });
+            previewImage.addEventListener('click', () => previewImage.classList.toggle('zoomed'));
+            previewImage.addEventListener('contextmenu', e => e.preventDefault());
         }
+    }
 
-        // Initialize DataTables
-        $('#inspectionTable').DataTable({
-            responsive: true,
-            dom: 'Bfrtip',
-            buttons: [],
-            order: [[4, 'desc']], // Sort by date column descending
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json'
-            }
-        });
-
-        // Initialize popovers
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl, {
-                trigger: 'hover'
-            })
-        });
-
-        // Initialize tooltips
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        });
-    });
-
-
-
-    // Image viewing functions
     function viewImage(imagePath) {
         try {
             const previewImage = document.getElementById('previewImage');
@@ -835,7 +1066,7 @@ $conn->close();
             imagePreviewModal.show();
             previewImage.classList.remove('zoomed');
             
-            previewImage.onerror = function() {
+            previewImage.onerror = () => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -853,51 +1084,126 @@ $conn->close();
         }
     }
 
-    // Export functions
+    // Card Hover Effects
+    function initializeCardHoverEffects() {
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 6px 15px rgba(0,0,0,0.1)';
+                this.style.transition = 'all 0.3s ease';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+    }
+
+    // Sidebar Toggle
+    const toggleSidebar = () => {
+        document.querySelector('.sidebar').classList.toggle('collapsed');
+    };
+
+    document.body.insertAdjacentHTML('afterbegin', `
+        <button 
+            class="btn btn-toggle" 
+            onclick="toggleSidebar()" 
+            style="position: fixed; top: 10px; left: 10px; z-index: 1000;">
+            <i class="fas fa-bars"></i>
+        </button>
+    `);
+
+    // Utility Functions
+    function handleLogout() {
+        Swal.fire({
+            title: 'Konfirmasi Logout',
+            text: 'Apakah Anda yakin ingin keluar?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Logout',
+            cancelButtonText: 'Batal',
+            background: '#fff'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Logging out...',
+                    text: 'Mohon tunggu sebentar',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => Swal.showLoading()
+                });
+                
+                setTimeout(() => {
+                    window.location.href = 'logout.php';
+                }, 800);
+            }
+        });
+    }
+
+    function printInspection(id) {
+        window.open(`print.php?id=${id}`, '_blank', 'width=800,height=600');
+    }
+
+    function deleteInspection(id) {
+        Swal.fire({
+            title: 'Konfirmasi Hapus',
+            text: 'Apakah Anda yakin ingin menghapus data pemeriksaan ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, Hapus',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `delete.php?id=${id}`;
+            }
+        });
+    }
+
+    // Export Functions
     function exportToExcel() {
         try {
             let table = document.getElementById("inspectionTable");
             let rows = [];
             
-            // Get headers (excluding the Aksi column)
-            let headers = [];
-            for(let i = 0; i < table.rows[0].cells.length - 1; i++) {
-                headers.push(table.rows[0].cells[i].textContent.trim());
-            }
+            // Get headers
+            let headers = Array.from(table.rows[0].cells)
+                .slice(0, -1)
+                .map(cell => cell.textContent.trim());
             rows.push(headers);
             
             // Get data
             for(let i = 1; i < table.rows.length; i++) {
-                let row = [];
-                for(let j = 0; j < table.rows[i].cells.length - 1; j++) {
-                    let cell = table.rows[i].cells[j];
-                    
-                    let text = '';
-                    if (cell.querySelector('.badge')) {
-                        text = cell.querySelector('.badge').textContent.trim();
-                    } else if (cell.querySelector('button.btn-info')) {
-                        let modalId = cell.querySelector('button').getAttribute('data-bs-target');
-                        let modal = document.querySelector(modalId);
-                        if (modal) {
-                            text = Array.from(modal.querySelectorAll('table tr'))
-                                .map(tr => Array.from(tr.cells).map(td => td.textContent.trim()).join(': '))
-                                .join('; ');
-                        } else {
-                            text = 'Lihat Detail';
+                let row = Array.from(table.rows[i].cells)
+                    .slice(0, -1)
+                    .map(cell => {
+                        if (cell.querySelector('.badge')) {
+                            return cell.querySelector('.badge').textContent.trim();
                         }
-                    } else {
-                        text = cell.textContent.trim();
-                    }
-                    row.push(text);
-                }
+                        if (cell.querySelector('button.btn-info')) {
+                            let modalId = cell.querySelector('button').getAttribute('data-bs-target');
+                            let modal = document.querySelector(modalId);
+                            return modal ? 
+                                Array.from(modal.querySelectorAll('table tr'))
+                                    .map(tr => Array.from(tr.cells)
+                                        .map(td => td.textContent.trim())
+                                        .join(': '))
+                                    .join('; ') : 
+                                'Lihat Detail';
+                        }
+                        return cell.textContent.trim();
+                    });
                 rows.push(row);
             }
             
             let wb = XLSX.utils.book_new();
             let ws = XLSX.utils.aoa_to_sheet(rows);
             
-            const max_width = rows.reduce((w, r) => Math.max(w, r.length), 0);
-            ws['!cols'] = Array(max_width).fill({ wch: 15 });
+            ws['!cols'] = Array(rows[0].length).fill({ wch: 15 });
             
             XLSX.utils.book_append_sheet(wb, ws, "Pemeriksaan Kendaraan");
             
@@ -965,32 +1271,11 @@ $conn->close();
         }
     }
 
-    // Prevent right-click on preview image
-    if (document.getElementById('previewImage')) {
-        document.getElementById('previewImage').addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-    }
-
-    // Handle keyboard navigation for image modal
-    document.addEventListener('keydown', function(e) {
-        if (imagePreviewModal && imagePreviewModal._isShown) {
-            if (e.key === 'Escape') {
-                imagePreviewModal.hide();
-            }
-        }
-    });
-
-    // Function to update overall status
+    // Status Management
     function updateOverallStatus() {
         const components = document.querySelectorAll('[data-component-status]');
-        let allGood = true;
-        
-        components.forEach(component => {
-            if (component.dataset.componentStatus === 'buruk') {
-                allGood = false;
-            }
-        });
+        const allGood = Array.from(components)
+            .every(component => component.dataset.componentStatus !== 'buruk');
         
         const statusBadge = document.querySelector('#overallStatus');
         if (statusBadge) {
@@ -999,12 +1284,56 @@ $conn->close();
         }
     }
 
-    // Print function
-    function printInspection(id) {
-        window.open(`print.php?id=${id}`, '_blank', 'width=800,height=600');
+    // Event Listeners
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (imagePreviewModal && imagePreviewModal._isShown) {
+                imagePreviewModal.hide();
+            }
+            cleanupModalState();
+        }
+    });
+
+    // Global Event Handlers
+    window.addEventListener('load', function() {
+        // Initialize overall status on page load
+        updateOverallStatus();
+        
+        // Add any global event handlers that need to run after page load
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                // Refresh charts if needed
+                if (typeof chartInstances !== 'undefined') {
+                    chartInstances.forEach(chart => chart.update());
+                }
+            }
+        });
+    });
+
+    // Format Utilities
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
-    
-</script>    
+
+    // Helper function for error handling
+    function handleError(error, operation) {
+        console.error(`Error during ${operation}:`, error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Terjadi kesalahan saat ${operation}`
+        });
+    }
+
+    // Register service worker if supported
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(error => {
+                console.error('ServiceWorker registration failed:', error);
+            });
+        });
+    }
+</script>
     <script src="../assets/js/core/libs.min.js"></script>
     <script src="../assets/js/hope-ui.js"></script>
 </body>

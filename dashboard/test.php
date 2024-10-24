@@ -1,396 +1,561 @@
-<div class="row">
-    <div class="col-12">
-        <h5>Detail Komponen</h5>
-        <div class="accordion" id="accordionKomponen">
-            <!-- Cairan -->
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCairan">
-                        Cairan
+<?php
+// Koneksi ke database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "checkcar";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    handleError("Koneksi database gagal: " . $conn->connect_error);
+    exit();
+}
+
+// Ambil ID dari parameter URL
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+// Query untuk mengambil data inspeksi
+$query = "SELECT * FROM vehicle_inspection WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
+
+// Jika data tidak ditemukan, redirect ke halaman utama
+if (!$data) {
+    header("Location: index.php");
+    exit;
+}
+
+// Fungsi untuk mendapatkan nama mobil
+function getCarName($platNomor) {
+    switch ($platNomor) {
+        case 'W 1740 NP':
+            return 'Inova Lama';
+        case 'W 1507 NP':
+            return 'Inova Reborn';
+        case 'W 1374 NP':
+            return 'Kijang Kapsul';
+        default:
+            return 'Unknown';
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Pemeriksaan Kendaraan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+     <!-- Tailwind CSS CDN -->
+     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body class="bg-gray-50">
+    <!-- Komponen Pemeriksaan -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Detail Komponen</h2>
+                <!-- Cairan -->
+            <div class="mb-6">
+                <div class="border rounded-lg overflow-hidden">
+                    <button class="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors" 
+                            onclick="toggleSection('collapseLampu')" 
+                            type="button">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xl">🛢️</span>
+                            <span class="font-medium text-gray-800">Cairan</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
                     </button>
-                </h2>
-                <div id="collapseCairan" class="accordion-collapse collapse show">
-                    <div class="accordion-body">
-                        <table class="table">
-                            <tr>
-                                <th>Oli Mesin</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['oli_mesin']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                    
+                    <div id="collapseCairan" class="block">
+                        <div class="p-4 space-y-3">
+                            <!-- oli_mesin -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">oli_mesin</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['oli_mesin']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['oli_mesin']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['oli_mesin_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['oli_mesin_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['oli_mesin_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Oli Power Steering</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['oli_power_steering']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                </div>
+                            </div>
+                            
+                            <!-- Oli Power Steering -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">Oli Power Steering</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['oli_power_steering']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['oli_power_steering']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['oli_power_steering_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['oli_power_steering_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['oli_power_steering_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Oli Transmisi</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['oli_transmisi']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                </div>
+                            </div>
+
+                            <!-- Oli transmisi -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">Oli Transmisi</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['oli_transmisi']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['oli_transmisi']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['oli_transmisi_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['oli_transmisi_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['oli_transmisi_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Minyak Rem</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['minyak_rem']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                </div>
+                            </div>
+
+                            <!-- minyak_rem -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">lampu_klakson</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['minyak_rem']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['minyak_rem']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['minyak_rem_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['minyak_rem_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['minyak_rem_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                        </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Lampu -->
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLampu">
-                        Lampu
+            <div class="mb-6">
+                <div class="border rounded-lg overflow-hidden">
+                    <button class="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors" 
+                            onclick="toggleSection('collapseLampu')" 
+                            type="button">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xl">💡</span>
+                            <span class="font-medium text-gray-800">Lampu</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
                     </button>
-                </h2>
-                <div id="collapseLampu" class="accordion-collapse collapse">
-                    <div class="accordion-body">
-                        <table class="table">
-                            <tr>
-                                <th>Lampu Utama</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['lampu_utama']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                    
+                    <div id="collapseLampu" class="block">
+                        <div class="p-4 space-y-3">
+                            <!-- lampu utama -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">lampu utama</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['lampu_utama']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['lampu_utama']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['lampu_utama_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['lampu_utama_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['lampu_utama_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Lampu Sein</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['lampu_sein']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                </div>
+                            </div>
+                            
+                            <!-- lampu_sein -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">lampu_sein</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['lampu_sein']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['lampu_sein']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['lampu_sein_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['lampu_sein_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['lampu_sein_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Lampu Rem</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['lampu_rem']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                </div>
+                            </div>
+
+                            <!-- lampu_rem -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">lampu_rem</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['lampu_rem']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['lampu_rem']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['lampu_rem_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['lampu_rem_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['lampu_rem_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Klakson</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['lampu_klakson']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                </div>
+                            </div>
+
+                            <!-- lampu_klakson -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">lampu_klakson</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['lampu_klakson']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['lampu_klakson']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['lampu_klakson_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['lampu_klakson_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['lampu_klakson_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                        </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Interior -->
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInterior">
-                        Interior
+                <!-- Interior -->
+            <div class="mb-6">
+                <div class="border rounded-lg overflow-hidden">
+                    <button class="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors" 
+                            onclick="toggleSection('collapseInter')" 
+                            type="button">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xl">🚘</span>
+                            <span class="font-medium text-gray-800">Interior</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
                     </button>
-                </h2>
-                <div id="collapseInterior" class="accordion-collapse collapse">
-                    <div class="accordion-body">
-                        <table class="table">
-                            <tr>
-                                <th>Aki</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['cek_aki']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                    
+                    <div id="collapseInter" class="block">
+                        <div class="p-4 space-y-3">
+                            <!-- Aki -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">lampu utama</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_aki']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['cek_aki']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['aki_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['aki_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['aki_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Kursi</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['cek_kursi']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                </div>
+                            </div>
+                            
+                            <!-- cek_kursi -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">cek_kursi</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_kursi']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['cek_kursi']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['kursi_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['kursi_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['kursi_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Lantai</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['cek_lantai']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                </div>
+                            </div>
+
+                            <!-- cek_lantai -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">cek_lantai</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_lantai']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['cek_lantai']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['lantai_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['lantai_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['lantai_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Dinding</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['cek_dinding']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                </div>
+                            </div>
+
+                            <!-- cek_dinding -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">cek_dinding</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_dinding']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['cek_dinding']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['dinding_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['dinding_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['dinding_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Kap</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['cek_kap']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                </div>
+                            </div>
+
+                            <!-- cek_kap -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">cek_kap</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_kap']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['cek_kap']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['kap_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['kap_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['kap_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                        </table>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Dokumen dan Perlengkapan -->
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDokumen">
-                        Dokumen dan Perlengkapan
+                <!-- Dokumen dan Perlengkapan -->
+            <div class="mb-6">
+                <div class="border rounded-lg overflow-hidden">
+                    <button class="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors" 
+                            onclick="toggleSection('collapseDoc')" 
+                            type="button">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xl">📄</span>
+                            <span class="font-medium text-gray-800">Dokumen dan Perlengkapan</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
                     </button>
-                </h2>
-                <div id="collapseDokumen" class="accordion-collapse collapse">
-                    <div class="accordion-body">
-                        <table class="table">
-                            <tr>
-                                <th>STNK</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['cek_stnk']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                    
+                    <div id="collapseDoc" class="block">
+                        <div class="p-4 space-y-3">
+                            <!-- Aki -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">STNK</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_stnk']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['cek_stnk']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['stnk_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['stnk_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['stnk_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>APAR</th>
-                                <td>
-                                    <span class="badge <?php echo strtolower($data['cek_apar']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                </div>
+                            </div>
+                            
+                            <!-- APAR -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">APAR</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_apar']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
                                         <?php echo $data['cek_apar']; ?>
                                     </span>
-                                </td>
-                                <td>
                                     <?php if (!empty($data['apar_foto'])): ?>
-                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['apar_foto']); ?>')">
-                                            <i class="fas fa-image"></i> Lihat Foto
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['apar_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
                                         </button>
                                     <?php endif; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                               <th>P3K</th>
-                               <td>
-                                   <span class="badge <?php echo strtolower($data['cek_p3k']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
-                                       <?php echo $data['cek_p3k']; ?>
-                                   </span>
-                               </td>
-                               <td>
-                                   <?php if (!empty($data['p3k_foto'])): ?>
-                                       <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['p3k_foto']); ?>')">
-                                           <i class="fas fa-image"></i> Lihat Foto
-                                       </button>
-                                   <?php endif; ?>
-                               </td>
-                           </tr>
-                           <tr>
-                               <th>Kunci Roda</th>
-                               <td>
-                                   <span class="badge <?php echo strtolower($data['cek_kunci_roda']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
-                                       <?php echo $data['cek_kunci_roda']; ?>
-                                   </span>
-                               </td>
-                               <td>
-                                   <?php if (!empty($data['kunci_roda_foto'])): ?>
-                                       <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['kunci_roda_foto']); ?>')">
-                                           <i class="fas fa-image"></i> Lihat Foto
-                                       </button>
-                                   <?php endif; ?>
-                               </td>
-                           </tr>
-                       </table>
-                   </div>
-               </div>
-           </div>
+                                </div>
+                            </div>
 
-           <!-- Sistem dan Mekanis -->
-           <div class="accordion-item">
-               <h2 class="accordion-header">
-                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSistem">
-                       Sistem dan Mekanis
-                   </button>
-               </h2>
-               <div id="collapseSistem" class="accordion-collapse collapse">
-                   <div class="accordion-body">
-                       <table class="table">
-                           <tr>
-                               <th>Air Radiator</th>
-                               <td>
-                                   <span class="badge <?php echo strtolower($data['cek_air_radiator']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
-                                       <?php echo $data['cek_air_radiator']; ?>
-                                   </span>
-                               </td>
-                               <td>
-                                   <?php if (!empty($data['air_radiator_foto'])): ?>
-                                       <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['air_radiator_foto']); ?>')">
-                                           <i class="fas fa-image"></i> Lihat Foto
-                                       </button>
-                                   <?php endif; ?>
-                               </td>
-                           </tr>
-                           <tr>
-                               <th>Bahan Bakar</th>
-                               <td>
-                                   <span class="badge <?php echo strtolower($data['cek_bahan_bakar']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
-                                       <?php echo $data['cek_bahan_bakar']; ?>
-                                   </span>
-                               </td>
-                               <td>
-                                   <?php if (!empty($data['bahan_bakar_foto'])): ?>
-                                       <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['bahan_bakar_foto']); ?>')">
-                                           <i class="fas fa-image"></i> Lihat Foto
-                                       </button>
-                                   <?php endif; ?>
-                               </td>
-                           </tr>
-                           <tr>
-                               <th>Tekanan Ban</th>
-                               <td>
-                                   <span class="badge <?php echo strtolower($data['cek_tekanan_ban']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
-                                       <?php echo $data['cek_tekanan_ban']; ?>
-                                   </span>
-                               </td>
-                               <td>
-                                   <?php if (!empty($data['tekanan_ban_foto'])): ?>
-                                       <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['tekanan_ban_foto']); ?>')">
-                                           <i class="fas fa-image"></i> Lihat Foto
-                                       </button>
-                                   <?php endif; ?>
-                               </td>
-                           </tr>
-                           <tr>
-                               <th>Rem</th>
-                               <td>
-                                   <span class="badge <?php echo strtolower($data['cek_rem']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
-                                       <?php echo $data['cek_rem']; ?>
-                                   </span>
-                               </td>
-                               <td>
-                                   <?php if (!empty($data['rem_foto'])): ?>
-                                       <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['rem_foto']); ?>')">
-                                           <i class="fas fa-image"></i> Lihat Foto
-                                       </button>
-                                   <?php endif; ?>
-                               </td>
-                           </tr>
-                       </table>
-                   </div>
-               </div>
-           </div>
-       </div>
-   </div>
-</div>
+                            <!-- P3K -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">P3K</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_p3k']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
+                                        <?php echo $data['cek_p3k']; ?>
+                                    </span>
+                                    <?php if (!empty($data['p3k_foto'])): ?>
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['p3k_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+
+                            <!-- Kunci Roda -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">Kunci Roda</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_kunci_roda']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
+                                        <?php echo $data['cek_kunci_roda']; ?>
+                                    </span>
+                                    <?php if (!empty($data['kunci_roda_foto'])): ?>
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['kunci_roda_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Sistem dan Mekanis -->
+            <div class="mb-6">
+                <div class="border rounded-lg overflow-hidden">
+                    <button class="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors" 
+                            onclick="toggleSection('collapseSistem')" 
+                            type="button">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xl">⚙️</span>
+                            <span class="font-medium text-gray-800">Sistem dan Mekanis</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    
+                    <div id="collapseSistem" class="block">
+                        <div class="p-4 space-y-3">
+                            <!-- Aki -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">Air Radiator</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_air_radiator']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
+                                        <?php echo $data['cek_air_radiator']; ?>
+                                    </span>
+                                    <?php if (!empty($data['air_radiator_foto'])): ?>
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['air_radiator_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            
+                            <!-- Bahan Bakar -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">cek_kursi</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_bahan_bakar']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
+                                        <?php echo $data['cek_bahan_bakar']; ?>
+                                    </span>
+                                    <?php if (!empty($data['bahan_bakar_foto'])): ?>
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['bahan_bakar_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+
+                            <!-- Tekanan Ban -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">Tekanan Ban</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_tekanan_ban']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
+                                        <?php echo $data['cek_tekanan_ban']; ?>
+                                    </span>
+                                    <?php if (!empty($data['tekanan_ban_foto'])): ?>
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['tekanan_ban_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+
+                            <!-- Rem -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">Rem</span>
+                                <div class="flex items-center space-x-4">
+                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_rem']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
+                                        <?php echo $data['cek_rem']; ?>
+                                    </span>
+                                    <?php if (!empty($data['rem_foto'])): ?>
+                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['rem_foto']); ?>')"
+                                                class="text-blue-600 hover:text-blue-800 transition-colors">
+                                            <i class="fas fa-image"></i>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white p-4 rounded-lg max-w-2xl w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Detail Foto</h3>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <img id="modalImage" src="" alt="Detail" class="w-full rounded">
+        </div>
+    </div>
+
+    <script>
+    function toggleSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        const isHidden = section.classList.contains('hidden');
+        
+        // Hide all sections first
+        document.querySelectorAll('[id^="collapse"]').forEach(el => {
+            if (el.id !== sectionId) {
+                el.classList.add('hidden');
+            }
+        });
+        
+        // Toggle current section
+        if (isHidden) {
+            section.classList.remove('hidden');
+        } else {
+            section.classList.add('hidden');
+        }
+    }
+
+    function viewImage(imagePath) {
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = imagePath;
+        modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('imageModal');
+        modal.classList.add('hidden');
+    }
+
+    // Close modal when clicking outside the image
+    document.getElementById('imageModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+
+    // Close modal with escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+    </script>
+</body>
+</html>
