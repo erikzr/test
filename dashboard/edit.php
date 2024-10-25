@@ -1,16 +1,6 @@
 <?php
-// Koneksi ke database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "checkcar";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    handleError("Koneksi database gagal: " . $conn->connect_error);
-    exit();
-}
+session_start(); // Memulai sesi
+include 'auth/koneksi.php';
 
 // Ambil ID dari parameter URL
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;

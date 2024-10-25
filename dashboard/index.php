@@ -7,18 +7,8 @@ function handleError($message) {
     error_log($message);
 }
 
-// Koneksi ke database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "checkcar";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    handleError("Koneksi database gagal: " . $conn->connect_error);
-    exit();
-}
+// koneksi kedatabase
+include 'auth/koneksi.php';
 
 // Mengambil data pemeriksaan terbaru dengan semua field
 $sql = "SELECT * FROM vehicle_inspection ORDER BY created_at DESC LIMIT 10";

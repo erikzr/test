@@ -31,19 +31,8 @@ if (empty($field) || empty($status) || empty($id)) {
     exit;
 }
 
-// Koneksi ke database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "checkcar";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    file_put_contents('debug.log', "Database connection failed: " . $conn->connect_error . "\n", FILE_APPEND);
-    echo json_encode(['success' => false, 'message' => 'Koneksi database gagal: ' . $conn->connect_error]);
-    exit;
-}
+session_start(); // Memulai sesi
+include 'auth/koneksi.php';
 
 // Validasi field name
 $allowed_fields = [
