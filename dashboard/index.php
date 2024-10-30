@@ -526,7 +526,7 @@ $conn->close();
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h5 class="card-title text-uppercase text-white mb-0">Total Inspeksi</h5>
+                                        <h5 class="card-title text-uppercase text-white mb-0">Total Inspeksiii</h5>
                                         <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo $totalInspeksi; ?></span>
                                     </div>
                                     <div class="col-auto">
