@@ -718,7 +718,7 @@ $conn->close();
                                                 'Air Radiator' => ['status' => $row['cek_air_radiator'], 'foto' => $row['air_radiator_foto']],
                                                 'Bahan Bakar' => ['status' => $row['cek_bahan_bakar'], 'foto' => $row['bahan_bakar_foto']],
                                                 'Tekanan Ban' => ['status' => $row['cek_tekanan_ban'], 'foto' => $row['tekanan_ban_foto']],
-                                                'Rem' => ['status' => $row['cek_rem'], 'foto' => '']
+                                                'Rem' => ['status' => $row['cek_rem'], 'foto' => $row['tekanan_ban_foto']]
                                             ]
                                         ];
                                     ?>
@@ -1029,51 +1029,143 @@ $conn->close();
     window.chartInstances = chartInstances;
     });
 
-    // Image Preview Functionality
-    let imagePreviewModal = null;
-    let currentImageSrc = '';
+    // Image Preview Implementation
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize image preview functionality
+    initializeImagePreview();
+    
+    // Initialize modals
+    initializeModals();
+});
 
-    function initializeImagePreview() {
-        imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
-        const previewImage = document.getElementById('previewImage');
-        
-        if (previewImage) {
-            previewImage.addEventListener('click', () => previewImage.classList.toggle('zoomed'));
-            previewImage.addEventListener('contextmenu', e => e.preventDefault());
-        }
-    }
+function initializeImagePreview() {
+    const imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+    const previewImage = document.getElementById('previewImage');
+    const downloadLink = document.getElementById('downloadImage');
 
-    function viewImage(imagePath) {
-        try {
-            const previewImage = document.getElementById('previewImage');
-            const downloadLink = document.getElementById('downloadImage');
-            
-            const fullImagePath = imagePath.startsWith('http') ? imagePath : `../form/uploads/${imagePath}`;
-            
-            previewImage.src = fullImagePath;
-            currentImageSrc = fullImagePath;
-            downloadLink.href = fullImagePath;
-            
-            imagePreviewModal.show();
-            previewImage.classList.remove('zoomed');
-            
-            previewImage.onerror = () => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Gagal memuat gambar. File mungkin tidak ada atau rusak.'
-                });
-                imagePreviewModal.hide();
-            };
-        } catch (error) {
-            console.error('Error viewing image:', error);
+    // Add click handler to all image preview buttons
+    document.querySelectorAll('[onclick^="viewImage"]').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const imagePath = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+            viewImage(imagePath);
+        });
+    });
+
+    // Enhanced viewImage function with proper path handling and error checking
+    window.viewImage = function(imagePath) {
+        if (!imagePath) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Terjadi kesalahan saat membuka gambar.'
+                text: 'Path gambar tidak ditemukan!'
             });
+            return;
         }
+
+        // Construct proper image path
+        const fullImagePath = constructImagePath(imagePath);
+        
+        // Pre-load image to check if it exists
+        const tempImg = new Image();
+        tempImg.onload = function() {
+            previewImage.src = fullImagePath;
+            downloadLink.href = fullImagePath;
+            imagePreviewModal.show();
+        };
+        
+        tempImg.onerror = function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Gagal memuat gambar. File mungkin tidak ada atau rusak.'
+            });
+        };
+        
+        tempImg.src = fullImagePath;
+    };
+
+    // Helper function to construct proper image path
+    function constructImagePath(imagePath) {
+        if (imagePath.startsWith('http')) {
+            return imagePath;
+        }
+        
+        // Remove any leading slashes
+        imagePath = imagePath.replace(/^\/+/, '');
+        
+        // Construct the full path - adjust this based on your folder structure
+        return `../form/uploads/${imagePath}`;  // Adjust this path according to your directory structure
     }
+
+    // Add zoom functionality
+    if (previewImage) {
+        previewImage.addEventListener('click', function() {
+            this.classList.toggle('zoomed');
+        });
+        
+        // Prevent right-click on preview image
+        previewImage.addEventListener('contextmenu', e => e.preventDefault());
+    }
+}
+
+// Enhanced modal initialization
+function initializeModals() {
+    const modals = document.querySelectorAll('.modal');
+    
+    modals.forEach(modal => {
+        const modalInstance = new bootstrap.Modal(modal);
+        
+        modal.addEventListener('hidden.bs.modal', function() {
+            // Reset image zoom when modal is closed
+            const previewImage = this.querySelector('#previewImage');
+            if (previewImage) {
+                previewImage.classList.remove('zoomed');
+            }
+            
+            // Clean up modal state
+            cleanupModalState();
+        });
+    });
+}
+
+// Modal state cleanup
+function cleanupModalState() {
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    document.body.classList.remove('modal-open');
+}
+
+// Add necessary CSS styles
+const styleSheet = document.createElement('style');
+styleSheet.textContent = `
+    #previewImage {
+        transition: transform 0.3s ease;
+        cursor: zoom-in;
+        max-width: 100%;
+        height: auto;
+    }
+    
+    #previewImage.zoomed {
+        transform: scale(1.5);
+        cursor: zoom-out;
+    }
+    
+    .modal-body {
+        overflow: auto;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .btn-image-preview {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        border-radius: 0.2rem;
+    }
+`;
+document.head.appendChild(styleSheet);
 
     // Card Hover Effects
     function initializeCardHoverEffects() {
@@ -1139,21 +1231,54 @@ $conn->close();
     }
 
     function deleteInspection(id) {
-        Swal.fire({
-            title: 'Konfirmasi Hapus',
-            text: 'Apakah Anda yakin ingin menghapus data pemeriksaan ini?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, Hapus',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = `delete.php?id=${id}`;
-            }
-        });
-    }
+    Swal.fire({
+        title: 'Konfirmasi Hapus',
+        text: 'Apakah Anda yakin ingin menghapus data pemeriksaan ini?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Hapus',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Menggunakan fetch untuk AJAX request
+            fetch('delete.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'id=' + id
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire(
+                        'Terhapus!',
+                        'Data pemeriksaan berhasil dihapus.',
+                        'success'
+                    ).then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    Swal.fire(
+                        'Gagal!',
+                        data.message || 'Gagal menghapus data pemeriksaan.',
+                        'error'
+                    );
+                }
+            })
+            .catch(error => {
+                Swal.fire(
+                    'Error!',
+                    'Terjadi kesalahan saat menghapus data.',
+                    'error'
+                );
+                console.error('Error:', error);
+            });
+        }
+    });
+}
     function exportToExcel() {
     try {
         // Initialize workbook
@@ -1351,7 +1476,7 @@ $conn->close();
             confirmButtonColor: '#dc3545'
         });
     }
-}
+    }
     // Fungsi untuk mengekspor ke PDF
     function exportToPDF() {
         try {

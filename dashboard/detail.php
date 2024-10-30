@@ -53,304 +53,161 @@ function getCarName($platNomor) {
     <div class="container mx-auto px-4 py-8">
         <div class="bg-white rounded-lg shadow-lg p-6">
             <h2 class="text-2xl font-bold mb-6 text-gray-800">Detail Komponen</h2>
+
+            <!-- cairan -->
             <div class="mb-6">
-    <div class="border rounded-lg overflow-hidden">
-        <button class="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors" 
-                onclick="toggleSection('collapseCairan')" 
-                type="button">
-            <div class="flex items-center space-x-3">
-                <span class="text-xl">🛢️</span>
-                <span class="font-medium text-gray-800">Cairan</span>
-            </div>
-            <i class="fas fa-chevron-down text-gray-500"></i>
-        </button>
+                <div class="border rounded-lg overflow-hidden">
+                    <button class="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors" 
+                            onclick="toggleSection('collapseCairan')" 
+                            type="button">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xl">🛢️</span>
+                            <span class="font-medium text-gray-800">Cairan</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
         
-        <div id="collapseCairan" class="block">
-            <div class="p-4 space-y-3">
-                <!-- oli mesin -->
-                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                    <span class="font-medium text-gray-700">Oli Mesin</span>
-                    <div class="flex items-center space-x-4">
-                        <select 
-                            class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['oli_mesin']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
-                            onchange="updateStatus('oli_mesin', this.value, <?php echo $data['id']; ?>)"
-                        >
-                            <option value="Baik" <?php echo $data['oli_mesin'] === 'Baik' ? 'selected' : ''; ?>>Baik</option>
-                            <option value="Kurang Baik" <?php echo $data['oli_mesin'] === 'Kurang Baik' ? 'selected' : ''; ?>>Kurang Baik</option>
-                        </select>
-                        
-                        <?php if (!empty($data['oli_mesin_foto'])): ?>
-                            <img 
-                                src="../../form/uploads/<?php echo basename(htmlspecialchars($data['oli_mesin_foto'])); ?>" 
-                                alt="Foto Oli Mesin" 
-                                class="w-10 h-10 rounded object-cover cursor-pointer"
-                                onclick="viewImage('../../form/uploads/<?php echo basename(htmlspecialchars($data['oli_mesin_foto'])); ?>')"
-                            >
-                        <?php endif; ?>
-                    </div>
-                </div>
+                <div id="collapseCairan" class="block">
+                    <div class="p-4 space-y-3">
+                            <!-- Oli Mesin -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">Oli Mesin</span>
+                                <div class="flex items-center space-x-4">
+                                    <select 
+                                        class="px-3 py-1 rounded-full text-sm <?php echo ($data['oli_mesin'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                                        onchange="updateStatus('oli_mesin', this.value, <?php echo $data['id']; ?>)"
+                                    >
+                                        <option value="baik" <?php echo ($data['oli_mesin'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="tidak_baik" <?php echo ($data['oli_mesin'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                    </select>
+                                    
+                                    <?php if (!empty($data['oli_mesin_foto'])): ?>
+                                        <img 
+                                            src="../form/uploads/<?php echo basename(htmlspecialchars($data['oli_mesin_foto'])); ?>" 
+                                            alt="Foto Oli Mesin" 
+                                            class="w-10 h-10 rounded object-cover cursor-pointer"
+                                            onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['oli_mesin_foto'])); ?>')"
+                                        >
+                                    <?php endif; ?>
+                                </div>
+                            </div>
 
-                                <!-- Tambahkan script untuk handle perubahan status -->
-                                <script>
-function updateStatus(field, newStatus, id) {
-    if(confirm('Apakah anda yakin ingin mengubah status?')) {
-        // Debug: Log data yang akan dikirim
-        console.log('Sending data:', { field, newStatus, id });
+                            <!-- Oli Power Steering -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">Oli Power Steering</span>
+                                <div class="flex items-center space-x-4">
+                                    <select 
+                                        class="px-3 py-1 rounded-full text-sm <?php echo ($data['oli_power_steering'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                                        onchange="updateStatus('oli_power_steering', this.value, <?php echo $data['id']; ?>)"
+                                    >
+                                        <option value="baik" <?php echo ($data['oli_power_steering'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="tidak_baik" <?php echo ($data['oli_power_steering'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                    </select>
+                                    
+                                    <?php if (!empty($data['oli_power_steering_foto'])): ?>
+                                        <img 
+                                            src="../form/uploads/<?php echo basename(htmlspecialchars($data['oli_power_steering_foto'])); ?>" 
+                                            alt="Foto Oli Power Steering" 
+                                            class="w-10 h-10 rounded object-cover cursor-pointer"
+                                            onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['oli_power_steering_foto'])); ?>')"
+                                        >
+                                    <?php endif; ?>
+                                </div>
+                            </div>
 
-        // Buat FormData object
-        const formData = new FormData();
-        formData.append('field', field);
-        formData.append('status', newStatus);
-        formData.append('id', id);
+                            <!-- Oli Transmisi -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">Oli Transmisi</span>
+                                <div class="flex items-center space-x-4">
+                                    <select 
+                                        class="px-3 py-1 rounded-full text-sm <?php echo ($data['oli_transmisi'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                                        onchange="updateStatus('oli_transmisi', this.value, <?php echo $data['id']; ?>)"
+                                    >
+                                        <option value="baik" <?php echo ($data['oli_transmisi'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="tidak_baik" <?php echo ($data['oli_transmisi'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                    </select>
+                                    
+                                    <?php if (!empty($data['oli_transmisi_foto'])): ?>
+                                        <img 
+                                            src="../form/uploads/<?php echo basename(htmlspecialchars($data['oli_transmisi_foto'])); ?>" 
+                                            alt="Foto Oli Transmisi" 
+                                            class="w-10 h-10 rounded object-cover cursor-pointer"
+                                            onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['oli_transmisi_foto'])); ?>')"
+                                        >
+                                    <?php endif; ?>
+                                </div>
+                            </div>
 
-        // Kirim AJAX request ke server
-        fetch('update_status.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            // Debug: Log raw response
-            console.log('Raw response:', response);
-            return response.text(); // Ubah ke text() untuk melihat response mentah
-        })
-        .then(rawText => {
-            console.log('Response text:', rawText);
-            // Coba parse sebagai JSON
-            try {
-                const data = JSON.parse(rawText);
-                console.log('Parsed JSON:', data);
-                
-                if(data.success) {
-                    alert('Status berhasil diperbarui!');
-                    location.reload();
-                } else {
-                    alert('Gagal memperbarui status: ' + (data.message || 'Unknown error'));
-                }
-            } catch (e) {
-                console.error('JSON parse error:', e);
-                alert('Error parsing response: ' + rawText);
-            }
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-            alert('Terjadi kesalahan saat memperbarui status: ' + error.message);
-        });
-    }
-}
-</script>
+                            <!-- Minyak Rem -->
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                <span class="font-medium text-gray-700">Minyak Rem</span>
+                                <div class="flex items-center space-x-4">
+                                    <select 
+                                        class="px-3 py-1 rounded-full text-sm <?php echo ($data['minyak_rem'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                                        onchange="updateStatus('minyak_rem', this.value, <?php echo $data['id']; ?>)"
+                                    >
+                                        <option value="baik" <?php echo ($data['minyak_rem'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="tidak_baik" <?php echo ($data['minyak_rem'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                    </select>
+                                    
+                                    <?php if (!empty($data['minyak_rem_foto'])): ?>
+                                        <img 
+                                            src="../form/uploads/<?php echo basename(htmlspecialchars($data['minyak_rem_foto'])); ?>" 
+                                            alt="Foto Minyak Rem" 
+                                            class="w-10 h-10 rounded object-cover cursor-pointer"
+                                            onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['minyak_rem_foto'])); ?>')"
+                                        >
+                                    <?php endif; ?>
+                                </div>
+                            </div>
 
-                <!-- Oli Power Steering -->
-                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                    <span class="font-medium text-gray-700">Oli Power Steering</span>
-                    <div class="flex items-center space-x-4">
-                        <select 
-                            class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['oli_power_steering']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
-                            onchange="updateStatus('oli_power_steering', this.value)"
-                        >
-                            <option value="Baik" <?php echo $data['oli_power_steering'] === 'Baik' ? 'selected' : ''; ?>>Baik</option>
-                            <option value="Kurang Baik" <?php echo $data['oli_power_steering'] === 'Kurang Baik' ? 'selected' : ''; ?>>Kurang Baik</option>
-                        </select>
-                        
-                        <?php if (!empty($data['oli_power_steering_foto'])): ?>
-                            <img 
-                                src="<?php echo htmlspecialchars($data['oli_power_steering_foto']); ?>" 
-                                alt="Foto Oli Mesin" 
-                                class="w-10 h-10 rounded object-cover cursor-pointer"
-                                onclick="viewImage('<?php echo htmlspecialchars($data['oli_power_steering_foto']); ?>')"
-                            >
-                        <?php endif; ?>
-                    </div>
-                </div>
+                            <script>
+                            function updateStatus(field, newStatus, id) {
+                                if(confirm('Apakah anda yakin ingin mengubah status?')) {
+                                    const formData = new FormData();
+                                    formData.append('field', field);
+                                    formData.append('status', newStatus);
+                                    formData.append('id', id);
 
-                <!-- Tambahkan script untuk handle perubahan status -->
-                <script>
-                function updateStatus(field, newStatus) {
-                    if(confirm('Apakah anda yakin ingin mengubah status?')) {
-                        // Kirim AJAX request ke server
-                        fetch('update_status.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: `field=${field}&status=${newStatus}`
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if(data.success) {
-                                alert('Status berhasil diperbarui!');
-                                location.reload(); // Refresh halaman untuk menampilkan perubahan
-                            } else {
-                                alert('Gagal memperbarui status!');
+                                    fetch('update_status.php', {
+                                        method: 'POST',
+                                        body: formData
+                                    })
+                                    .then(response => response.text())
+                                    .then(rawText => {
+                                        try {
+                                            const data = JSON.parse(rawText);
+                                            if(data.success) {
+                                                alert('Status berhasil diperbarui!');
+                                                location.reload();
+                                            } else {
+                                                alert('Gagal memperbarui status: ' + (data.message || 'Unknown error'));
+                                            }
+                                        } catch (e) {
+                                            console.error('JSON parse error:', e);
+                                            alert('Error parsing response: ' + rawText);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Fetch error:', error);
+                                        alert('Terjadi kesalahan saat memperbarui status: ' + error.message);
+                                    });
+                                }
                             }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Terjadi kesalahan saat memperbarui status!');
-                        });
-                    }
-                }
-                </script>
 
-                 <!-- Oli transmisi -->
-                 <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                    <span class="font-medium text-gray-700">Oli Transmisi</span>
-                    <div class="flex items-center space-x-4">
-                        <select 
-                            class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['oli_transmisi']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
-                            onchange="updateStatus('oli_transmisi', this.value)"
-                        >
-                            <option value="Baik" <?php echo $data['oli_transmisi'] === 'Baik' ? 'selected' : ''; ?>>Baik</option>
-                            <option value="Kurang Baik" <?php echo $data['oli_transmisi'] === 'Kurang Baik' ? 'selected' : ''; ?>>Kurang Baik</option>
-                        </select>
-                        
-                        <?php if (!empty($data['oli_transmisi_foto'])): ?>
-                            <img 
-                                src="<?php echo htmlspecialchars($data['oli_transmisi_foto']); ?>" 
-                                alt="Foto Oli Transmisi" 
-                                class="w-10 h-10 rounded object-cover cursor-pointer"
-                                onclick="viewImage('<?php echo htmlspecialchars($data['oli_transmisi_foto']); ?>')"
-                            >
-                        <?php endif; ?>
+                            function toggleSection(sectionId) {
+                                const section = document.getElementById(sectionId);
+                                section.classList.toggle('hidden');
+                            }
+
+                            function viewImage(imagePath) {
+                                window.open(imagePath, '_blank');
+                            }
+                            </script>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Tambahkan script untuk handle perubahan status -->
-                <script>
-                function updateStatus(field, newStatus) {
-                    if(confirm('Apakah anda yakin ingin mengubah status?')) {
-                        // Kirim AJAX request ke server
-                        fetch('update_status.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: `field=${field}&status=${newStatus}`
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if(data.success) {
-                                alert('Status berhasil diperbarui!');
-                                location.reload(); // Refresh halaman untuk menampilkan perubahan
-                            } else {
-                                alert('Gagal memperbarui status!');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Terjadi kesalahan saat memperbarui status!');
-                        });
-                    }
-                }
-                </script>
-
-                <!-- Minyak Rem -->
-                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                    <span class="font-medium text-gray-700">Minyak Rem</span>
-                    <div class="flex items-center space-x-4">
-                        <select 
-                            class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['minyak_rem']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
-                            onchange="updateStatus('minyak_rem', this.value)"
-                        >
-                            <option value="Baik" <?php echo $data['minyak_rem'] === 'Baik' ? 'selected' : ''; ?>>Baik</option>
-                            <option value="Kurang Baik" <?php echo $data['minyak_rem'] === 'Kurang Baik' ? 'selected' : ''; ?>>Kurang Baik</option>
-                        </select>
-                        
-                        <?php if (!empty($data['minyak_rem_foto'])): ?>
-                            <img 
-                                src="<?php echo htmlspecialchars($data['minyak_rem_foto']); ?>" 
-                                alt="Foto Minyak Rem" 
-                                class="w-10 h-10 rounded object-cover cursor-pointer"
-                                onclick="viewImage('<?php echo htmlspecialchars($data['minyak_rem_foto']); ?>')"
-                            >
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                <!-- Tambahkan script untuk handle perubahan status -->
-                <script>
-                function updateStatus(field, newStatus) {
-                    if(confirm('Apakah anda yakin ingin mengubah status?')) {
-                        // Kirim AJAX request ke server
-                        fetch('update_status.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: `field=${field}&status=${newStatus}`
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if(data.success) {
-                                alert('Status berhasil diperbarui!');
-                                location.reload(); // Refresh halaman untuk menampilkan perubahan
-                            } else {
-                                alert('Gagal memperbarui status!');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Terjadi kesalahan saat memperbarui status!');
-                        });
-                    }
-                }
-                </script>
-
-                <!-- Oli transmisi -->
-                 <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                    <span class="font-medium text-gray-700">Oli Transmisi</span>
-                    <div class="flex items-center space-x-4">
-                        <select 
-                            class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['oli_transmisi']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
-                            onchange="updateStatus('oli_transmisi', this.value)"
-                        >
-                            <option value="Baik" <?php echo $data['oli_transmisi'] === 'Baik' ? 'selected' : ''; ?>>Baik</option>
-                            <option value="Kurang Baik" <?php echo $data['oli_transmisi'] === 'Kurang Baik' ? 'selected' : ''; ?>>Kurang Baik</option>
-                        </select>
-                        
-                        <?php if (!empty($data['oli_transmisi_foto'])): ?>
-                            <img 
-                                src="<?php echo htmlspecialchars($data['oli_transmisi_foto']); ?>" 
-                                alt="Foto Oli Mesin" 
-                                class="w-10 h-10 rounded object-cover cursor-pointer"
-                                onclick="viewImage('<?php echo htmlspecialchars($data['oli_transmisi_foto']); ?>')"
-                            >
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                <!-- Tambahkan script untuk handle perubahan status -->
-                <script>
-                function updateStatus(field, newStatus) {
-                    if(confirm('Apakah anda yakin ingin mengubah status?')) {
-                        // Kirim AJAX request ke server
-                        fetch('update_status.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: `field=${field}&status=${newStatus}`
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if(data.success) {
-                                alert('Status berhasil diperbarui!');
-                                location.reload(); // Refresh halaman untuk menampilkan perubahan
-                            } else {
-                                alert('Gagal memperbarui status!');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Terjadi kesalahan saat memperbarui status!');
-                        });
-                    }
-                }
-                </script>
-                <!-- Dan seterusnya untuk komponen lainnya dengan pola yang sama -->
-            </div>
-        </div>
     </div>
-</div>
 
             <!-- Lampu -->
             <div class="mb-6">
@@ -367,66 +224,91 @@ function updateStatus(field, newStatus, id) {
                     
                     <div id="collapseLampu" class="block">
                         <div class="p-4 space-y-3">
+                            
                             <!-- lampu utama -->
                             <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                                <span class="font-medium text-gray-700">lampu utama</span>
+                                <span class="font-medium text-gray-700">Lampu Utama</span>
                                 <div class="flex items-center space-x-4">
-                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['lampu_utama']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
-                                        <?php echo $data['lampu_utama']; ?>
-                                    </span>
+                                    <select 
+                                        class="px-3 py-1 rounded-full text-sm <?php echo ($data['lampu_utama'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                                        onchange="updateStatus('lampu_utama', this.value, <?php echo $data['id']; ?>)"
+                                    >
+                                        <option value="baik" <?php echo ($data['lampu_utama'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="tidak_baik" <?php echo ($data['lampu_utama'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                    </select>
                                     <?php if (!empty($data['lampu_utama_foto'])): ?>
-                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['lampu_utama_foto']); ?>')"
-                                                class="text-blue-600 hover:text-blue-800 transition-colors">
-                                            <i class="fas fa-image"></i>
-                                        </button>
+                                        <img 
+                                            src="../form/uploads/<?php echo basename(htmlspecialchars($data['lampu_utama_foto'])); ?>" 
+                                            alt="Foto Lampu Utama" 
+                                            class="w-10 h-10 rounded object-cover cursor-pointer"
+                                            onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['lampu_utama_foto'])); ?>')"
+                                        >
                                     <?php endif; ?>
                                 </div>
                             </div>
                             
-                            <!-- lampu_sein -->
+                            <!-- lampu sein -->
                             <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                                <span class="font-medium text-gray-700">lampu_sein</span>
+                                <span class="font-medium text-gray-700">Lampu Sein</span>
                                 <div class="flex items-center space-x-4">
-                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['lampu_sein']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
-                                        <?php echo $data['lampu_sein']; ?>
-                                    </span>
+                                    <select 
+                                        class="px-3 py-1 rounded-full text-sm <?php echo ($data['lampu_sein'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                                        onchange="updateStatus('lampu_sein', this.value, <?php echo $data['id']; ?>)"
+                                    >
+                                        <option value="baik" <?php echo ($data['lampu_sein'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="tidak_baik" <?php echo ($data['lampu_sein'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                    </select>
                                     <?php if (!empty($data['lampu_sein_foto'])): ?>
-                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['lampu_sein_foto']); ?>')"
-                                                class="text-blue-600 hover:text-blue-800 transition-colors">
-                                            <i class="fas fa-image"></i>
-                                        </button>
+                                        <img 
+                                            src="../form/uploads/<?php echo basename(htmlspecialchars($data['lampu_sein_foto'])); ?>" 
+                                            alt="Foto Lampu Sein" 
+                                            class="w-10 h-10 rounded object-cover cursor-pointer"
+                                            onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['lampu_sein_foto'])); ?>')"
+                                        >
                                     <?php endif; ?>
                                 </div>
                             </div>
 
-                            <!-- lampu_rem -->
+                            <!-- lampu rem -->
                             <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                                <span class="font-medium text-gray-700">lampu_rem</span>
+                                <span class="font-medium text-gray-700">Lampu Rem</span>
                                 <div class="flex items-center space-x-4">
-                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['lampu_rem']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
-                                        <?php echo $data['lampu_rem']; ?>
-                                    </span>
+                                    <select 
+                                        class="px-3 py-1 rounded-full text-sm <?php echo ($data['lampu_rem'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                                        onchange="updateStatus('lampu_rem', this.value, <?php echo $data['id']; ?>)"
+                                    >
+                                        <option value="baik" <?php echo ($data['lampu_rem'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="tidak_baik" <?php echo ($data['lampu_rem'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                    </select>
                                     <?php if (!empty($data['lampu_rem_foto'])): ?>
-                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['lampu_rem_foto']); ?>')"
-                                                class="text-blue-600 hover:text-blue-800 transition-colors">
-                                            <i class="fas fa-image"></i>
-                                        </button>
+                                        <img 
+                                            src="../form/uploads/<?php echo basename(htmlspecialchars($data['lampu_rem_foto'])); ?>" 
+                                            alt="Foto Lampu Rem" 
+                                            class="w-10 h-10 rounded object-cover cursor-pointer"
+                                            onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['lampu_rem_foto'])); ?>')"
+                                        >
                                     <?php endif; ?>
                                 </div>
                             </div>
 
-                            <!-- lampu_klakson -->
+                            <!-- lampu klakson -->
                             <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                                <span class="font-medium text-gray-700">lampu_klakson</span>
+                                <span class="font-medium text-gray-700">Lampu Klakson</span>
                                 <div class="flex items-center space-x-4">
-                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['lampu_klakson']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
-                                        <?php echo $data['lampu_klakson']; ?>
-                                    </span>
+                                    <select 
+                                        class="px-3 py-1 rounded-full text-sm <?php echo ($data['lampu_klakson'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                                        onchange="updateStatus('lampu_klakson', this.value, <?php echo $data['id']; ?>)"
+                                    >
+                                        <option value="baik" <?php echo ($data['lampu_klakson'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="tidak_baik" <?php echo ($data['lampu_klakson'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                    </select>
                                     <?php if (!empty($data['lampu_klakson_foto'])): ?>
-                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['lampu_klakson_foto']); ?>')"
-                                                class="text-blue-600 hover:text-blue-800 transition-colors">
-                                            <i class="fas fa-image"></i>
-                                        </button>
+                                        <img 
+                                            src="../form/uploads/<?php echo basename(htmlspecialchars($data['lampu_klakson_foto'])); ?>" 
+                                            alt="Foto Lampu Klakson" 
+                                            class="w-10 h-10 rounded object-cover cursor-pointer"
+                                            onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['lampu_klakson_foto'])); ?>')"
+                                        >
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -435,105 +317,140 @@ function updateStatus(field, newStatus, id) {
                 </div>
             </div>
 
-                <!-- Interior -->
-            <div class="mb-6">
-                <div class="border rounded-lg overflow-hidden">
-                    <button class="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors" 
-                            onclick="toggleSection('collapseInter')" 
-                            type="button">
-                        <div class="flex items-center space-x-3">
-                            <span class="text-xl">🚘</span>
-                            <span class="font-medium text-gray-800">Interior</span>
-                        </div>
-                        <i class="fas fa-chevron-down text-gray-500"></i>
-                    </button>
-                    
-                    <div id="collapseInter" class="block">
-                        <div class="p-4 space-y-3">
-                            <!-- Aki -->
-                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                                <span class="font-medium text-gray-700">lampu utama</span>
-                                <div class="flex items-center space-x-4">
-                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_aki']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
-                                        <?php echo $data['cek_aki']; ?>
-                                    </span>
-                                    <?php if (!empty($data['aki_foto'])): ?>
-                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['aki_foto']); ?>')"
-                                                class="text-blue-600 hover:text-blue-800 transition-colors">
-                                            <i class="fas fa-image"></i>
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            
-                            <!-- cek_kursi -->
-                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                                <span class="font-medium text-gray-700">cek_kursi</span>
-                                <div class="flex items-center space-x-4">
-                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_kursi']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
-                                        <?php echo $data['cek_kursi']; ?>
-                                    </span>
-                                    <?php if (!empty($data['kursi_foto'])): ?>
-                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['kursi_foto']); ?>')"
-                                                class="text-blue-600 hover:text-blue-800 transition-colors">
-                                            <i class="fas fa-image"></i>
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
 
-                            <!-- cek_lantai -->
-                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                                <span class="font-medium text-gray-700">cek_lantai</span>
-                                <div class="flex items-center space-x-4">
-                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_lantai']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
-                                        <?php echo $data['cek_lantai']; ?>
-                                    </span>
-                                    <?php if (!empty($data['lantai_foto'])): ?>
-                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['lantai_foto']); ?>')"
-                                                class="text-blue-600 hover:text-blue-800 transition-colors">
-                                            <i class="fas fa-image"></i>
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-
-                            <!-- cek_dinding -->
-                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                                <span class="font-medium text-gray-700">cek_dinding</span>
-                                <div class="flex items-center space-x-4">
-                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_dinding']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
-                                        <?php echo $data['cek_dinding']; ?>
-                                    </span>
-                                    <?php if (!empty($data['dinding_foto'])): ?>
-                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['dinding_foto']); ?>')"
-                                                class="text-blue-600 hover:text-blue-800 transition-colors">
-                                            <i class="fas fa-image"></i>
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-
-                            <!-- cek_kap -->
-                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
-                                <span class="font-medium text-gray-700">cek_kap</span>
-                                <div class="flex items-center space-x-4">
-                                    <span class="px-3 py-1 rounded-full text-sm <?php echo strtolower($data['cek_kap']) === 'baik' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
-                                        <?php echo $data['cek_kap']; ?>
-                                    </span>
-                                    <?php if (!empty($data['kap_foto'])): ?>
-                                        <button onclick="viewImage('<?php echo htmlspecialchars($data['kap_foto']); ?>')"
-                                                class="text-blue-600 hover:text-blue-800 transition-colors">
-                                            <i class="fas fa-image"></i>
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-
-                        </div>
+<!-- Interior -->
+<div class="mb-6">
+    <div class="border rounded-lg overflow-hidden">
+        <button class="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors" 
+                onclick="toggleSection('collapseInter')" 
+                type="button">
+            <div class="flex items-center space-x-3">
+                <span class="text-xl">🚘</span>
+                <span class="font-medium text-gray-800">Interior</span>
+            </div>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+        </button>
+        
+        <div id="collapseInter" class="block">
+            <div class="p-4 space-y-3">
+                
+                <!-- cek_aki -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                    <span class="font-medium text-gray-700">Cek Aki</span>
+                    <div class="flex items-center space-x-4">
+                        <select 
+                            class="px-3 py-1 rounded-full text-sm <?php echo ($data['cek_aki'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                            onchange="updateStatus('cek_aki', this.value, <?php echo $data['id']; ?>)"
+                        >
+                            <option value="baik" <?php echo ($data['cek_aki'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                            <option value="tidak_baik" <?php echo ($data['cek_aki'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                        </select>
+                        <?php if (!empty($data['aki_foto'])): ?>
+                            <img 
+                                src="../form/uploads/<?php echo basename(htmlspecialchars($data['aki_foto'])); ?>" 
+                                alt="Foto Aki" 
+                                class="w-10 h-10 rounded object-cover cursor-pointer"
+                                onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['aki_foto'])); ?>')"
+                            >
+                        <?php endif; ?>
                     </div>
                 </div>
+                
+                <!-- cek_kursi -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                    <span class="font-medium text-gray-700">Cek Kursi</span>
+                    <div class="flex items-center space-x-4">
+                        <select 
+                            class="px-3 py-1 rounded-full text-sm <?php echo ($data['cek_kursi'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                            onchange="updateStatus('cek_kursi', this.value, <?php echo $data['id']; ?>)"
+                        >
+                            <option value="baik" <?php echo ($data['cek_kursi'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                            <option value="tidak_baik" <?php echo ($data['cek_kursi'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                        </select>
+                        <?php if (!empty($data['kursi_foto'])): ?>
+                            <img 
+                                src="../form/uploads/<?php echo basename(htmlspecialchars($data['kursi_foto'])); ?>" 
+                                alt="Foto Kursi" 
+                                class="w-10 h-10 rounded object-cover cursor-pointer"
+                                onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['kursi_foto'])); ?>')"
+                            >
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- cek_lantai -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                    <span class="font-medium text-gray-700">Cek Lantai</span>
+                    <div class="flex items-center space-x-4">
+                        <select 
+                            class="px-3 py-1 rounded-full text-sm <?php echo ($data['cek_lantai'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                            onchange="updateStatus('cek_lantai', this.value, <?php echo $data['id']; ?>)"
+                        >
+                            <option value="baik" <?php echo ($data['cek_lantai'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                            <option value="tidak_baik" <?php echo ($data['cek_lantai'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                        </select>
+                        <?php if (!empty($data['lantai_foto'])): ?>
+                            <img 
+                                src="../form/uploads/<?php echo basename(htmlspecialchars($data['lantai_foto'])); ?>" 
+                                alt="Foto Lantai" 
+                                class="w-10 h-10 rounded object-cover cursor-pointer"
+                                onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['lantai_foto'])); ?>')"
+                            >
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- cek_dinding -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                    <span class="font-medium text-gray-700">Cek Dinding</span>
+                    <div class="flex items-center space-x-4">
+                        <select 
+                            class="px-3 py-1 rounded-full text-sm <?php echo ($data['cek_dinding'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                            onchange="updateStatus('cek_dinding', this.value, <?php echo $data['id']; ?>)"
+                        >
+                            <option value="baik" <?php echo ($data['cek_dinding'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                            <option value="tidak_baik" <?php echo ($data['cek_dinding'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                        </select>
+                        <?php if (!empty($data['dinding_foto'])): ?>
+                            <img 
+                                src="../form/uploads/<?php echo basename(htmlspecialchars($data['dinding_foto'])); ?>" 
+                                alt="Foto Dinding" 
+                                class="w-10 h-10 rounded object-cover cursor-pointer"
+                                onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['dinding_foto'])); ?>')"
+                            >
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- cek_kap -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                    <span class="font-medium text-gray-700">Cek Kap</span>
+                    <div class="flex items-center space-x-4">
+                        <select 
+                            class="px-3 py-1 rounded-full text-sm <?php echo ($data['cek_kap'] === 'baik') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>"
+                            onchange="updateStatus('cek_kap', this.value, <?php echo $data['id']; ?>)"
+                        >
+                            <option value="baik" <?php echo ($data['cek_kap'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
+                            <option value="tidak_baik" <?php echo ($data['cek_kap'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                        </select>
+                        <?php if (!empty($data['kap_foto'])): ?>
+                            <img 
+                                src="../form/uploads/<?php echo basename(htmlspecialchars($data['kap_foto'])); ?>" 
+                                alt="Foto Kap" 
+                                class="w-10 h-10 rounded object-cover cursor-pointer"
+                                onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['kap_foto'])); ?>')"
+                            >
+                        <?php endif; ?>
+                    </div>
+                </div>
+
             </div>
+        </div>
+    </div>
+</div>
+
+
+
 
                 <!-- Dokumen dan Perlengkapan -->
             <div class="mb-6">
