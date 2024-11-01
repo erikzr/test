@@ -50,3 +50,69 @@ Error: Data tidak lengkap. Field: oli_mesin, Status: Baik, ID:
 [2024-10-30 09:35:39] Invalid status value: baik
 [2024-10-30 09:40:48] Received request - Field: lampu_klakson, Status: baik, ID: 5
 [2024-10-30 09:40:48] Invalid status value: baik
+[2024-11-01 06:52:18] Received request - Field: oli_mesin, Status: tidak_baik, ID: 5
+[2024-11-01 06:52:18] Invalid status value: tidak_baik
+[2024-11-01 06:53:52] Received request - Field: oli_mesin, Status: baik, ID: 5
+[2024-11-01 06:53:52] Invalid status value: baik
+[2024-11-01 07:00:24][INFO] Received request - Field: oli_mesin, Status: tidak_baik, ID: 5
+[2024-11-01 07:00:24][ERROR] Invalid status value: tidak_baik
+[2024-11-01 07:03:57][INFO] Received request - Field: oli_mesin, Status: tidak_baik, ID: 5
+[2024-11-01 07:03:57][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:04:33][INFO] Received request - Field: oli_mesin, Status: baik, ID: 5
+[2024-11-01 07:04:33][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:05:03][INFO] Received request - Field: oli_power_steering, Status: baik, ID: 5
+[2024-11-01 07:05:03][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:05:07][INFO] Received request - Field: minyak_rem, Status: baik, ID: 5
+[2024-11-01 07:05:07][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:05:11][INFO] Received request - Field: lampu_utama, Status: baik, ID: 5
+[2024-11-01 07:05:11][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:05:15][INFO] Received request - Field: lampu_sein, Status: baik, ID: 5
+[2024-11-01 07:05:15][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:05:18][INFO] Received request - Field: lampu_klakson, Status: baik, ID: 5
+[2024-11-01 07:05:18][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:05:24][INFO] Received request - Field: cek_kursi, Status: baik, ID: 5
+[2024-11-01 07:05:24][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:05:28][INFO] Received request - Field: cek_dinding, Status: baik, ID: 5
+[2024-11-01 07:05:28][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:05:32][INFO] Received request - Field: cek_kap, Status: baik, ID: 5
+[2024-11-01 07:05:32][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:05:36][INFO] Received request - Field: cek_kunci_roda, Status: baik, ID: 5
+[2024-11-01 07:05:36][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:14:30][INFO] Received request - Field: oli_mesin, Status: tidak_baik, ID: 5
+[2024-11-01 07:14:30][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:14:35][INFO] Received request - Field: oli_mesin, Status: baik, ID: 5
+[2024-11-01 07:14:35][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:35:23][INFO] Received request - Field: cek_bahan_bakar, Status: tidak_baik, ID: 5
+[2024-11-01 07:35:23][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:35:32][INFO] Received request - Field: cek_bahan_bakar, Status: baik, ID: 5
+[2024-11-01 07:35:32][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:35:37][INFO] Received request - Field: cek_tekanan_ban, Status: tidak_baik, ID: 5
+[2024-11-01 07:35:37][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:35:47][INFO] Received request - Field: cek_tekanan_ban, Status: baik, ID: 5
+[2024-11-01 07:35:47][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:36:49][INFO] Received request - Field: cek_tekanan_ban, Status: tidak_baik, ID: 5
+[2024-11-01 07:36:49][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:37:00][INFO] Received request - Field: cek_tekanan_ban, Status: baik, ID: 5
+[2024-11-01 07:37:00][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:43:01][INFO] Received request - Field: oli_mesin, Status: tidak_baik, ID: 5
+[2024-11-01 07:43:01][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:43:19][INFO] Received request - Field: oli_mesin, Status: baik, ID: 5
+[2024-11-01 07:43:19][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:43:24][INFO] Received request - Field: oli_mesin, Status: tidak_baik, ID: 5
+[2024-11-01 07:43:24][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:43:53][INFO] Received request - Field: oli_mesin, Status: baik, ID: 5
+[2024-11-01 07:43:53][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:45:26][INFO] Received request - Field: oli_mesin, Status: tidak_baik, ID: 5
+[2024-11-01 07:45:26][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:45:31][INFO] Received request - Field: oli_mesin, Status: baik, ID: 5
+[2024-11-01 07:45:31][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:54:38][INFO] Received request - Field: oli_mesin, Status: tidak_baik, ID: 5
+[2024-11-01 07:54:38][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:54:45][INFO] Received request - Field: oli_mesin, Status: baik, ID: 5
+[2024-11-01 07:54:45][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:57:17][INFO] Received request - Field: oli_mesin, Status: tidak_baik, ID: 5
+[2024-11-01 07:57:17][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:57:23][INFO] Received request - Field: oli_mesin, Status: baik, ID: 5
+[2024-11-01 07:57:23][SUCCESS] Update successful - Rows affected: 1
+[2024-11-01 07:57:34][INFO] Received request - Field: minyak_rem, Status: tidak_baik, ID: 5
+[2024-11-01 07:57:34][SUCCESS] Update successful - Rows affected: 1

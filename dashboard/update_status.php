@@ -15,72 +15,105 @@ if (session_status() === PHP_SESSION_NONE) {
 // Include database connection
 require_once 'auth/koneksi.php';
 
-// Function to log debug information
-function debugLog($message) {
+// Function to log debug information with enhanced formatting
+function debugLog($message, $type = 'INFO') {
     $logFile = 'debug.log';
     $timestamp = date('Y-m-d H:i:s');
-    $logMessage = "[$timestamp] $message\n";
+    $logMessage = "[$timestamp][$type] $message\n";
     file_put_contents($logFile, $logMessage, FILE_APPEND);
+}
+
+// Function to send JSON response and exit
+function sendResponse($success, $message, $data = null) {
+    $response = [
+        'success' => $success,
+        'message' => $message
+    ];
+    
+    if ($data !== null) {
+        $response['data'] = $data;
+    }
+    
+    echo json_encode($response);
+    exit;
 }
 
 // Verify request method
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Invalid request method. Only POST is allowed.'
-    ]);
-    exit;
+    debugLog('Invalid request method: ' . $_SERVER['REQUEST_METHOD'], 'ERROR');
+    sendResponse(false, 'Invalid request method. Only POST is allowed.');
 }
 
-// Get and validate POST data
-$field = $_POST['field'] ?? '';
-$status = $_POST['status'] ?? '';
-$id = $_POST['id'] ?? '';
+// Get and sanitize POST data
+$field = trim($_POST['field'] ?? '');
+$status = trim($_POST['status'] ?? '');
+$id = filter_var($_POST['id'] ?? '', FILTER_VALIDATE_INT);
 
 debugLog("Received request - Field: $field, Status: $status, ID: $id");
 
 // Validate required fields
-if (empty($field) || empty($status) || empty($id)) {
-    debugLog("Missing required fields");
-    echo json_encode([
-        'success' => false,
-        'message' => 'Missing required fields'
-    ]);
-    exit;
+if (empty($field) || empty($status) || $id === false) {
+    debugLog("Missing or invalid required fields", 'ERROR');
+    sendResponse(false, 'Missing or invalid required fields');
 }
 
-// Validate field name against allowed fields
+// Define allowed fields based on your table structure
 $allowed_fields = [
-    'oli_mesin', 'oli_power_steering', 'oli_transmisi', 'minyak_rem',
-    'lampu_utama', 'lampu_sein', 'lampu_rem', 'lampu_klakson', 'cek_aki',
-    'cek_kursi', 'cek_lantai', 'cek_dinding', 'cek_kap',
-    'cek_stnk', 'cek_apar', 'cek_p3k', 'cek_kunci_roda', 'cek_air_radiator',
-    'cek_bahan_bakar', 'cek_tekanan_ban', 'cek_rem'
+    'oli_mesin',
+    'oli_power_steering',
+    'oli_transmisi',
+    'minyak_rem',
+    'lampu_utama',
+    'lampu_sein',
+    'lampu_rem',
+    'lampu_klakson',
+    'cek_aki',
+    'cek_kursi',
+    'cek_lantai',
+    'cek_dinding',
+    'cek_kap',
+    'cek_stnk',
+    'cek_apar',
+    'cek_p3k',
+    'cek_kunci_roda',
+    'cek_air_radiator',
+    'cek_bahan_bakar',
+    'cek_tekanan_ban',
+    'cek_rem'
 ];
 
+// Validate field name
 if (!in_array($field, $allowed_fields)) {
-    debugLog("Invalid field name: $field");
-    echo json_encode([
-        'success' => false,
-        'message' => 'Invalid field name'
-    ]);
-    exit;
+    debugLog("Invalid field name: $field", 'ERROR');
+    sendResponse(false, 'Invalid field name');
 }
 
-// Validate status values
-$allowed_statuses = ['Baik', 'Kurang Baik'];
-if (!in_array($status, $allowed_statuses)) {
-    debugLog("Invalid status value: $status");
-    echo json_encode([
-        'success' => false,
-        'message' => 'Invalid status value'
-    ]);
-    exit;
+// Validate status values (sesuai dengan nilai yang ada di database)
+$allowed_statuses = ['baik', 'tidak_baik'];
+if (!in_array(strtolower($status), $allowed_statuses)) {
+    debugLog("Invalid status value: $status", 'ERROR');
+    sendResponse(false, 'Invalid status value. Must be "baik" or "tidak_baik"');
 }
 
 try {
+    // Begin transaction
+    $conn->begin_transaction();
+
+    // First, verify that the record exists
+    $check_sql = "SELECT id FROM vehicle_inspection WHERE id = ?";
+    $check_stmt = $conn->prepare($check_sql);
+    $check_stmt->bind_param("i", $id);
+    $check_stmt->execute();
+    $result = $check_stmt->get_result();
+
+    if ($result->num_rows === 0) {
+        $conn->rollback();
+        debugLog("Record not found with ID: $id", 'ERROR');
+        sendResponse(false, 'Record not found');
+    }
+
     // Prepare and execute the update query
-    $sql = "UPDATE vehicle_inspection SET `$field` = ? WHERE id = ?";
+    $sql = "UPDATE vehicle_inspection SET `$field` = ?, updated_at = NOW() WHERE id = ?";
     $stmt = $conn->prepare($sql);
     
     if (!$stmt) {
@@ -95,34 +128,34 @@ try {
     
     // Check if any rows were affected
     if ($stmt->affected_rows > 0) {
-        debugLog("Update successful - Rows affected: " . $stmt->affected_rows);
-        echo json_encode([
-            'success' => true,
-            'message' => 'Status updated successfully',
-            'data' => [
-                'field' => $field,
-                'status' => $status,
-                'id' => $id,
-                'affected_rows' => $stmt->affected_rows
-            ]
+        $conn->commit();
+        debugLog("Update successful - Rows affected: " . $stmt->affected_rows, 'SUCCESS');
+        sendResponse(true, 'Status updated successfully', [
+            'field' => $field,
+            'status' => $status,
+            'id' => $id,
+            'affected_rows' => $stmt->affected_rows,
+            'timestamp' => date('Y-m-d H:i:s')
         ]);
     } else {
-        debugLog("No rows updated - ID might not exist");
-        echo json_encode([
-            'success' => false,
-            'message' => 'No records were updated. The ID might not exist.'
-        ]);
+        $conn->rollback();
+        debugLog("No changes made - New value same as old value", 'INFO');
+        sendResponse(true, 'No changes needed - value already up to date');
     }
     
-    $stmt->close();
-    
 } catch (Exception $e) {
-    debugLog("Error: " . $e->getMessage());
-    echo json_encode([
-        'success' => false,
-        'message' => 'Database error: ' . $e->getMessage()
-    ]);
+    if ($conn->inTransaction()) {
+        $conn->rollback();
+    }
+    debugLog("Error: " . $e->getMessage(), 'ERROR');
+    sendResponse(false, 'Database error: ' . $e->getMessage());
 } finally {
+    if (isset($check_stmt)) {
+        $check_stmt->close();
+    }
+    if (isset($stmt)) {
+        $stmt->close();
+    }
     $conn->close();
 }
 ?>
