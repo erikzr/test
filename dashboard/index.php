@@ -489,11 +489,12 @@ $conn->close();
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-users"></i>
-                            <span class="item-name">Users</span>
-                        </a>
-                    </li>
+                 <a class="nav-link" href="adminusers.php">
+                    <i class="fas fa-users"></i>
+                        <span class="item-name">Users</span>
+                             </a>
+                </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <i class="fas fa-cog"></i>
@@ -509,131 +510,147 @@ $conn->close();
         </button>
     </aside>
         
-        <main class="main-content">
-            <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
-                <div class="container-fluid navbar-inner">
-                    <a href="#" class="navbar-brand">
-                        <h4 class="logo-title">Pemeriksaan Kendaraan</h4>
-                    </a>
-                </div>
-            </nav>
-            
-            <div class="container-fluid content-inner mt-5 py-0">
-                
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card card-stats bg-info text-white">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <h5 class="card-title text-uppercase text-white mb-0">Total Inspeksiii</h5>
-                                        <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo $totalInspeksi; ?></span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-white text-info rounded-circle shadow">
-                                            <i class="fas fa-clipboard-list"></i>
-                                        </div>
-                                    </div>
-                                </div>
+ <main class="main-content">
+    <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
+        <div class="container-fluid navbar-inner">
+            <a href="#" class="navbar-brand">
+                <h4 class="logo-title">Pemeriksaan Kendaraan</h4>
+            </a>
+        </div>
+    </nav>
+    
+    <div class="container-fluid content-inner mt-5 py-0">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-stats bg-info text-white">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-white mb-0">Total Inspeksi</h5>
+                                <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo $totalInspeksi; ?></span>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-stats bg-success text-white">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <h5 class="card-title text-uppercase text-white mb-0">Persentase Aman</h5>
-                                        <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo number_format($persentaseAman, 1); ?>%</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-white text-success rounded-circle shadow">
-                                            <i class="fas fa-check-circle"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-stats bg-danger text-white">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <h5 class="card-title text-uppercase text-white mb-0">Perlu Perhatian</h5>
-                                        <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo $perluPerhatian; ?></span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-white text-danger rounded-circle shadow">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                        </div>
-                                    </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-white text-info rounded-circle shadow">
+                                    <i class="fas fa-clipboard-list"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-stats bg-success text-white">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-white mb-0">Persentase Aman</h5>
+                                <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo number_format($persentaseAman, 1); ?>%</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-white text-success rounded-circle shadow">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-stats bg-danger text-white">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-white mb-0">Perlu Perhatian</h5>
+                                <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo $perluPerhatian; ?></span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-white text-danger rounded-circle shadow">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <div class="row mt-4">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Persentase Kondisi Komponen per Kendaraan</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <?php foreach ($currentPageItems as $stat): ?>
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5 class="card-title mb-0">
-                                                    <?php echo htmlspecialchars($stat['car_name']); ?> (<?php echo htmlspecialchars($stat['plat_mobil']); ?>)
-                                                </h5>
-                                                <small class="text-muted">
-                                                    Tanggal Inspeksi: <?php echo date("d/m/Y H:i", strtotime($stat['inspection_date'])); ?>
-                                                </small>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="component-chart">
-                                                    <canvas id="chart-<?php echo str_replace(' ', '-', $stat['plat_mobil']); ?>"></canvas>
-                                                </div>
-                                                <div class="text-center mt-3">
-                                                    <span class="badge bg-success me-2">Baik: <?php echo $stat['persentase_baik']; ?>%</span>
-                                                    <span class="badge bg-danger">Perlu Perbaikan: <?php echo $stat['persentase_buruk']; ?>%</span>
-                                                </div>
-                                                <div class="mt-3">
-                                                    <small class="text-muted">Detail Komponen:</small>
-                                                    <ul class="list-unstyled small">
-                                                        <?php foreach ($stat['detail_komponen'] as $detail): ?>
-                                                        <li>
-                                                            <?php echo htmlspecialchars($detail['nama']); ?>: 
-                                                            <span class="badge <?php echo strtolower($detail['nilai']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
-                                                                <?php echo htmlspecialchars($detail['nilai']); ?>
-                                                            </span>
-                                                        </li>
-                                                        <?php endforeach; ?>
-                                                    </ul>
-                                                </div>
-                                            </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Persentase Kondisi Komponen per Kendaraan</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <?php foreach ($currentPageItems as $stat): ?>
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">
+                                            <?php echo htmlspecialchars($stat['car_name']); ?> (<?php echo htmlspecialchars($stat['plat_mobil']); ?>)
+                                        </h5>
+                                        <small class="text-muted">
+                                            Tanggal Inspeksi: <?php echo date("d/m/Y H:i", strtotime($stat['inspection_date'])); ?>
+                                        </small>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="component-chart">
+                                            <canvas id="chart-<?php echo str_replace(' ', '-', $stat['plat_mobil']); ?>"></canvas>
+                                        </div>
+                                        <div class="text-center mt-3">
+                                            <span class="badge bg-success me-2">Baik: <?php echo $stat['persentase_baik']; ?>%</span>
+                                            <span class="badge bg-danger">Perlu Perbaikan: <?php echo $stat['persentase_buruk']; ?>%</span>
+                                        </div>
+                                        <div class="mt-3">
+                                            <small class="text-muted">Detail Komponen:</small>
+                                            <ul class="list-unstyled small">
+                                                <?php foreach ($stat['detail_komponen'] as $detail): ?>
+                                                <li>
+                                                    <?php echo htmlspecialchars($detail['nama']); ?>: 
+                                                    <span class="badge <?php echo strtolower($detail['nilai']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                                        <?php echo htmlspecialchars($detail['nilai']); ?>
+                                                    </span>
+                                                </li>
+                                                <?php endforeach; ?>
+                                            </ul>
                                         </div>
                                     </div>
-                                    <?php endforeach; ?>
                                 </div>
-                                
-                                <!-- Pagination controls -->
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center">
-                                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                                        <li class="page-item <?php echo $i === $currentPage ? 'active' : ''; ?>">
-                                            <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                                        </li>
-                                        <?php endfor; ?>
-                                    </ul>
-                                </nav>
                             </div>
+                            <?php endforeach; ?>
                         </div>
+                        
+                        <!-- Pagination controls -->
+                        <nav aria-label="Page navigation" class="mt-4">
+                            <ul class="pagination justify-content-center">
+                                <?php if ($currentPage > 1): ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?php echo $currentPage - 1; ?>" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <li class="page-item <?php echo $i === $currentPage ? 'active' : ''; ?>">
+                                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                </li>
+                                <?php endfor; ?>
+                                
+                                <?php if ($currentPage < $totalPages): ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?php echo $currentPage + 1; ?>" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
+            </div>
+        </div>
+
                 
                
 <!-- Filter Section -->
@@ -652,39 +669,34 @@ $conn->close();
                     </button>
                 </div>
             </div>
-            
-            <!-- Filter Controls -->
-            <div class="card-body pb-0">
-                <form id="filterForm" class="row g-3">
-                    <div class="col-md-3">
-                        <label class="form-label">Tanggal Mulai</label>
-                        <input type="date" class="form-control" id="startDate" name="startDate">
+                <!-- Filter Controls -->
+                    <div class="card-body border-bottom">
+                        <form id="filterForm" class="row g-3 align-items-end">
+                            <div class="col-md-3">
+                                <label class="form-label">Tanggal Mulai</label>
+                                <input type="date" class="form-control" id="startDate" name="startDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Tanggal Akhir</label>
+                                <input type="date" class="form-control" id="endDate" name="endDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Jenis Mobil</label>
+                                <select class="form-select" id="carType" name="carType">
+                                    <option value="">Semua Mobil</option>
+                                    <option value="W 1740 NP">Inova Lama</option>
+                                    <option value="W 1507 NP">Inova Reborn</option>
+                                    <option value="W 1374 NP">Kijang Kapsul</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-primary w-100" onclick="applyFilters()">
+                                    <i class="fas fa-filter me-2"></i>Terapkan Filter
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Tanggal Akhir</label>
-                        <input type="date" class="form-control" id="endDate" name="endDate">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Jenis Mobil</label>
-                        <select class="form-select" id="carType" name="carType">
-                            <option value="">Semua Mobil</option>
-                            <option value="Inova Lama">Inova Lama</option>
-                            <option value="Inova Reborn">Inova Reborn</option>
-                            <option value="Kijang Kapsul">Kijang Kapsul</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-end">
-                        <button type="submit" class="btn btn-primary me-2">
-                            <i class="fas fa-filter me-2"></i>Filter
-                        </button>
-                        <button type="reset" class="btn btn-secondary">
-                            <i class="fas fa-undo me-2"></i>Reset
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-                <!-- Tambahkan container dengan max-width -->
+               <!-- Tambahkan container dengan max-width -->
                 <div class="container-fluid px-3">
                     <div class="card mb-3">
                         <div class="card-body p-2">
@@ -892,32 +904,129 @@ $conn->close();
         </main>
     </div>
 <script>
+    // Function to format date from dd/mm/yyyy HH:ii to yyyy-mm-dd format
+function formatDate(dateString) {
+    const [date, time] = dateString.split(' ');
+    const [day, month, year] = date.split('/');
+    return `${year}-${month}-${day}`;
+}
+
+// Function to check if a date is within range
+function isDateInRange(dateStr, startDate, endDate) {
+    if (!startDate && !endDate) return true;
     
-            document.addEventListener('DOMContentLoaded', function() {
-            // Initialize DataTables
-            $('#inspectionTable').DataTable({
-                responsive: true,
-                dom: 'Bfrtip',
-                buttons: [],
-                order: [[4, 'desc']],
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json'
-                }
-            });
+    const date = new Date(formatDate(dateStr));
+    const start = startDate ? new Date(startDate) : null;
+    const end = endDate ? new Date(endDate) : null;
+    
+    if (start && end) {
+        return date >= start && date <= end;
+    } else if (start) {
+        return date >= start;
+    } else if (end) {
+        return date <= end;
+    }
+    return true;
+}
 
-            // Initialize Bootstrap components
-            initializeBootstrapComponents();
+// Main filter function
+function applyFilters() {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const carType = document.getElementById('carType').value;
+    
+    const table = document.getElementById('inspectionTable');
+    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    
+    let visibleCount = 0;
+    
+    for (let i = 0; i < rows.length; i++) {
+        const plateCell = rows[i].getElementsByTagName('td')[2]; // Plat Mobil column
+        const dateCell = rows[i].getElementsByTagName('td')[4];  // Tanggal Pemeriksaan column
+        
+        if (plateCell && dateCell) {
+            const plateText = plateCell.textContent.trim();
+            const dateText = dateCell.textContent.trim();
             
-            // Initialize Charts
-            initializeCharts();
+            const matchesCarType = !carType || plateText === carType;
+            const matchesDate = isDateInRange(dateText, startDate, endDate);
             
-            // Initialize Image Preview
-            initializeImagePreview();
-            
-            // Add card hover effects
-            initializeCardHoverEffects();
-            });
+            if (matchesCarType && matchesDate) {
+                rows[i].style.display = '';
+                visibleCount++;
+                // Update row numbers
+                rows[i].getElementsByTagName('td')[0].textContent = visibleCount;
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    }
+    
+    // Update the showing entries text
+    const showingText = document.querySelector('.dataTables_info');
+    if (showingText) {
+        showingText.textContent = `Menampilkan 1 sampai ${visibleCount} dari ${visibleCount} entri`;
+    }
+}
 
+// Reset filter function
+function resetFilters() {
+    document.getElementById('filterForm').reset();
+    const table = document.getElementById('inspectionTable');
+    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    
+    for (let i = 0; i < rows.length; i++) {
+        rows[i].style.display = '';
+        // Reset row numbers
+        rows[i].getElementsByTagName('td')[0].textContent = i + 1;
+    }
+    
+    // Update the showing entries text
+    const showingText = document.querySelector('.dataTables_info');
+    if (showingText) {
+        showingText.textContent = `Menampilkan 1 sampai ${rows.length} dari ${rows.length} entri`;
+    }
+}
+
+// Add event listeners for date inputs to automatically trigger filter
+document.getElementById('startDate').addEventListener('change', applyFilters);
+document.getElementById('endDate').addEventListener('change', applyFilters);
+document.getElementById('carType').addEventListener('change', applyFilters);
+
+// Export functions
+function exportToExcel() {
+    const table = document.getElementById('inspectionTable');
+    const rows = Array.from(table.getElementsByTagName('tr'));
+    let csv = [];
+    
+    // Get headers
+    const headers = Array.from(rows[0].getElementsByTagName('th'))
+        .map(header => header.textContent.trim())
+        .slice(0, -1); // Remove the Aksi column
+    csv.push(headers.join(','));
+    
+    // Get visible rows data
+    Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'))
+        .filter(row => row.style.display !== 'none')
+        .forEach(row => {
+            const rowData = Array.from(row.getElementsByTagName('td'))
+                .map(cell => cell.textContent.trim())
+                .slice(0, -1); // Remove the Aksi column
+            csv.push(rowData.join(','));
+        });
+    
+    const csvContent = csv.join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'data_pemeriksaan_kendaraan.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
             // Bootstrap Components Initialization
             function initializeBootstrapComponents() {
                 // Setup Popovers

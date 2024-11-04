@@ -120,3 +120,587 @@ Error: Data tidak lengkap. Field: oli_mesin, Status: Baik, ID:
 Received ID for deletion: 5
 SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
 Delete successful
+2024-11-04 08:44:55 - Delete request received
+Received ID for deletion: 27
+SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
+Delete successful
+2024-11-04 15:22:01 - Debug: Total inspeksi: 26
+2024-11-04 15:22:01 - Debug: Persentase Aman: 69.230769230769
+2024-11-04 15:22:01 - Debug: Array
+(
+    [Total Records] => 26
+    [Perlu Perhatian] => 8
+    [Current Page] => 4
+    [Items Per Page] => 3
+    [Total Pages] => 4
+)
+
+2024-11-04 15:22:05 - Debug: Total inspeksi: 26
+2024-11-04 15:22:05 - Debug: Persentase Aman: 69.230769230769
+2024-11-04 15:22:05 - Debug: Array
+(
+    [Total Records] => 26
+    [Perlu Perhatian] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 4
+)
+
+2024-11-04 15:24:44 - Debug: Total inspeksi: 26
+2024-11-04 15:24:44 - Debug: Persentase Aman: 69.230769230769
+2024-11-04 15:24:44 - Debug: Array
+(
+    [Total Records] => 26
+    [Perlu Perhatian] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 4
+)
+
+2024-11-04 09:24:52 - Delete request received
+Received ID for deletion: 24
+SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
+Delete successful
+2024-11-04 15:24:55 - Debug: Total inspeksi: 25
+2024-11-04 15:24:55 - Debug: Persentase Aman: 68
+2024-11-04 15:24:55 - Debug: Array
+(
+    [Total Records] => 25
+    [Perlu Perhatian] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 4
+)
+
+2024-11-04 15:25:05 - Debug: Total inspeksi: 25
+2024-11-04 15:25:05 - Debug: Persentase Aman: 68
+2024-11-04 15:25:05 - Debug: Array
+(
+    [Total Records] => 25
+    [Perlu Perhatian] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 4
+)
+
+2024-11-04 15:25:32 - Debug: Total inspeksi: 25
+2024-11-04 15:25:32 - Debug: Persentase Aman: 68
+2024-11-04 15:25:32 - Debug: Array
+(
+    [Total Records] => 25
+    [Perlu Perhatian] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 4
+)
+
+2024-11-04 15:27:03 - Debug: Total inspeksi: 25
+2024-11-04 15:27:03 - Debug: Persentase Aman: 68
+2024-11-04 15:27:03 - Debug: Array
+(
+    [Total Records] => 25
+    [Perlu Perhatian] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 4
+)
+
+2024-11-04 15:32:04 - Debug: Total inspeksi: 25
+2024-11-04 15:32:04 - Debug: Persentase Aman: 68
+2024-11-04 15:32:04 - Debug: Array
+(
+    [Total Records] => 25
+    [Perlu Perhatian] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 4
+)
+
+2024-11-04 15:38:06 - Debug: Array
+(
+    [Total Inspeksi] => 25
+    [Perlu Perhatian] => 23
+    [Persentase Aman] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 15:42:12 - Debug: Array
+(
+    [Total Inspeksi] => 25
+    [Perlu Perhatian] => 23
+    [Persentase Aman] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 15:42:13 - Debug: Array
+(
+    [Total Inspeksi] => 25
+    [Perlu Perhatian] => 23
+    [Persentase Aman] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 15:42:14 - Debug: Array
+(
+    [Total Inspeksi] => 25
+    [Perlu Perhatian] => 23
+    [Persentase Aman] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 15:42:14 - Debug: Array
+(
+    [Total Inspeksi] => 25
+    [Perlu Perhatian] => 23
+    [Persentase Aman] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 15:42:21 - Debug: Array
+(
+    [Total Inspeksi] => 25
+    [Perlu Perhatian] => 23
+    [Persentase Aman] => 8
+    [Current Page] => 9
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 15:42:26 - Debug: Array
+(
+    [Total Inspeksi] => 25
+    [Perlu Perhatian] => 23
+    [Persentase Aman] => 8
+    [Current Page] => 3
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 15:42:28 - Debug: Array
+(
+    [Total Inspeksi] => 25
+    [Perlu Perhatian] => 23
+    [Persentase Aman] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 15:48:33 - Debug: Array
+(
+    [Total Inspeksi] => 25
+    [Perlu Perhatian] => 23
+    [Persentase Aman] => 8
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 15:49:01 - Debug: Array
+(
+    [Total Inspeksi] => 25
+    [Perlu Perhatian] => 23
+    [Persentase Aman] => 8
+    [Current Page] => 9
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 15:50:19 - Debug: Array
+(
+    [Total Inspeksi] => 26
+    [Perlu Perhatian] => 24
+    [Persentase Aman] => 7.7
+    [Current Page] => 9
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 15:50:35 - Debug: Array
+(
+    [Total Inspeksi] => 26
+    [Perlu Perhatian] => 24
+    [Persentase Aman] => 7.7
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 15:59:46 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:04:46 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:09:47 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:14:47 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:14:56 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:18:06 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:18:33 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:18:35 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:19:10 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:24:11 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:26:40 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:27:15 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:27:32 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:32:32 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:36:36 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:36:39 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:37:32 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:37:33 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:40:58 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:41:04 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:41:08 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:41:19 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:43:03 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:46:08 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:48:14 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:48:19 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:48:19 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:48:19 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:48:19 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:48:20 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:48:20 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:51:37 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:52:25 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:52:27 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:52:28 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 16:55:14 - Debug: Array
+(
+    [Total Inspeksi] => 27
+    [Perlu Perhatian] => 25
+    [Persentase Aman] => 7.4
+    [Current Page] => 1
+    [Items Per Page] => 3
+    [Total Pages] => 9
+)
+
+2024-11-04 10:57:14 - Delete request received
+Received ID for deletion: 26
+SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
+Delete successful
+2024-11-04 10:57:37 - Delete request received
+Received ID for deletion: 31
+SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
+Delete successful
