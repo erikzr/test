@@ -116,3 +116,7 @@ Error: Data tidak lengkap. Field: oli_mesin, Status: Baik, ID:
 [2024-11-01 07:57:23][SUCCESS] Update successful - Rows affected: 1
 [2024-11-01 07:57:34][INFO] Received request - Field: minyak_rem, Status: tidak_baik, ID: 5
 [2024-11-01 07:57:34][SUCCESS] Update successful - Rows affected: 1
+2024-11-01 10:01:20 - Delete request received
+Received ID for deletion: 5
+SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
+Delete successful
