@@ -11,7 +11,7 @@ function handleError($message) {
 include 'auth/koneksi.php';
 
 // Mengambil data pemeriksaan terbaru dengan semua field
-$sql = "SELECT * FROM vehicle_inspection ORDER BY created_at DESC LIMIT 10";
+$sql = "SELECT * FROM vehicle_inspection ORDER BY created_at ";
 
 $result = $conn->query($sql);
 
@@ -30,6 +30,7 @@ while ($row = $result->fetch_assoc()) {
     $status = 'Aman';
     $totalKomponen = 0;
     $komponenBaik = 0;
+    $komponenBuruk = 0;
     
     $komponenList = [
         'oli_mesin', 'oli_power_steering', 'oli_transmisi', 
@@ -42,16 +43,10 @@ while ($row = $result->fetch_assoc()) {
             $totalKomponen++;
             if (strtolower(trim($row[$komponen])) === 'baik') {
                 $komponenBaik++;
+            } else {
+                $komponenBuruk++;
             }
         }
-    }
-    
-    if ($totalKomponen > 0) {
-        $persentaseBaik = ($komponenBaik / $totalKomponen) * 100;
-        $persentaseBuruk = 100 - $persentaseBaik;
-    } else {
-        $persentaseBaik = 0;
-        $persentaseBuruk = 0;
     }
     
     $carName = '';
@@ -73,8 +68,8 @@ while ($row = $result->fetch_assoc()) {
         'plat_mobil' => $row['plat_mobil'],
         'car_name' => $carName,
         'inspection_date' => $row['created_at'],
-        'persentase_baik' => round($persentaseBaik, 1),
-        'persentase_buruk' => round($persentaseBuruk, 1),
+        'komponen_baik' => $komponenBaik,
+        'komponen_buruk' => $komponenBuruk,
         'detail_komponen' => array_map(function($komponen) use ($row) {
             return [
                 'nama' => $komponen,
@@ -83,7 +78,7 @@ while ($row = $result->fetch_assoc()) {
         }, $komponenList)
     ];
     
-    if ($persentaseBaik < 100) {
+    if ($komponenBuruk > 0) {
         $status = 'Perlu Perhatian';
         $perluPerhatian++;
     }
@@ -92,7 +87,9 @@ while ($row = $result->fetch_assoc()) {
     $inspeksiData[] = $row;
 }
 
-$persentaseAman = $totalInspeksi > 0 ? (($totalInspeksi - $perluPerhatian) / $totalInspeksi) * 100 : 0;
+// Total kendaraan yang perlu perhatian
+$mobilPerluPerhatian = $perluPerhatian;
+$mobilAman = $totalInspeksi - $perluPerhatian;
 
 // Pagination logic
 $itemsPerPage = 3;
@@ -544,7 +541,7 @@ $conn->close();
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-white mb-0">Persentase Aman</h5>
-                                <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo number_format($persentaseAman, 1); ?>%</span>
+                                <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo number_format($mobilAman); ?></span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-white text-success rounded-circle shadow">
@@ -598,8 +595,8 @@ $conn->close();
                                             <canvas id="chart-<?php echo str_replace(' ', '-', $stat['plat_mobil']); ?>"></canvas>
                                         </div>
                                         <div class="text-center mt-3">
-                                            <span class="badge bg-success me-2">Baik: <?php echo $stat['persentase_baik']; ?>%</span>
-                                            <span class="badge bg-danger">Perlu Perbaikan: <?php echo $stat['persentase_buruk']; ?>%</span>
+                                            <span class="badge bg-success me-2">Baik: <?php echo $stat['komponen_baik']; ?></span>
+                                            <span class="badge bg-danger">Perlu Perbaikan: <?php echo $stat['komponen_buruk']; ?></span>
                                         </div>
                                         <div class="mt-3">
                                             <small class="text-muted">Detail Komponen:</small>
