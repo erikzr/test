@@ -132,7 +132,7 @@ $conn->close();
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary">Sign In</button>
+                                <button type="submit" class="btn btn-primary">Sign Ink</button>
                             </div>
                         </form>
                     </div>
