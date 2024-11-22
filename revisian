@@ -1,0 +1,46 @@
+servis rutin 10.000km bengkel buduran / toyota 
+body beset / lecet ( paling sering )
+kebersihan kurang ( interior eksterior )
+sering kemana ( area jawa timur / tergantung undangan dan janjian )
+driver utama mas hadi                       ✅
+driver cadangan mas ayik                    ✅
+mobil khusus pimpinan ( reborn )
+pimpinan 1 operasional 2
+
+service ( bagian user )
+KOMPONEN 
+nambahi servis rutinan ( ketiga mobil nya ) ✅
+nama                                        ✅
+jenis mobil                                 ✅
+tanggal servis                              ✅
+tanggal kembali servis                      ✅
+kilometer terakhir                          ✅
+bukti atau nota servis ( jpg/png)           ✅
+tombol logout terlalu lebar                 ✅
+
+catatan ( bagian admin )
+KOMPONEN 
+nambahi servis rutinan ( ketiga mobil nya ) ❌
+nama                                        ❌
+jenis mobil                                 ❌
+tanggal servis                              ❌
+tanggal kembali servis                      ❌
+kilometer terakhir                          ❌
+bukti atau nota servis ( jpg/png)           ❌
+tombol logout terlalu lebar                 ✅
+
+catatan ( bagian user )
+menambahkan required ketika user belum mengisi / tidak upload otomatis muncul tulisan gagal ( waktu ke slide selanjutnya )❌baru sampai step 2
+ketika submit                               ❌
+apakah yakin muncul tulisan itu             ❌
+tidak perlu persen                          ✅
+komponen misal 3 komponen tidak baik        ✅
+exportnya dikasih filter ( perbulan / hari ini ) excel filter by tanggal dan mobil✅
+
+admin buatkan juga database                 ✅
+( karena yang akses tidak 1 orang )         ✅
+admin mengelola semuanya                    ✅
+ketika di dashboard admin bisa menambahkan atau menghapus user ✅
+hover jangan putih waktu klik lihat komponen✅
+pdf nya belum rapi                          ❌
+foto bagian komponen belum tampil           ❌✅

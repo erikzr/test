@@ -442,13 +442,13 @@ $result = $conn->query($sql);
             <div class="sidebar-list">
                 <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
+                        <a class="nav-link" href="index.php">
                             <i class="fas fa-tachometer-alt"></i>
                             <span class="item-name">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="adminusers.php">
+                        <a class="nav-link active" aria-current="page" href="#">
                             <i class="fas fa-users"></i>
                                  <span class="item-name">Users</span>
                                 </a>

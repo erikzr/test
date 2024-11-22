@@ -741,3 +741,27 @@ Delete successful
 Received ID for deletion: 9
 SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
 Delete successful
+2024-11-20 05:11:03 - Delete request received
+Received ID for deletion: 3
+SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
+Delete successful
+[2024-11-20 14:11:13][INFO] Received request - Field: oli_transmisi, Status: baik, ID: 4
+[2024-11-20 14:11:13][SUCCESS] Update successful - Rows affected: 1
+2024-11-22 09:02:13 - Delete request received
+Received ID for deletion: 9
+SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
+Delete successful
+[2024-11-22 09:42:53][INFO] Received request - Field: lampu_sein, Status: baik, ID: 4
+[2024-11-22 09:42:53][SUCCESS] Update successful - Rows affected: 1
+[2024-11-22 09:42:59][INFO] Received request - Field: lampu_klakson, Status: baik, ID: 4
+[2024-11-22 09:42:59][SUCCESS] Update successful - Rows affected: 1
+[2024-11-22 09:43:05][INFO] Received request - Field: cek_kursi, Status: baik, ID: 4
+[2024-11-22 09:43:05][SUCCESS] Update successful - Rows affected: 1
+[2024-11-22 09:43:09][INFO] Received request - Field: cek_lantai, Status: baik, ID: 4
+[2024-11-22 09:43:09][SUCCESS] Update successful - Rows affected: 1
+[2024-11-22 09:43:15][INFO] Received request - Field: cek_stnk, Status: baik, ID: 4
+[2024-11-22 09:43:15][SUCCESS] Update successful - Rows affected: 1
+[2024-11-22 09:43:20][INFO] Received request - Field: cek_p3k, Status: baik, ID: 4
+[2024-11-22 09:43:20][SUCCESS] Update successful - Rows affected: 1
+[2024-11-22 09:43:26][INFO] Received request - Field: cek_bahan_bakar, Status: baik, ID: 4
+[2024-11-22 09:43:26][SUCCESS] Update successful - Rows affected: 1
