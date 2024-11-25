@@ -349,13 +349,23 @@ h4 {
             </div>
         </div>
     </fieldset>
+                            <script>
+                                // JavaScript untuk menangani timestamp
+                                const handleTimestamp = (inputId, timestampId) => {
+                                    const inputElement = document.getElementById(inputId);
+                                    const timestampElement = document.getElementById(timestampId);
 
-    <script>
-                                function updateTimestamp(elementId) {
-                                    var now = new Date();
-                                    var timestamp = now.toLocaleString(); // Menampilkan tanggal dan waktu lokal
-                                    document.getElementById(elementId).innerText = timestamp;
-                                }
+                                    inputElement.addEventListener('change', () => {
+                                        const currentTime = new Date().toLocaleString();
+                                        timestampElement.innerText = currentTime;
+                                    });
+                                };
+
+                                // Panggil fungsi untuk setiap input foto
+                                handleTimestamp('oli_mesin_foto', 'oli_mesin_time');
+                                handleTimestamp('oli_power_steering_foto', 'oli_power_steering_time');
+                                handleTimestamp('oli_transmisi_foto', 'oli_transmisi_time');
+                                handleTimestamp('minyak_rem_foto', 'minyak_rem_time');
                             </script>
 <!-- Pemeriksaan Penerangan -->
 <fieldset>
@@ -516,6 +526,7 @@ h4 {
         </div>
     </div>
 </fieldset>
+
                             <script>
                                 function updateTimestamp(elementId) {
                                     var now = new Date();
@@ -790,7 +801,34 @@ h4 {
                                     document.getElementById(elementId).innerText = currentTime;
                                 }
                             </script>
-<!-- <script>
+
+<!--Finish-->
+<!--Finish               --><fieldset>
+<div class="form-card">
+                                    <div class="row">
+                                    <div class="col-7">
+                                        <h3 class="mb-4 text-left">Finish:</h3>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 6 - 6</h2>
+                                    </div>
+                                    </div>
+                                    <br><br>
+                                    <h2 class="text-center text-success"><strong>SUCCESS !</strong></h2>
+                                    <br>
+                                    <div class="row justify-content-center">
+                                    <div class="col-3"> <img src="../../assets/images/pages/img-success.png" class="img-fluid" alt="fit-image"> </div>
+                                    </div>
+                                    <br><br>
+                                    <div class="row justify-content-center">
+                                    <div class="text-center col-7">
+                                        <h5 class="text-center purple-text">Terimakasih , form berhasil di submit!</h5>
+                                    </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+<script>
 // Pastikan script dijalankan setelah DOM selesai dimuat
 document.addEventListener('DOMContentLoaded', function() {
     // Tambahkan event listener untuk tombol next
@@ -906,7 +944,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-</script> -->
+</script>
                         </form>
                         </div>
                     </div>
@@ -986,8 +1024,6 @@ document.addEventListener('DOMContentLoaded', function() {
     color: #dc3545;
 }
 </style>
-
-<!-- scriptlast -->
 
 <script>
 // Fungsi untuk update timestamp

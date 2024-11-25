@@ -2,39 +2,23 @@
     session_start(); // Start the session
     // Define service categories and their items
     $carCategories = [
-        'W 123123 ZS' => [
+        'W 1740 NP (Inova Lama)' => [
             'oli_mesin' => 'Oli Mesin',
             'oli_power_steering' => 'Oli Power Steering',
             'oli_transmisi' => 'Oli Transmisi'
         ],
-        'Kelistrikan' => [
+        'W 1507 NP (Reborn)' => [
             'lampu_utama' => 'Lampu Utama',
             'lampu_sein' => 'Lampu Sein',
             'lampu_rem' => 'Lampu Rem',
             'lampu_klakson' => 'Lampu Klakson',
             'aki' => 'Aki'
         ],
-        'Interior' => [
+        'W 1347 NP (Kijang Kapsul)' => [
             'kursi' => 'Kursi',
             'lantai' => 'Lantai',
             'dinding' => 'Dinding'
         ],
-        'Eksterior' => [
-            'kap' => 'Kap',
-            'stnk' => 'STNK',
-            'apar' => 'APAR',
-            'p3k' => 'P3K',
-            'kunci_roda' => 'Kunci Roda'
-        ],
-        'Cairan' => [
-            'air_radiator' => 'Air Radiator',
-            'minyak_rem' => 'Minyak Rem',
-            'bahan_bakar' => 'Bahan Bakar'
-        ],
-        'Mekanis' => [
-            'tekanan_ban' => 'Tekanan Ban',
-            'rem' => 'Rem'
-        ]
     ];
 
     $serviceCategories = [
@@ -460,7 +444,7 @@ h4 {
                 <div id="serviceItems">
                     <div class="service-item">
                         <div class="service-row">
-                        <div class="form-group">
+                            <div class="form-group">
                                 <label>Pilih mobil</label>
                                 <select name="service_type[]" onchange="updateServiceOptions(this)" required>
                                     <option value="">Pilih Kategori</option>
@@ -469,19 +453,21 @@ h4 {
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <div class="form-group">
-                            <label for="kilometer">Kilometer Terakhir</label>
-                            <input type="text" name="kilometer" id="kilometer" placeholder="Kilometer Mobil" class="input-kilometer" required>
-                        </div>
 
-                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="kilometer">Kilometer Terakhir</label>
+                                <input type="text" name="kilometer" id="kilometer" placeholder="Kilometer Mobil" class="input-kilometer" required>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="service_date">Tanggal Perbaikan</label>
                                 <input type="date" name="service_date" id="service_date" class="input-date" required>
                             </div>
-                                    <div class="form-group">
-                                        <label for="return_service_date">Tanggal Selesai Perbaikan</label>
-                                        <input type="date" name="return_service_date" id="return_service_date" class="input-date" required>
-                                    </div>
+
+                            <div class="form-group">
+                                <label for="return_service_date">Tanggal Selesai Perbaikan</label>
+                                <input type="date" name="return_service_date" id="return_service_date" class="input-date" required>
+                            </div>
                                     
                             <div class="form-group">
                                 <label>Pilih Jenis Service</label>
@@ -498,6 +484,11 @@ h4 {
                                 <select name="service_item[]" required>
                                     <option value="">Pilih Item</option>
                                 </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="kilometer">Keterangan Tambahan</label>
+                                <input type="text" name="kilometer" id="kilometer" placeholder="Kilometer Mobil" class="input-kilometer" required>
                             </div>
 
                             <div class="form-group">
@@ -588,18 +579,20 @@ h4 {
                                 </select>
                             </div>
                             <div class="form-group">
-                            <label for="kilometer">Kilometer Terakhir</label>
-                            <input type="text" name="kilometer" id="kilometer" placeholder="Kilometer Mobil" class="input-kilometer" required>
-                        </div>
+                                <label for="kilometer">Kilometer Terakhir</label>
+                                <input type="text" name="kilometer" id="kilometer" placeholder="Kilometer Mobil" class="input-kilometer" required>
+                            </div>
 
-                        <div class="form-group">
+                            <div class="form-group">
                                 <label for="service_date">Tanggal Perbaikan</label>
                                 <input type="date" name="service_date" id="service_date" class="input-date" required>
                             </div>
-                                    <div class="form-group">
-                                        <label for="return_service_date">Tanggal Selesai Perbaikan</label>
-                                        <input type="date" name="return_service_date" id="return_service_date" class="input-date" required>
-                                    </div>
+
+                            <div class="form-group">
+                                <label for="return_service_date">Tanggal Selesai Perbaikan</label>
+                                <input type="date" name="return_service_date" id="return_service_date" class="input-date" required>
+                                <button type="button" class="remove-button" onclick="removeServiceItem(this)">Hapus</button>
+                            </div>
                                     
                             <div class="form-group">
                                 <label>Pilih Jenis Service</label>
@@ -619,10 +612,14 @@ h4 {
                             </div>
 
                             <div class="form-group">
+                                <label for="kilometer">Keterangan Tambahan</label>
+                                <input type="text" name="kilometer" id="kilometer" placeholder="Kilometer Mobil" class="input-kilometer" required>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Bukti Nota</label>
                                 <input type="file" name="photo[]" accept="image/*" required>
                                 <div class="timestamp">Waktu diambil: belum diambil</div>
-                                
                             </div>
                         </div>
                     </div>

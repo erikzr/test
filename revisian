@@ -30,9 +30,9 @@ bukti atau nota servis ( jpg/png)           ❌
 tombol logout terlalu lebar                 ✅
 
 catatan ( bagian user )
-menambahkan required ketika user belum mengisi / tidak upload otomatis muncul tulisan gagal ( waktu ke slide selanjutnya )❌baru sampai step 2
-ketika submit                               ❌
-apakah yakin muncul tulisan itu             ❌
+menambahkan required ketika user belum mengisi / tidak upload otomatis muncul tulisan gagal ( waktu ke slide selanjutnya ) ✅baru sampai step 2
+ketika submit                               ✅
+apakah yakin muncul tulisan itu             ✅
 tidak perlu persen                          ✅
 komponen misal 3 komponen tidak baik        ✅
 exportnya dikasih filter ( perbulan / hari ini ) excel filter by tanggal dan mobil✅
@@ -43,4 +43,4 @@ admin mengelola semuanya                    ✅
 ketika di dashboard admin bisa menambahkan atau menghapus user ✅
 hover jangan putih waktu klik lihat komponen✅
 pdf nya belum rapi                          ❌
-foto bagian komponen belum tampil           ❌✅
+foto bagian komponen belum tampil           ✅

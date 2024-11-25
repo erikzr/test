@@ -498,9 +498,7 @@ button.btn.btn-primary:hover {
 button.btn.btn-danger.ms-2:hover {
   background-color: rgba(0, 0, 0, 0.2); /* Overlay semi-transparan gelap */
 }
-.btn-primary {
-  z-index: 1061; /* or higher */
-}
+
 </style>    
 </head>
 <body>

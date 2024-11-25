@@ -765,3 +765,7 @@ Delete successful
 [2024-11-22 09:43:20][SUCCESS] Update successful - Rows affected: 1
 [2024-11-22 09:43:26][INFO] Received request - Field: cek_bahan_bakar, Status: baik, ID: 4
 [2024-11-22 09:43:26][SUCCESS] Update successful - Rows affected: 1
+2024-11-24 02:08:22 - Delete request received
+Received ID for deletion: 33
+SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
+Delete successful
