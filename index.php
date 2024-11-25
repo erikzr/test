@@ -63,7 +63,7 @@ $conn->close();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>BMN-Operasional</title>
+    <title>BMN-Operasional BPSDMP Kominfo Surabaya</title>
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <link rel="stylesheet" href="assets/css/core/libs.min.css">
     <link rel="stylesheet" href="assets/css/hope-ui.min.css?v=5.0.0">
@@ -106,7 +106,8 @@ $conn->close();
                         <a href="index.html" class="navbar-brand d-flex justify-content-center mb-3">
                             <img src="kmnf.png" alt="Logo Kominfo" style="width: 50px; height: auto;">
                         </a>
-                        <h2 class="mb-2 text-center">Sign In test</h2>
+                        <h2 class="mb-2 text-center">Login
+                        </h2>
                         <p class="text-center">Masuk untuk melanjutkan.</p>
                         
                         <!-- Alert Message -->

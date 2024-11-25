@@ -1084,7 +1084,7 @@ function exportToExcel() {
                 .map(td => {
                     // Bersihkan data dari karakter khusus dan format yang tidak perlu
                     let value = td.textContent.trim();
-                    
+
                     // Jika ini adalah tanggal, format dengan benar
                     if (value.includes('/')) {
                         const [date, time] = value.split(' ');
@@ -1094,44 +1094,22 @@ function exportToExcel() {
                             value += ' ' + time;
                         }
                     }
-                    
+
                     return value;
                 });
         });
 
-        // Buat workbook dengan konfigurasi yang tepat
+        // Buat workbook dan worksheet
         const wb = XLSX.utils.book_new();
-        
-        // Buat worksheet dengan opsi yang lebih spesifik
-        const ws = XLSX.utils.aoa_to_sheet([headers, ...filteredData], {
-            cellDates: true,
-            dateNF: 'yyyy-mm-dd'
-        });
+        const ws = XLSX.utils.aoa_to_sheet([headers, ...filteredData]);
 
-        // Atur properti worksheet
-        ws['!cols'] = headers.map(() => ({ wch: 20 }));
+        // Tambahkan worksheet ke workbook
+        XLSX.utils.book_append_sheet(wb, ws, "Filtered Data");
 
-        // Tambahkan worksheet ke workbook dengan nama yang aman
-        XLSX.utils.book_append_sheet(wb, ws, "Data_Pemeriksaan");
-
-        // Generate filename yang aman
-        const timestamp = new Date().toISOString()
-            .slice(0, 19)
-            .replace(/[-:]/g, '')
-            .replace(/[T]/g, '_');
-        const filename = `Laporan_Pemeriksaan_Kendaraan_${timestamp}.xlsx`;
-
-        // Opsi tambahan untuk memastikan kompatibilitas
-        const wopts = {
-            bookType: 'xlsx',
-            bookSST: false,
-            type: 'binary',
-            cellDates: true,
-            compression: true
-        };
-
-        // Simpan file dengan opsi yang ditingkatkan
-        XLSX.writeFile(wb, filename, wopts);
+        // Simpan file Excel
+        const timestamp = new Date().toISOString().replace(/[-:T]/g, '_').slice(0, 15);
+        const filename = `Filtered_Inspection_Data_${timestamp}.xlsx`;
+        XLSX.writeFile(wb, filename);
 
         console.log('Export berhasil!');
     } catch (error) {
@@ -1139,6 +1117,7 @@ function exportToExcel() {
         alert('Terjadi kesalahan saat mengekspor data. Detail: ' + error.message);
     }
 }
+
             // Bootstrap Components Initialization
             function initializeBootstrapComponents() {
                 // Setup Popovers

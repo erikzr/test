@@ -1,5 +1,69 @@
 <?php
     session_start(); // Start the session
+
+    // Koneksi ke database
+$servername = "localhost"; // Sesuaikan dengan host Anda
+$username = "root"; // Ganti dengan username MySQL Anda
+$password = ""; // Ganti dengan password MySQL Anda
+$dbname = "checkcar"; // Nama database Anda
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Cek koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Iterasi data form yang dikirim
+    foreach ($_POST['service_type'] as $index => $mobil) {
+        $kilometer = $_POST['kilometer'][$index] ?? null;
+        $tanggal_perbaikan = $_POST['service_date'][$index] ?? null;
+        $tanggal_selesai = $_POST['return_service_date'][$index] ?? null;
+        $jenis_service = $_POST['service_type'][$index] ?? null;
+        $item_service = $_POST['service_item'][$index] ?? null;
+        $keterangan = $_POST['keterangan'][$index] ?? '';
+
+       
+
+        // Tangani file upload
+        $bukti_nota = null;
+        if (isset($_FILES['photo']['name'][$index]) && $_FILES['photo']['name'][$index] != '') {
+            $upload_dir = '../../form/uploadservice/'; // Folder untuk menyimpan file
+            $filename = time() . '_' . basename($_FILES['photo']['name'][$index]);
+            $target_file = $upload_dir . $filename;
+
+            // Pindahkan file ke folder tujuan
+            if (move_uploaded_file($_FILES['photo']['tmp_name'][$index], $target_file)) {
+                $bukti_nota = $target_file;
+            } else {
+                echo "Gagal mengunggah file untuk item ke-" . ($index + 1) . ".<br>";
+                continue; // Lewati data ini jika file gagal diunggah
+            }
+        }
+
+        // Simpan data ke database
+        $stmt = $conn->prepare("
+            INSERT INTO servicerutin (
+                mobil, kilometer, tanggal_perbaikan, tanggal_selesai, jenis_service, item_service, keterangan, bukti_nota
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $stmt->bind_param(
+            'sissssss',
+            $mobil,
+            $kilometer,
+            $tanggal_perbaikan,
+            $tanggal_selesai,
+            $jenis_service,
+            $item_service,
+            $keterangan,
+            $bukti_nota
+        );
+
+    }
+}
+
+
     // Define service categories and their items
     $carCategories = [
         'W 1740 NP (Inova Lama)' => [
@@ -56,6 +120,8 @@
             'rem' => 'Rem'
         ]
     ];
+
+    $conn->close();
 ?>
 <!doctype html>
 <html lang="en" dir="ltr" data-bs-theme="light" data-bs-theme-color="theme-color-default">
@@ -277,7 +343,7 @@ h4 {
     font-size: 1rem;
 }
 
-.input-kilometer {
+.input-keterangan {
     width: 200px; /* Ubah ukuran sesuai keinginan */
     padding: 0.5rem;
     font-size: 1rem;
@@ -456,17 +522,17 @@ h4 {
 
                             <div class="form-group">
                                 <label for="kilometer">Kilometer Terakhir</label>
-                                <input type="text" name="kilometer" id="kilometer" placeholder="Kilometer Mobil" class="input-kilometer" required>
+                                <input type="text" name="kilometer[]" id="kilometer" placeholder="Kilometer Mobil" class="input-keterangan" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="service_date">Tanggal Perbaikan</label>
-                                <input type="date" name="service_date" id="service_date" class="input-date" required>
+                                <input type="date" name="service_date[]" id="service_date" class="input-date" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="return_service_date">Tanggal Selesai Perbaikan</label>
-                                <input type="date" name="return_service_date" id="return_service_date" class="input-date" required>
+                                <input type="date" name="return_service_date[]" id="return_service_date" class="input-date" required>
                             </div>
                                     
                             <div class="form-group">
@@ -487,8 +553,8 @@ h4 {
                             </div>
 
                             <div class="form-group">
-                                <label for="kilometer">Keterangan Tambahan</label>
-                                <input type="text" name="kilometer" id="kilometer" placeholder="Kilometer Mobil" class="input-kilometer" required>
+                                <label for="keterangan">Keterangan Tambahan</label>
+                                <input type="text" name="keterangan[]" id="keterangan" placeholder="Keterangan" class="input-keterangan" required>
                             </div>
 
                             <div class="form-group">
@@ -580,7 +646,7 @@ h4 {
                             </div>
                             <div class="form-group">
                                 <label for="kilometer">Kilometer Terakhir</label>
-                                <input type="text" name="kilometer" id="kilometer" placeholder="Kilometer Mobil" class="input-kilometer" required>
+                                <input type="text" name="kilometer" id="kilometer" placeholder="Kilometer Mobil" class="input-keterangan" required>
                             </div>
 
                             <div class="form-group">
@@ -613,7 +679,7 @@ h4 {
 
                             <div class="form-group">
                                 <label for="kilometer">Keterangan Tambahan</label>
-                                <input type="text" name="kilometer" id="kilometer" placeholder="Kilometer Mobil" class="input-kilometer" required>
+                                <input type="text" name="keterangan[]" id="keterangan" placeholder="Keterangan" class="input-keterangan" required>
                             </div>
 
                             <div class="form-group">
