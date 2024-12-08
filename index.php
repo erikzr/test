@@ -106,7 +106,7 @@ $conn->close();
                         <a href="index.html" class="navbar-brand d-flex justify-content-center mb-3">
                             <img src="kmnf.png" alt="Logo Kominfo" style="width: 50px; height: auto;">
                         </a>
-                        <h2 class="mb-2 text-center">Login
+                        <h2 class="mb-2 text-center">Masuk
                         </h2>
                         <p class="text-center">Masuk untuk melanjutkan.</p>
                         

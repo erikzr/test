@@ -24,7 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $item_service = $_POST['service_item'][$index] ?? null;
         $keterangan = $_POST['keterangan'][$index] ?? '';
 
-       
+        // Validasi input kosong
+        if (!$mobil || !$kilometer || !$tanggal_perbaikan || !$tanggal_selesai || !$jenis_service || !$item_service) {
+            continue; // Lewati data ini
+        }
 
         // Tangani file upload
         $bukti_nota = null;
@@ -60,6 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $bukti_nota
         );
 
+        if ($stmt->execute()) {
+        } else {
+            echo "Terjadi kesalahan: " . $stmt->error . "<br>";
+        }
     }
 }
 
