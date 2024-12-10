@@ -455,6 +455,50 @@ $conn->close();
     opacity: 0.9;
     background-color: #c82333;
 }
+
+th {
+    padding: 8px; /* Atur jarak dalam setiap kolom jika dibutuhkan */
+}
+
+th, td {
+    padding: 10px 12px; /* Menambahkan jarak di dalam kolom */
+    text-align: center; /* Menyelaraskan teks di tengah */
+}
+
+button.btn.btn-sm.btn-info:hover {
+  background-color: rgb(5, 123, 130); /* Warna yang sedikit lebih gelap */
+  /* Atau, gunakan filter untuk menggelapkan: */
+  /* filter: brightness(90%); */
+}
+
+button.btn.btn-primary.w-50:hover {
+  background-color: rgb(46, 69, 185);
+}
+
+button#resetButton:hover {
+  background-color: rgb(0, 23, 58);
+}
+
+a.btn.btn-sm.btn-info.my-1:hover {
+  background-color: rgb(5, 123, 130); /* Warna yang sedikit lebih gelap */
+  /* Atau, gunakan filter untuk menggelapkan: */
+  /* filter: brightness(90%); */
+}
+
+button.btn.btn-sm.btn-danger.my-1:hover {
+  background-color: rgb(153, 40, 26); /* Warna yang sedikit lebih gelap */
+  /* Atau, gunakan filter untuk menggelapkan: */
+  /* filter: brightness(90%); */
+}
+
+button.btn.btn-primary:hover {
+  background-color: rgb(46, 69, 185);
+}
+
+button.btn.btn-danger.ms-2:hover {
+  background-color: rgba(0, 0, 0, 0.2); /* Overlay semi-transparan gelap */
+}
+
 </style>    
 </head>
 <body>
@@ -681,10 +725,11 @@ $conn->close();
                                     <option value="W 1374 NP">Kijang Kapsul</option>
                                 </select>
                             </div>
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-primary w-100" onclick="applyFilters()">
+                            <div class="col-md-3 d-flex justify-content-between">
+                                <button type="button" class="btn btn-primary w-50" onclick="applyFilters()">
                                     <i class="fas fa-filter me-2"></i>Terapkan Filter
                                 </button>
+                                <button id="resetButton" type="button" class="btn btn-secondary w-50" onclick="resetFilters()">Reset</button>
                             </div>
                         </form>
                     </div>
@@ -694,17 +739,19 @@ $conn->close();
                         <div class="card-body p-2">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover mb-0" id="inspectionTable">
-                                    <thead>
-                                        <tr>
-                                            <th class="px-2" style="width: 5%">No</th>
-                                            <th class="px-2" style="width: 15%">Nama Petugas</th>
-                                            <th class="px-2" style="width: 12%">Plat Mobil</th>
-                                            <th class="px-2" style="width: 13%">Nama Mobil</th>
-                                            <th class="px-2" style="width: 15%">Tanggal Pemeriksaan</th>
-                                            <th class="px-2" style="width: 25%">Komponen</th>
-                                            <th class="px-2" style="width: 15%">Aksi</th>
-                                        </tr>
-                                    </thead>
+                                <thead>
+                                    <tr>
+                                        <th class="px-2" style="width: 10%">No</th>
+                                        <th class="px-2" style="width: 15%">Nama Petugas</th>
+                                        <th class="px-2" style="width: 10%">Plat Mobil</th>
+                                        <th class="px-2" style="width: 10%">Nama Mobil</th>
+                                        <th class="px-2" style="width: 15%">Tanggal Pemeriksaan</th>
+                                        <th class="px-2" style="width: 15%">Komponen</th>
+                                        <th class="px-2" style="width: 10%">Service</th>
+                                        <th class="px-2" style="width: 15%">Aksi</th>
+                                        
+                                    </tr>
+                                </thead>
                                     <tbody>
                                         <?php 
                                         $no = 1;
@@ -760,101 +807,107 @@ $conn->close();
                                             ];
                                         ?>
                                         <tr>
-                                            <td><?php echo $no++; ?></td>
-                                            <td><?php echo htmlspecialchars($row['nama']); ?></td>
-                                            <td><?php echo htmlspecialchars($row['plat_mobil']); ?></td>
-                                            <td><?php echo htmlspecialchars($carName); ?></td>
-                                            <td><?php echo date("d/m/Y H:i", strtotime($row['created_at'])); ?></td>
-                                            
-                                            <!-- Komponen Button -->
-                                            <td>
-                                                <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#komponenModal<?php echo $no; ?>">
-                                                    Lihat Komponen
-                                                </button>
-                                                
-                                                <!-- Modal Komponen -->
-                                                <div class="modal fade" id="komponenModal<?php echo $no; ?>" tabindex="-1">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title">Detail Komponen</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="accordion" id="accordionKomponen<?php echo $no; ?>">
-                                                                    <?php foreach ($komponenList as $kategori => $items): ?>
-                                                                    <div class="accordion-item">
-                                                                        <h2 class="accordion-header">
-                                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-                                                                                    data-bs-target="#collapse<?php echo $kategori.$no; ?>">
-                                                                                <?php echo $kategori; ?>
-                                                                            </button>
-                                                                        </h2>
-                                                                        <div id="collapse<?php echo $kategori.$no; ?>" class="accordion-collapse collapse">
-                                                                            <div class="accordion-body">
-                                                                                <div class="table-responsive">
-                                                                                    <table class="table table-sm">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th>Komponen</th>
-                                                                                                <th>Status</th>
-                                                                                                <th>Foto</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                        <?php foreach ($items as $nama => $data): ?>
-                                                                                            <tr>
-                                                                                                <td><?php echo $nama; ?></td>
-                                                                                                <td>
-                                                                                                    <span class="badge <?php echo strtolower($data['status']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
-                                                                                                        <?php echo htmlspecialchars($data['status']); ?>
-                                                                                                    </span>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <?php if (!empty($data['foto'])): ?>
-                                                                                                        <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['foto']); ?>')">
-                                                                                                            <i class="fas fa-image"></i>
-                                                                                                        </button>
-                                                                                                    <?php else: ?>
-                                                                                                        <span class="text-muted">-</span>
-                                                                                                    <?php endif; ?>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <?php endforeach; ?>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <?php endforeach; ?>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <!-- Actions -->
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a href="detail.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-warning">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <button class="btn btn-sm btn-danger" onclick="deleteInspection(<?php echo $row['id']; ?>)">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
+    <td><?php echo $no++; ?></td>
+    <td><?php echo htmlspecialchars($row['nama']); ?></td>
+    <td><?php echo htmlspecialchars($row['plat_mobil']); ?></td>
+    <td><?php echo htmlspecialchars($carName); ?></td>
+    <td><?php echo date("d/m/Y H:i", strtotime($row['created_at'])); ?></td>
+    <td>
+        <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#komponenModal<?php echo $no; ?>">
+            Detail Komponen
+        </button>
+        <!-- Modal untuk Detail Komponen -->
+        <div class="modal fade" id="komponenModal<?php echo $no; ?>" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detail Komponen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="accordion" id="accordionKomponen<?php echo $no; ?>">
+                            <?php foreach ($komponenList as $kategori => $items): ?>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                                            data-bs-target="#collapse<?php echo $kategori . $no; ?>">
+                                        <?php echo $kategori; ?>
+                                    </button>
+                                </h2>
+                                <div id="collapse<?php echo $kategori . $no; ?>" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Komponen</th>
+                                                        <th>Status</th>
+                                                        <th>Foto</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php foreach ($items as $nama => $data): ?>
+                                                    <tr>
+                                                        <td><?php echo $nama; ?></td>
+                                                        <td>
+                                                            <span class="badge <?php echo strtolower($data['status']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                                                <?php echo htmlspecialchars($data['status']); ?>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <?php if (!empty($data['foto'])): ?>
+                                                                <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['foto']); ?>')">
+                                                                    <i class="fas fa-image"></i>
+                                                                </button>
+                                                            <?php else: ?>
+                                                                <span class="text-muted">-</span>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+    <!-- Kolom Service -->
+    <td>
+        <span class="badge bg-primary">Pending</span>
+    </td>
+    <!-- Kolom Aksi -->
+    <td>
+        <div class="text-center">
+            <!-- Tombol Lihat -->
+            <a href="detail.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info my-1">
+                <i class="fas fa-eye"></i> Lihat
+            </a>
+            <!-- Tombol Hapus -->
+            <button class="btn btn-sm btn-danger my-1" onclick="deleteInspection(<?php echo $row['id']; ?>)">
+                <i class="fas fa-trash"></i> Hapus
+            </button>
+        </div>
+    </td>
+</tr>
+                                  
                                         </tr>
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
+                                
                             </div>
+                            
                         </div>
+                        
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -896,14 +949,14 @@ $conn->close();
         </main>
     </div>
 <script>
-    // Function to format date from dd/mm/yyyy HH:ii to yyyy-mm-dd format
+// Function untuk format tanggal dari dd/mm/yyyy HH:ii ke yyyy-mm-dd format
 function formatDate(dateString) {
     const [date, time] = dateString.split(' ');
     const [day, month, year] = date.split('/');
     return `${year}-${month}-${day}`;
 }
 
-// Function to check if a date is within range
+// Function untuk cek apakah tanggal dalam range
 function isDateInRange(dateStr, startDate, endDate) {
     if (!startDate && !endDate) return true;
     
@@ -921,7 +974,14 @@ function isDateInRange(dateStr, startDate, endDate) {
     return true;
 }
 
-// Main filter function
+// Simpan kondisi awal tabel saat halaman dimuat
+let originalTableState = null;
+document.addEventListener('DOMContentLoaded', function() {
+    const table = document.getElementById('inspectionTable');
+    originalTableState = table.innerHTML;
+});
+
+// Function filter utama
 function applyFilters() {
     const startDate = document.getElementById('startDate').value;
     const endDate = document.getElementById('endDate').value;
@@ -946,7 +1006,7 @@ function applyFilters() {
             if (matchesCarType && matchesDate) {
                 rows[i].style.display = '';
                 visibleCount++;
-                // Update row numbers
+                // Update nomor baris
                 rows[i].getElementsByTagName('td')[0].textContent = visibleCount;
             } else {
                 rows[i].style.display = 'none';
@@ -954,71 +1014,110 @@ function applyFilters() {
         }
     }
     
-    // Update the showing entries text
+    // Update text menampilkan entri
+    updateEntryInfo(visibleCount);
+}
+
+// Function untuk update info entri
+function updateEntryInfo(count) {
     const showingText = document.querySelector('.dataTables_info');
     if (showingText) {
-        showingText.textContent = `Menampilkan 1 sampai ${visibleCount} dari ${visibleCount} entri`;
+        if (count === 0) {
+            showingText.textContent = 'Tidak ada data yang ditampilkan';
+        } else {
+            showingText.textContent = `Menampilkan 1 sampai ${count} dari ${count} entri`;
+        }
     }
 }
 
-// Reset filter function
+// Function reset yang mengembalikan tabel ke kondisi awal
 function resetFilters() {
+    // Reset form filter
     document.getElementById('filterForm').reset();
+    
+    // Kembalikan tabel ke kondisi awal
     const table = document.getElementById('inspectionTable');
-    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-    
-    for (let i = 0; i < rows.length; i++) {
-        rows[i].style.display = '';
-        // Reset row numbers
-        rows[i].getElementsByTagName('td')[0].textContent = i + 1;
+    if (originalTableState) {
+        table.innerHTML = originalTableState;
+    }
+
+    // Reset nilai filter
+    document.getElementById('startDate').value = '';
+    document.getElementById('endDate').value = '';
+    if (document.getElementById('carType')) {
+        document.getElementById('carType').selectedIndex = 0;
     }
     
-    // Update the showing entries text
-    const showingText = document.querySelector('.dataTables_info');
-    if (showingText) {
-        showingText.textContent = `Menampilkan 1 sampai ${rows.length} dari ${rows.length} entri`;
-    }
+    // Update informasi entri dengan jumlah total baris asli
+    const totalRows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr').length;
+    updateEntryInfo(totalRows);
 }
 
-// Add event listeners for date inputs to automatically trigger filter
-document.getElementById('startDate').addEventListener('change', applyFilters);
-document.getElementById('endDate').addEventListener('change', applyFilters);
-document.getElementById('carType').addEventListener('change', applyFilters);
+// Event listener untuk tombol reset
+document.getElementById('resetButton').addEventListener('click', function(e) {
+    e.preventDefault();
+    resetFilters();
+});
 
-// Export functions
+// Event listener untuk form filter
+document.getElementById('filterForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    applyFilters();
+});
+
 function exportToExcel() {
-    const table = document.getElementById('inspectionTable');
-    const rows = Array.from(table.getElementsByTagName('tr'));
-    let csv = [];
-    
-    // Get headers
-    const headers = Array.from(rows[0].getElementsByTagName('th'))
-        .map(header => header.textContent.trim())
-        .slice(0, -1); // Remove the Aksi column
-    csv.push(headers.join(','));
-    
-    // Get visible rows data
-    Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'))
-        .filter(row => row.style.display !== 'none')
-        .forEach(row => {
-            const rowData = Array.from(row.getElementsByTagName('td'))
-                .map(cell => cell.textContent.trim())
-                .slice(0, -1); // Remove the Aksi column
-            csv.push(rowData.join(','));
+    try {
+        // Ambil tabel dan semua baris yang visible
+        const table = document.getElementById('inspectionTable');
+        const visibleRows = Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'))
+            .filter(row => row.style.display !== 'none');
+
+        // Ambil header (kecuali kolom Aksi)
+        const headers = Array.from(table.getElementsByTagName('thead')[0].getElementsByTagName('th'))
+            .slice(0, -1)
+            .map(th => th.textContent.trim());
+
+        // Siapkan data dalam format yang benar untuk XLSX
+        const filteredData = visibleRows.map(row => {
+            return Array.from(row.getElementsByTagName('td'))
+                .slice(0, -1)
+                .map(td => {
+                    // Bersihkan data dari karakter khusus dan format yang tidak perlu
+                    let value = td.textContent.trim();
+
+                    // Jika ini adalah tanggal, format dengan benar
+                    if (value.includes('/')) {
+                        const [date, time] = value.split(' ');
+                        const [day, month, year] = date.split('/');
+                        value = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                        if (time) {
+                            value += ' ' + time;
+                        }
+                    }
+
+                    return value;
+                });
         });
-    
-    const csvContent = csv.join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    
-    link.setAttribute('href', url);
-    link.setAttribute('download', 'data_pemeriksaan_kendaraan.csv');
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+
+        // Buat workbook dan worksheet
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet([headers, ...filteredData]);
+
+        // Tambahkan worksheet ke workbook
+        XLSX.utils.book_append_sheet(wb, ws, "Filtered Data");
+
+        // Simpan file Excel
+        const timestamp = new Date().toISOString().replace(/[-:T]/g, '_').slice(0, 15);
+        const filename = `Filtered_Inspection_Data_${timestamp}.xlsx`;
+        XLSX.writeFile(wb, filename);
+
+        console.log('Export berhasil!');
+    } catch (error) {
+        console.error('Error saat export:', error);
+        alert('Terjadi kesalahan saat mengekspor data. Detail: ' + error.message);
+    }
 }
+
             // Bootstrap Components Initialization
             function initializeBootstrapComponents() {
                 // Setup Popovers
@@ -1778,6 +1877,7 @@ function exportToExcel() {
     <script src="../assets/js/hope-ui.js"></script>
     <!-- Untuk Excel -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blob-polyfill/7.0.20220408/Blob.min.js"></script>
 
     <!-- Untuk PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
