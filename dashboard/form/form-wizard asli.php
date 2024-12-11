@@ -538,7 +538,7 @@ h4 {
 <fieldset>
     <div class="form-card text-start">
         <!-- Header -->
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-7">
                 <h3 class="mb-4">Pemeriksaan Kebersihan</h3>
             </div>
@@ -574,8 +574,10 @@ h4 {
                         <small id="kursi_timestamp" class="form-text text-muted">Waktu diambil: <span id="kursi_time">belum diambil</span></small>
                     </div>
                 </div>
+            </div>
 
                 <!-- Kebersihan Lantai -->
+            <div class="col-md-6">
                 <div class="form-group p-4 mb-4" style="border: 1px solid #e0e0e0; border-radius: 8px;">
                     <label class="form-label">Cek Kebersihan Lantai <span class="text-danger">*</span></label>
                     <div class="form-check">
@@ -599,7 +601,11 @@ h4 {
                         <small id="lantai_timestamp" class="form-text text-muted">Waktu diambil: <span id="lantai_time">belum diambil</span></small>
                     </div>
                 </div>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-6">
                 <!-- Kebersihan Dinding -->
                 <div class="form-group p-4 mb-4" style="border: 1px solid #e0e0e0; border-radius: 8px;">
                     <label class="form-label">Cek Kebersihan Dinding Luar & Dalam <span class="text-danger">*</span></label>
@@ -624,8 +630,10 @@ h4 {
                         <small id="dinding_timestamp" class="form-text text-muted">Waktu diambil: <span id="dinding_time">belum diambil</span></small>
                     </div>
                 </div>
+            </div>
 
                 <!-- Kebersihan Kap Mesin -->
+            <div class="col-md-6">
                 <div class="form-group p-4 mb-4" style="border: 1px solid #e0e0e0; border-radius: 8px;">
                     <label class="form-label">Cek Kebersihan Kap Mesin <span class="text-danger">*</span></label>
                     <div class="form-check">
@@ -659,6 +667,7 @@ h4 {
         </div>
     </div>
 </fieldset>
+
                             <script>
                                 function updateTimestamp(elementId) {
                                     var now = new Date();
@@ -706,8 +715,10 @@ h4 {
                         <small id="stnk_timestamp" class="form-text text-muted">Waktu diambil: <span id="stnk_time">belum diambil</span></small>
                     </div>
                 </div>
+            </div>
 
                 <!-- Kunci Roda -->
+            <div class="col-md-6">
                 <div class="form-group p-4 mb-4" style="border: 1px solid #e0e0e0; border-radius: 8px;">
                     <label class="form-label">Cek Kunci Roda <span class="text-danger">*</span></label>
                     <div class="form-check">
@@ -732,8 +743,129 @@ h4 {
                         <small id="kunci_roda_timestamp" class="form-text text-muted">Waktu diambil: <span id="kunci_roda_time">belum diambil</span></small>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Air Radiator -->
+        <div class="row">
+            <div class="col-md-6">
+                <!-- APAR -->
+                <div class="form-group p-4 mb-4" style="border: 1px solid #e0e0e0; border-radius: 8px;">
+                    <label class="form-label">Cek Apar <span class="text-danger">*</span></label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cek_apar" value="baik" id="cek_apar_baik" required>
+                        <label class="form-check-label" for="cek_apar_baik">Baik</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cek_apar" value="tidak_baik" id="cek_apar_tidak_baik">
+                        <label class="form-check-label" for="cek_apar_tidak_baik">Tidak Baik</label>
+                    </div>
+                    <div class="invalid-feedback">
+                        Silakan pilih kondisi Apar
+                    </div>
+
+                    <!-- Input Foto -->
+                    <div class="input-image mt-3" style="padding: 16px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                        <label for="apar_foto" class="form-label d-block" style="font-weight: 600;">Ambil Foto APAR <span class="text-danger">*</span></label>
+                        <input type="file" class="form-control" name="apar_foto" id="apar_foto" accept="image/*" capture="camera" required onchange="updateTimestamp('apar_time')" />
+                        <div class="invalid-feedback">
+                            Silakan ambil foto APAR
+                        </div>
+                        <small id="apar_timestamp" class="form-text text-muted">Waktu diambil: <span id="apar_time">belum diambil</span></small>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Kotak P3k -->
+            <div class="col-md-6">
+                <div class="form-group p-4 mb-4" style="border: 1px solid #e0e0e0; border-radius: 8px;">
+                    <label class="form-label">Cek Kotak P3k <span class="text-danger">*</span></label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cek_p3k" value="baik" id="cek_p3k_baik" required>
+                        <label class="form-check-label" for="cek_p3k_baik">Baik</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cek_p3k" value="tidak_baik" id="cek_p3k_tidak_baik">
+                        <label class="form-check-label" for="cek_p3k_tidak_baik">Tidak Baik</label>
+                    </div>
+                    <div class="invalid-feedback">
+                        Silakan pilih kondisi kunci roda
+                    </div>
+
+                    <!-- Input Foto -->
+                    <div class="input-image mt-3" style="padding: 16px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                        <label for="p3k_foto" class="form-label d-block" style="font-weight: 600;">Ambil Foto Kunci Roda <span class="text-danger">*</span></label>
+                        <input type="file" class="form-control" name="p3k_foto" id="p3k_foto" accept="image/*" capture="camera" required onchange="updateTimestamp('p3k_time')" />
+                        <div class="invalid-feedback">
+                            Silakan ambil foto kunci roda
+                        </div>
+                        <small id="p3k_timestamp" class="form-text text-muted">Waktu diambil: <span id="p3k_time">belum diambil</span></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Rem -->
+                <div class="form-group p-4 mb-4" style="border: 1px solid #e0e0e0; border-radius: 8px;">
+                    <label class="form-label">Cek Rem <span class="text-danger">*</span></label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cek_rem" value="baik" id="cek_rem_baik" required>
+                        <label class="form-check-label" for="cek_rem_baik">Baik</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cek_rem" value="tidak_baik" id="cek_rem_tidak_baik">
+                        <label class="form-check-label" for="cek_rem_tidak_baik">Tidak Baik</label>
+                    </div>
+                    <div class="invalid-feedback">
+                        Silakan pilih kondisi rem
+                    </div>
+
+                    <!-- Input Foto -->
+                    <div class="input-image mt-3" style="padding: 16px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                        <label for="rem_foto" class="form-label d-block" style="font-weight: 600;">Ambil Foto Rem <span class="text-danger">*</span></label>
+                        <input type="file" class="form-control" name="rem_foto" id="rem_foto" accept="image/*" capture="camera" required onchange="updateTimestamp('rem_time')" />
+                        <div class="invalid-feedback">
+                            Silakan ambil foto rem
+                        </div>
+                        <small id="rem_timestamp" class="form-text text-muted">Waktu diambil: <span id="rem_time">belum diambil</span></small>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Ban Cadangan -->
+            <div class="col-md-6">
+                <div class="form-group p-4 mb-4" style="border: 1px solid #e0e0e0; border-radius: 8px;">
+                    <label class="form-label">Cek Ketersediaan Bahan Bakar <span class="text-danger">*</span></label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cek_bahan_bakar" value="baik" id="cek_bahan_baik" required>
+                        <label class="form-check-label" for="cek_bahan_bakar_baik">Baik</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cek_bahan_bakar" value="tidak_baik" id="cek_bahan_bakar_tidak_baik">
+                        <label class="form-check-label" for="cek_bahan_bakar_tidak_baik">Tidak Baik</label>
+                    </div>
+                    <div class="invalid-feedback">
+                        Silakan pilih kondisi ban cadangan
+                    </div>
+
+                    <!-- Input Foto -->
+                    <div class="input-image mt-3" style="padding: 16px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                        <label for="bahan_bakar_foto" class="form-label d-block" style="font-weight: 600;">Ambil Foto Bahan Bakar <span class="text-danger">*</span></label>
+                        <input type="file" class="form-control" name="bahan_bakar_foto" id="bahan_bakar_foto" accept="image/*" capture="camera" required onchange="updateTimestamp('bahan_bakar_time')" />
+                        <div class="invalid-feedback">
+                            Silakan ambil foto ban cadangan
+                        </div>
+                        <small id="bahan_bakar_timestamp" class="form-text text-muted">Waktu diambil: <span id="bahan_bakar_time">belum diambil</span></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <!-- air radiator -->
                 <div class="form-group p-4 mb-4" style="border: 1px solid #e0e0e0; border-radius: 8px;">
                     <label class="form-label">Cek Air Radiator <span class="text-danger">*</span></label>
                     <div class="form-check">
@@ -758,35 +890,37 @@ h4 {
                         <small id="air_radiator_timestamp" class="form-text text-muted">Waktu diambil: <span id="air_radiator_time">belum diambil</span></small>
                     </div>
                 </div>
+            </div>
 
-                <!-- Ban Cadangan -->
+                <!-- tekanan ban -->
+            <div class="col-md-6">
                 <div class="form-group p-4 mb-4" style="border: 1px solid #e0e0e0; border-radius: 8px;">
-                    <label class="form-label">Cek Ketersediaan Ban Cadangan <span class="text-danger">*</span></label>
+                    <label class="form-label">Cek Tekanan Ban <span class="text-danger">*</span></label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cek_ban_cadangan" value="baik" id="cek_ban_cadangan_baik" required>
-                        <label class="form-check-label" for="cek_ban_cadangan_baik">Baik</label>
+                        <input class="form-check-input" type="radio" name="cek_tekanan_ban" value="baik" id="cek_tekanan_ban_baik" required>
+                        <label class="form-check-label" for="cek_tekanan_ban_baik">Baik</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cek_ban_cadangan" value="tidak_baik" id="cek_ban_cadangan_tidak_baik">
-                        <label class="form-check-label" for="cek_ban_cadangan_tidak_baik">Tidak Baik</label>
+                        <input class="form-check-input" type="radio" name="cek_tekanan_ban" value="tidak_baik" id="cek_tekanan_ban_tidak_baik">
+                        <label class="form-check-label" for="cek_tekanan_ban_tidak_baik">Tidak Baik</label>
                     </div>
                     <div class="invalid-feedback">
-                        Silakan pilih kondisi ban cadangan
+                        Silakan pilih kondisi tekanan ban
                     </div>
 
                     <!-- Input Foto -->
                     <div class="input-image mt-3" style="padding: 16px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
-                        <label for="ban_cadangan_foto" class="form-label d-block" style="font-weight: 600;">Ambil Foto Ban Cadangan <span class="text-danger">*</span></label>
-                        <input type="file" class="form-control" name="ban_cadangan_foto" id="ban_cadangan_foto" accept="image/*" capture="camera" required onchange="updateTimestamp('ban_cadangan_time')" />
+                        <label for="tekanan_ban_foto" class="form-label d-block" style="font-weight: 600;">Ambil Foto Tekanan Ban <span class="text-danger">*</span></label>
+                        <input type="file" class="form-control" name="tekanan_ban_foto" id="tekanan_ban_foto" accept="image/*" capture="camera" required onchange="updateTimestamp('tekanan_ban_time')" />
                         <div class="invalid-feedback">
-                            Silakan ambil foto ban cadangan
+                            Silakan ambil foto tekanan ban
                         </div>
-                        <small id="ban_cadangan_timestamp" class="form-text text-muted">Waktu diambil: <span id="ban_cadangan_time">belum diambil</span></small>
+                        <small id="tekanan_ban_timestamp" class="form-text text-muted">Waktu diambil: <span id="tekanan_ban_time">belum diambil</span></small>
                     </div>
                 </div>
             </div>
         </div>
-
+        
         <!-- Tombol Navigasi -->
         <button type="submit" name="submit" class="btn btn-success float-end" value="submit">Submit</button>
 

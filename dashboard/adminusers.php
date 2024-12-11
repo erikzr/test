@@ -38,10 +38,8 @@ if (isset($_GET['delete_id'])) {
     // Query untuk menghapus user berdasarkan ID
     $delete_sql = "DELETE FROM users WHERE id = $delete_id";
     if ($conn->query($delete_sql) === TRUE) {
-        echo "User berhasil dihapus!";
-        echo "<meta http-equiv='refresh' content='0'>";
-    } else {
-        echo "Error saat menghapus user: " . $conn->error;
+        
+    
     }
 }
 
@@ -620,6 +618,35 @@ function toggleForm() {
         form.style.display = "none";
     }
 }
+
+// Utility Functions
+            function handleLogout() {
+                Swal.fire({
+                    title: 'Konfirmasi Logout',
+                    text: 'Apakah Anda yakin ingin keluar?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Logout',
+                    cancelButtonText: 'Batal',
+                    background: '#fff'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: 'Logging out...',
+                            text: 'Mohon tunggu sebentar',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            willOpen: () => Swal.showLoading()
+                        });
+                        
+                        setTimeout(() => {
+                            window.location.href = 'logout.php';
+                        }, 800);
+                    }
+                });
+            }
 </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 </body>

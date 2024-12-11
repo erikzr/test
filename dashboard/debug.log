@@ -769,3 +769,51 @@ Delete successful
 Received ID for deletion: 33
 SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
 Delete successful
+2024-12-10 04:56:12 - Delete request received
+Received ID for deletion: 9
+SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
+Delete successful
+2024-12-10 05:59:28 - Delete request received
+Received ID for deletion: 1
+SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
+Delete successful
+2024-12-10 05:59:41 - Delete request received
+Received ID for deletion: 2
+SQL Query: DELETE FROM vehicle_inspection WHERE id = ?
+Delete successful
+[2024-12-10 07:22:59][INFO] Received request - Field: oli_mesin, Status: baik, ID: 27
+[2024-12-10 07:22:59][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 07:23:04][INFO] Received request - Field: minyak_rem, Status: baik, ID: 27
+[2024-12-10 07:23:04][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 07:23:10][INFO] Received request - Field: lampu_utama, Status: baik, ID: 27
+[2024-12-10 07:23:10][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 07:23:14][INFO] Received request - Field: lampu_sein, Status: baik, ID: 27
+[2024-12-10 07:23:14][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 07:23:19][INFO] Received request - Field: lampu_klakson, Status: baik, ID: 27
+[2024-12-10 07:23:19][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 07:23:25][INFO] Received request - Field: cek_lantai, Status: baik, ID: 27
+[2024-12-10 07:23:25][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 07:23:41][INFO] Received request - Field: cek_air_radiator, Status: baik, ID: 27
+[2024-12-10 07:23:41][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 09:16:31][INFO] Received request - Field: cek_aki, Status: baik, ID: 31
+[2024-12-10 09:16:31][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 09:16:38][INFO] Received request - Field: cek_dinding, Status: baik, ID: 31
+[2024-12-10 09:16:38][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 09:16:43][INFO] Received request - Field: cek_kap, Status: baik, ID: 31
+[2024-12-10 09:16:43][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 09:16:49][INFO] Received request - Field: lampu_sein, Status: baik, ID: 31
+[2024-12-10 09:16:49][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 09:16:54][INFO] Received request - Field: lampu_rem, Status: baik, ID: 31
+[2024-12-10 09:16:54][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 09:16:58][INFO] Received request - Field: minyak_rem, Status: baik, ID: 31
+[2024-12-10 09:16:58][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 09:17:05][INFO] Received request - Field: oli_mesin, Status: baik, ID: 31
+[2024-12-10 09:17:05][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 09:17:11][INFO] Received request - Field: cek_apar, Status: baik, ID: 31
+[2024-12-10 09:17:11][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 09:17:16][INFO] Received request - Field: cek_p3k, Status: baik, ID: 31
+[2024-12-10 09:17:16][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 09:17:21][INFO] Received request - Field: cek_air_radiator, Status: baik, ID: 31
+[2024-12-10 09:17:21][SUCCESS] Update successful - Rows affected: 1
+[2024-12-10 09:17:26][INFO] Received request - Field: cek_rem, Status: baik, ID: 31
+[2024-12-10 09:17:26][SUCCESS] Update successful - Rows affected: 1

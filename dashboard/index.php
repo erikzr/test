@@ -1,43 +1,60 @@
 <?php
 session_start();
 
+// Koneksi ke database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "checkcar";
+
+// Membuat koneksi
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Query untuk mengambil data
+$sql = "SELECT * FROM servicerutin ORDER BY created_at DESC";
+$result = $conn->query($sql);
+
+$no = 1;
+
+
+// Memeriksa koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
 // Fungsi untuk menangani error
 function handleError($message) {
     echo "<div class='alert alert-danger'>Error: $message</div>";
     error_log($message);
 }
 
-// koneksi kedatabase
-include 'auth/koneksi.php';
+// Mengambil data pemeriksaan terbaru dari `vehicle_inspection`
+$sqlInspection = "SELECT * FROM vehicle_inspection ORDER BY created_at DESC";
+$resultInspection = $conn->query($sqlInspection);
 
-// Mengambil data pemeriksaan terbaru dengan semua field
-$sql = "SELECT * FROM vehicle_inspection ORDER BY created_at ";
-
-$result = $conn->query($sql);
-
-if (!$result) {
+if (!$resultInspection) {
     handleError("Query error: " . $conn->error);
     exit();
 }
 
 // Menghitung statistik
-$totalInspeksi = $result->num_rows;
+$totalInspeksi = $resultInspection->num_rows;
 $perluPerhatian = 0;
 $inspeksiData = [];
 $komponenStats = [];
 
-while ($row = $result->fetch_assoc()) {
+while ($row = $resultInspection->fetch_assoc()) {
     $status = 'Aman';
     $totalKomponen = 0;
     $komponenBaik = 0;
     $komponenBuruk = 0;
-    
+
     $komponenList = [
-        'oli_mesin', 'oli_power_steering', 'oli_transmisi', 
-        'minyak_rem', 'lampu_utama', 'lampu_sein', 
+        'oli_mesin', 'oli_power_steering', 'oli_transmisi',
+        'minyak_rem', 'lampu_utama', 'lampu_sein',
         'lampu_rem', 'lampu_klakson', 'cek_aki'
     ];
-    
+
     foreach ($komponenList as $komponen) {
         if (isset($row[$komponen])) {
             $totalKomponen++;
@@ -48,7 +65,7 @@ while ($row = $result->fetch_assoc()) {
             }
         }
     }
-    
+
     $carName = '';
     switch ($row['plat_mobil']) {
         case 'W 1740 NP':
@@ -63,7 +80,7 @@ while ($row = $result->fetch_assoc()) {
         default:
             $carName = 'Unknown';
     }
-    
+
     $komponenStats[] = [
         'plat_mobil' => $row['plat_mobil'],
         'car_name' => $carName,
@@ -77,12 +94,12 @@ while ($row = $result->fetch_assoc()) {
             ];
         }, $komponenList)
     ];
-    
+
     if ($komponenBuruk > 0) {
         $status = 'Perlu Perhatian';
         $perluPerhatian++;
     }
-    
+
     $row['status'] = $status;
     $inspeksiData[] = $row;
 }
@@ -98,8 +115,10 @@ $currentPage = isset($_GET['page']) ? max(1, min($totalPages, intval($_GET['page
 $offset = ($currentPage - 1) * $itemsPerPage;
 $currentPageItems = array_slice($komponenStats, $offset, $itemsPerPage);
 
+// Menutup koneksi
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="id" dir="ltr" data-bs-theme="light">
@@ -614,7 +633,7 @@ button.btn.btn-danger.ms-2:hover {
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Persentase Kondisi Komponen per Kendaraan</h4>
+                        <h4 class="card-title">Kondisi Komponen per Kendaraan</h4>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -747,7 +766,6 @@ button.btn.btn-danger.ms-2:hover {
                                         <th class="px-2" style="width: 10%">Nama Mobil</th>
                                         <th class="px-2" style="width: 15%">Tanggal Pemeriksaan</th>
                                         <th class="px-2" style="width: 15%">Komponen</th>
-                                        <th class="px-2" style="width: 10%">Service</th>
                                         <th class="px-2" style="width: 15%">Aksi</th>
                                         
                                     </tr>
@@ -802,7 +820,8 @@ button.btn.btn-danger.ms-2:hover {
                                                     'Air Radiator' => ['status' => $row['cek_air_radiator'], 'foto' => $row['air_radiator_foto']],
                                                     'Bahan Bakar' => ['status' => $row['cek_bahan_bakar'], 'foto' => $row['bahan_bakar_foto']],
                                                     'Tekanan Ban' => ['status' => $row['cek_tekanan_ban'], 'foto' => $row['tekanan_ban_foto']],
-                                                    'Rem' => ['status' => $row['cek_rem'], 'foto' => $row['tekanan_ban_foto']]
+                                                    'Rem' => ['status' => $row['cek_rem'], 'foto' => $row['cek_rem']]
+
                                                 ]
                                             ];
                                         ?>
@@ -877,11 +896,7 @@ button.btn.btn-danger.ms-2:hover {
                 </div>
             </div>
         </div>
-    </td>
-    <!-- Kolom Service -->
-    <td>
-        <span class="badge bg-primary">Pending</span>
-    </td>
+
     <!-- Kolom Aksi -->
     <td>
         <div class="text-center">
@@ -912,6 +927,144 @@ button.btn.btn-danger.ms-2:hover {
             </div>
         </div>
     </div>
+
+    <!-- Tabel Pemeriksaan service Kendaraan -->
+    <div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="card-title mb-0">Data Service Rutin Kendaraan</h4>
+                <div>
+                    <button class="btn btn-primary" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel me-2"></i>Export Excel
+                    </button>
+                    <button class="btn btn-danger ms-2" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf me-2"></i>Export PDF
+                    </button>
+                </div>
+            </div>
+            <div class="card-body border-bottom">
+                <form id="filterForm" class="row g-3 align-items-end">
+                    <div class="col-md-3">
+                        <label class="form-label">Tanggal Mulai</label>
+                        <input type="date" class="form-control" id="startDate" name="startDate">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Tanggal Akhir</label>
+                        <input type="date" class="form-control" id="endDate" name="endDate">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Jenis Mobil</label>
+                        <select class="form-select" id="carType" name="carType">
+                            <option value="">Semua Mobil</option>
+                            <option value="W 1740 NP">Inova Lama</option>
+                            <option value="W 1507 NP">Inova Reborn</option>
+                            <option value="W 1347 NP">Kijang Kapsul</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 d-flex justify-content-between">
+                        <button type="button" class="btn btn-primary w-50" onclick="applyFilters()">
+                            <i class="fas fa-filter me-2"></i>Terapkan Filter
+                        </button>
+                        <button id="resetButton" type="button" class="btn btn-secondary w-50" onclick="resetFilters()">Reset</button>
+                    </div>
+                </form>
+            </div>
+            <div class="container-fluid px-3">
+                <div class="card mb-3">
+                    <div class="card-body p-2">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover mb-0" id="inspectionTable">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Mobil</th>
+                                        <th>Kilometer</th>
+                                        <th>Tanggal Perbaikan</th>
+                                        <th>Tanggal Selesai</th>
+                                        <th>Jenis Service</th>
+                                        <th>Item Service</th>
+                                        <th>Keterangan</th>
+                                        <th>Bukti Nota</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    if ($result->num_rows > 0) {
+                                        $no = 1; // Pastikan ini diinisialisasi
+                                        while ($row = $result->fetch_assoc()) { ?>
+                                            <tr>
+                                                <td><?php echo $no++; ?></td>
+                                                <td><?php echo htmlspecialchars($row['mobil']); ?></td>
+                                                <td><?php echo htmlspecialchars($row['kilometer']); ?></td>
+                                                <td><?php echo date("d/m/Y", strtotime($row['tanggal_perbaikan'])); ?></td>
+                                                <td><?php echo date("d/m/Y", strtotime($row['tanggal_selesai'])); ?></td>
+                                                <td><?php echo htmlspecialchars($row['jenis_service']); ?></td>
+                                                <td><?php echo htmlspecialchars($row['item_service']); ?></td>
+                                                <td><?php echo htmlspecialchars($row['keterangan']); ?></td>
+                                                <td>
+                                                    <?php if ($row['bukti_nota']) { ?>
+                                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#notaModal<?php echo $no; ?>">
+                                                            <i class="fas fa-file-alt"></i> Lihat Nota
+                                                        </button>
+                                                        
+                                                        <!-- Modal untuk Bukti Nota -->
+                                                        <div class="modal fade" id="notaModal<?php echo $no; ?>" tabindex="-1">
+                                                            <div class="modal-dialog modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Bukti Nota</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                                    </div>
+                                                                    <div class="modal-body text-center">
+                                                                    <img src="../form/uploadservice/<?php echo htmlspecialchars($row['bukti_nota']); ?>"                                                                            alt="Bukti Nota" 
+                                                                            class="img-fluid" 
+                                                                            style="max-height: 70vh; max-width: 100%;">
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <a href="<?php echo htmlspecialchars($row['bukti_nota']); ?>" 
+                                                                        target="_blank" 
+                                                                        class="btn btn-secondary">
+                                                                            Buka Gambar Penuh
+                                                                        </a>
+                                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tutup</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php } else { ?>
+                                                        <span class="text-muted">Tidak ada</span>
+                                                    <?php } ?>
+                                                </td>
+                                                <td>
+                                                    <div class="text-center">
+                                                        <button class="btn btn-sm btn-info my-1">
+                                                            <i class="fas fa-eye"></i> Lihat
+                                                        </button>
+                                                        <button class="btn btn-sm btn-danger my-1" onclick="deleteInspection(<?php echo $row['id']; ?>)">
+                                                            <i class="fas fa-trash"></i> Hapus
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php 
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='10' class='text-center'>Tidak ada data ditemukan.</td></tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 <!-- Image Preview Modal -->

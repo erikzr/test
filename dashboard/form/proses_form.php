@@ -8,7 +8,7 @@ $password = "";
 $dbname = "checkcar";
 
 // Batasan jumlah file per request
-define('MAX_FILES_PER_REQUEST', 20);
+define('MAX_FILES_PER_REQUEST', 25);
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -54,8 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'grup5' => [
             'air_radiator_foto', 
             'bahan_bakar_foto', 
-            'tekanan_ban_foto'
-        ]
+            'tekanan_ban_foto'        ]
     ];
 
     $data = [];

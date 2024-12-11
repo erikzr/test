@@ -1,43 +1,76 @@
 <?php
 session_start();
 
+// Koneksi ke database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "checkcar";
+
+// Membuat koneksi
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Query untuk mengambil data dari tabel `servicerutin`
+$sql = "SELECT * FROM servicerutin ORDER BY created_at DESC";
+$result = $conn->query($sql);
+
+
+// Memeriksa koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
 // Fungsi untuk menangani error
 function handleError($message) {
     echo "<div class='alert alert-danger'>Error: $message</div>";
     error_log($message);
 }
 
-// koneksi kedatabase
-include 'auth/koneksi.php';
-
-// Mengambil data pemeriksaan terbaru dengan semua field
-$sql = "SELECT * FROM vehicle_inspection ORDER BY created_at ";
-
+// Mengambil data dari tabel `servicerutin` untuk ID tertentu
+$sql = "SELECT * FROM servicerutin WHERE id = 899";
 $result = $conn->query($sql);
 
-if (!$result) {
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        echo "Mobil: " . $row["mobil"] . "<br>";
+        echo "Kilometer: " . $row["kilometer"] . "<br>";
+        echo "Tanggal Perbaikan: " . $row["tanggal_perbaikan"] . "<br>";
+        echo "Tanggal Selesai: " . $row["tanggal_selesai"] . "<br>";
+        echo "Jenis Service: " . $row["jenis_service"] . "<br>";
+        echo "Item Service: " . $row["item_service"] . "<br>";
+        echo "Keterangan: " . $row["keterangan"] . "<br><br>";
+    }
+} else {
+    echo "Tidak ada data ditemukan di tabel `servicerutin`.";
+}
+
+// Mengambil data pemeriksaan terbaru dari `vehicle_inspection`
+$sqlInspection = "SELECT * FROM vehicle_inspection ORDER BY created_at";
+$resultInspection = $conn->query($sqlInspection);
+
+if (!$resultInspection) {
     handleError("Query error: " . $conn->error);
     exit();
 }
 
 // Menghitung statistik
-$totalInspeksi = $result->num_rows;
+$totalInspeksi = $resultInspection->num_rows;
 $perluPerhatian = 0;
 $inspeksiData = [];
 $komponenStats = [];
 
-while ($row = $result->fetch_assoc()) {
+while ($row = $resultInspection->fetch_assoc()) {
     $status = 'Aman';
     $totalKomponen = 0;
     $komponenBaik = 0;
     $komponenBuruk = 0;
-    
+
     $komponenList = [
-        'oli_mesin', 'oli_power_steering', 'oli_transmisi', 
-        'minyak_rem', 'lampu_utama', 'lampu_sein', 
+        'oli_mesin', 'oli_power_steering', 'oli_transmisi',
+        'minyak_rem', 'lampu_utama', 'lampu_sein',
         'lampu_rem', 'lampu_klakson', 'cek_aki'
     ];
-    
+
     foreach ($komponenList as $komponen) {
         if (isset($row[$komponen])) {
             $totalKomponen++;
@@ -48,7 +81,7 @@ while ($row = $result->fetch_assoc()) {
             }
         }
     }
-    
+
     $carName = '';
     switch ($row['plat_mobil']) {
         case 'W 1740 NP':
@@ -63,7 +96,7 @@ while ($row = $result->fetch_assoc()) {
         default:
             $carName = 'Unknown';
     }
-    
+
     $komponenStats[] = [
         'plat_mobil' => $row['plat_mobil'],
         'car_name' => $carName,
@@ -77,12 +110,12 @@ while ($row = $result->fetch_assoc()) {
             ];
         }, $komponenList)
     ];
-    
+
     if ($komponenBuruk > 0) {
         $status = 'Perlu Perhatian';
         $perluPerhatian++;
     }
-    
+
     $row['status'] = $status;
     $inspeksiData[] = $row;
 }
@@ -98,8 +131,10 @@ $currentPage = isset($_GET['page']) ? max(1, min($totalPages, intval($_GET['page
 $offset = ($currentPage - 1) * $itemsPerPage;
 $currentPageItems = array_slice($komponenStats, $offset, $itemsPerPage);
 
+// Menutup koneksi
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="id" dir="ltr" data-bs-theme="light">
@@ -614,7 +649,7 @@ button.btn.btn-danger.ms-2:hover {
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Persentase Kondisi Komponen per Kendaraan</h4>
+                        <h4 class="card-title">Kondisi Komponen per Kendaraan</h4>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -747,7 +782,6 @@ button.btn.btn-danger.ms-2:hover {
                                         <th class="px-2" style="width: 10%">Nama Mobil</th>
                                         <th class="px-2" style="width: 15%">Tanggal Pemeriksaan</th>
                                         <th class="px-2" style="width: 15%">Komponen</th>
-                                        <th class="px-2" style="width: 10%">Service</th>
                                         <th class="px-2" style="width: 15%">Aksi</th>
                                         
                                     </tr>
@@ -877,11 +911,229 @@ button.btn.btn-danger.ms-2:hover {
                 </div>
             </div>
         </div>
-    </td>
-    <!-- Kolom Service -->
+
+    <!-- Kolom Aksi -->
     <td>
-        <span class="badge bg-primary">Pending</span>
+        <div class="text-center">
+            <!-- Tombol Lihat -->
+            <a href="detail.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info my-1">
+                <i class="fas fa-eye"></i> Lihat
+            </a>
+            <!-- Tombol Hapus -->
+            <button class="btn btn-sm btn-danger my-1" onclick="deleteInspection(<?php echo $row['id']; ?>)">
+                <i class="fas fa-trash"></i> Hapus
+            </button>
+        </div>
     </td>
+</tr>
+                                  
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabel Pemeriksaan Kendaraan -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="card-title mb-0">Data Service Rutin Kendaraan</h4>
+                <div>
+                    <button class="btn btn-primary" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel me-2"></i>Export Excel
+                    </button>
+                    <button class="btn btn-danger ms-2" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf me-2"></i>Export PDF
+                    </button>
+                </div>
+            </div>
+                <!-- Filter Controls -->
+                    <div class="card-body border-bottom">
+                        <form id="filterForm" class="row g-3 align-items-end">
+                            <div class="col-md-3">
+                                <label class="form-label">Tanggal Mulai</label>
+                                <input type="date" class="form-control" id="startDate" name="startDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Tanggal Akhir</label>
+                                <input type="date" class="form-control" id="endDate" name="endDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Jenis Mobil</label>
+                                <select class="form-select" id="carType" name="carType">
+                                    <option value="">Semua Mobil</option>
+                                    <option value="W 1740 NP">Inova Lama</option>
+                                    <option value="W 1507 NP">Inova Reborn</option>
+                                    <option value="W 1374 NP">Kijang Kapsul</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 d-flex justify-content-between">
+                                <button type="button" class="btn btn-primary w-50" onclick="applyFilters()">
+                                    <i class="fas fa-filter me-2"></i>Terapkan Filter
+                                </button>
+                                <button id="resetButton" type="button" class="btn btn-secondary w-50" onclick="resetFilters()">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+               <!-- Tambahkan container dengan max-width -->
+                <div class="container-fluid px-3">
+                    <div class="card mb-3">
+                        <div class="card-body p-2">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover mb-0" id="inspectionTable">
+                                <thead>
+                                    <tr>
+                                        <th class="px-2" style="width: 10%">No</th>
+                                        <th class="px-2" style="width: 15%">Mobil</th>
+                                        <th class="px-2" style="width: 10%">Kilometer</th>
+                                        <th class="px-2" style="width: 10%">Tanggal Perbaikan</th>
+                                        <th class="px-2" style="width: 15%">Tanggal Selesai</th>
+                                        <th class="px-2" style="width: 15%">Jenis Service</th>
+                                        <th class="px-2" style="width: 15%">Item Service</th>
+                                        <th class="px-2" style="width: 15%">Keterangan</th>
+                                        <th class="px-2" style="width: 15%">Bukti Nota</th>
+                                        <th class="px-2" style="width: 15%">Created At</th>
+                                        
+                                    </tr>
+                                </thead>
+                                    <tbody>
+                                        <?php 
+                                        $no = 1;
+                                        foreach ($inspeksiData as $row): 
+                                            $carName = '';
+                                            switch ($row['plat_mobil']) {
+                                                case 'W 1740 NP':
+                                                    $carName = 'Inova Lama';
+                                                    break;
+                                                case 'W 1507 NP':
+                                                    $carName = 'Inova Reborn';
+                                                    break;
+                                                case 'W 1374 NP':
+                                                    $carName = 'Kijang Kapsul';
+                                                    break;
+                                                default:
+                                                    $carName = 'Unknown';
+                                            }
+
+                                            // Kelompokkan komponen berdasarkan kategori
+                                            $komponenList = [
+                                                'Cairan' => [
+                                                    'Oli Mesin' => ['status' => $row['oli_mesin'], 'foto' => $row['oli_mesin_foto']],
+                                                    'Oli Power Steering' => ['status' => $row['oli_power_steering'], 'foto' => $row['oli_power_steering_foto']],
+                                                    'Oli Transmisi' => ['status' => $row['oli_transmisi'], 'foto' => $row['oli_transmisi_foto']],
+                                                    'Minyak Rem' => ['status' => $row['minyak_rem'], 'foto' => $row['minyak_rem_foto']]
+                                                ],
+                                                'Lampu' => [
+                                                    'Lampu Utama' => ['status' => $row['lampu_utama'], 'foto' => $row['lampu_utama_foto']],
+                                                    'Lampu Sein' => ['status' => $row['lampu_sein'], 'foto' => $row['lampu_sein_foto']],
+                                                    'Lampu Rem' => ['status' => $row['lampu_rem'], 'foto' => $row['lampu_rem_foto']],
+                                                    'Klakson' => ['status' => $row['lampu_klakson'], 'foto' => $row['lampu_klakson_foto']],
+                                                    'Aki' => ['status' => $row['cek_aki'], 'foto' => $row['aki_foto']]
+                                                ],
+                                                'Interior' => [
+                                                    'Kursi' => ['status' => $row['cek_kursi'], 'foto' => $row['kursi_foto']],
+                                                    'Lantai' => ['status' => $row['cek_lantai'], 'foto' => $row['lantai_foto']],
+                                                    'Dinding' => ['status' => $row['cek_dinding'], 'foto' => $row['dinding_foto']],
+                                                    'Kap' => ['status' => $row['cek_kap'], 'foto' => $row['kap_foto']]
+                                                ],
+                                                'Dokumen' => [
+                                                    'STNK' => ['status' => $row['cek_stnk'], 'foto' => $row['stnk_foto']],
+                                                    'APAR' => ['status' => $row['cek_apar'], 'foto' => $row['apar_foto']],
+                                                    'P3K' => ['status' => $row['cek_p3k'], 'foto' => $row['p3k_foto']],
+                                                    'Kunci Roda' => ['status' => $row['cek_kunci_roda'], 'foto' => $row['kunci_roda_foto']]
+                                                ],
+                                                'Sistem' => [
+                                                    'Air Radiator' => ['status' => $row['cek_air_radiator'], 'foto' => $row['air_radiator_foto']],
+                                                    'Bahan Bakar' => ['status' => $row['cek_bahan_bakar'], 'foto' => $row['bahan_bakar_foto']],
+                                                    'Tekanan Ban' => ['status' => $row['cek_tekanan_ban'], 'foto' => $row['tekanan_ban_foto']],
+                                                    'Rem' => ['status' => $row['cek_rem'], 'foto' => $row['tekanan_ban_foto']]
+                                                ]
+                                            ];
+                                        ?>
+                                        <tr>
+    <td><?php echo $no++; ?></td>
+    <td><?php echo htmlspecialchars($row['nama']); ?></td>
+    <td><?php echo htmlspecialchars($row['plat_mobil']); ?></td>
+    <td><?php echo htmlspecialchars($carName); ?></td>
+    <td><?php echo date("d/m/Y H:i", strtotime($row['created_at'])); ?></td>
+    <td>
+        <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#komponenModal<?php echo $no; ?>">
+            Detail Komponen
+        </button>
+        <!-- Modal untuk Detail Komponen -->
+        <div class="modal fade" id="komponenModal<?php echo $no; ?>" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detail Komponen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="accordion" id="accordionKomponen<?php echo $no; ?>">
+                            <?php foreach ($komponenList as $kategori => $items): ?>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                                            data-bs-target="#collapse<?php echo $kategori . $no; ?>">
+                                        <?php echo $kategori; ?>
+                                    </button>
+                                </h2>
+                                <div id="collapse<?php echo $kategori . $no; ?>" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Komponen</th>
+                                                        <th>Status</th>
+                                                        <th>Foto</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php foreach ($items as $nama => $data): ?>
+                                                    <tr>
+                                                        <td><?php echo $nama; ?></td>
+                                                        <td>
+                                                            <span class="badge <?php echo strtolower($data['status']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                                                <?php echo htmlspecialchars($data['status']); ?>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <?php if (!empty($data['foto'])): ?>
+                                                                <button class="btn btn-sm btn-primary" onclick="viewImage('<?php echo htmlspecialchars($data['foto']); ?>')">
+                                                                    <i class="fas fa-image"></i>
+                                                                </button>
+                                                            <?php else: ?>
+                                                                <span class="text-muted">-</span>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <!-- Kolom Aksi -->
     <td>
         <div class="text-center">
