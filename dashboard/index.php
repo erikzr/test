@@ -53,9 +53,6 @@ while ($row = $resultInspection->fetch_assoc()) {
         'Oli Mesin', 'Oli Power Steering', 'Oli Transmisi',
         'Minyak Rem', 'Lampu Utama', 'Lampu Sein',
         'Lampu Rem', 'Lampu Klakson', 'Cek Aki'
-        'Oli Mesin', 'Oli Power Steering', 'Oli Transmisi',
-        'Minyak Rem', 'Lampu Utama', 'Lampu Sein',
-        'Lampu Rem', 'Lampu Klakson', 'Cek Aki'
     ];
 
     foreach ($komponenList as $komponen) {
@@ -560,6 +557,137 @@ button.btn.btn-danger.ms-2:hover {
         </div>
     </nav>
     
+    <div class="container-fluid content-inner mt-5 py-0">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-stats bg-info text-white">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-white mb-0">Total Inspeksi</h5>
+                                <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo $totalInspeksi; ?></span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-white text-info rounded-circle shadow">
+                                    <i class="fas fa-clipboard-list"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-stats bg-success text-white">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-white mb-0">Persentase Aman</h5>
+                                <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo number_format($mobilAman); ?></span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-white text-success rounded-circle shadow">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-stats bg-danger text-white">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-white mb-0">Perlu Perhatian</h5>
+                                <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo $perluPerhatian; ?></span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-white text-danger rounded-circle shadow">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Kondisi Komponen per Kendaraan</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <?php foreach ($currentPageItems as $stat): ?>
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">
+                                            <?php echo htmlspecialchars($stat['car_name']); ?> (<?php echo htmlspecialchars($stat['plat_mobil']); ?>)
+                                        </h5>
+                                        <small class="text-muted">
+                                            Tanggal Inspeksi: <?php echo date("d/m/Y H:i", strtotime($stat['inspection_date'])); ?>
+                                        </small>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="component-chart">
+                                            <canvas id="chart-<?php echo str_replace(' ', '-', $stat['plat_mobil']); ?>"></canvas>
+                                        </div>
+                                        <div class="text-center mt-3">
+                                            <span class="badge bg-success me-2">Baik: <?php echo $stat['komponen_baik']; ?></span>
+                                            <span class="badge bg-danger">Perlu Perbaikan: <?php echo $stat['komponen_buruk']; ?></span>
+                                        </div>
+                                        <div class="mt-3">
+                                            <small class="text-muted">Detail Komponen:</small>
+                                            <ul class="list-unstyled small">
+                                                <?php foreach ($stat['detail_komponen'] as $detail): ?>
+                                                <li>
+                                                    <?php echo htmlspecialchars($detail['nama']); ?>: 
+                                                    <span class="badge <?php echo strtolower($detail['nilai']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
+                                                        <?php echo htmlspecialchars($detail['nilai']); ?>
+                                                    </span>
+                                                </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                        
+                        <!-- Pagination controls -->
+                        <nav aria-label="Page navigation" class="mt-4">
+                            <ul class="pagination justify-content-center">
+                                <?php if ($currentPage > 1): ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?php echo $currentPage - 1; ?>" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <li class="page-item <?php echo $i === $currentPage ? 'active' : ''; ?>">
+                                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                </li>
+                                <?php endfor; ?>
+                                
+                                <?php if ($currentPage < $totalPages): ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?php echo $currentPage + 1; ?>" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
 
                 
                
