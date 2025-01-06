@@ -134,7 +134,7 @@ const kompresGambar = {
                     form.append(input.name, input.value);
                 }
             }
-
+//eriiik
             // Log data sebelum dikirim
             this.logFormData(form);
             
