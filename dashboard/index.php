@@ -53,6 +53,9 @@ while ($row = $resultInspection->fetch_assoc()) {
         'Oli Mesin', 'Oli Power Steering', 'Oli Transmisi',
         'Minyak Rem', 'Lampu Utama', 'Lampu Sein',
         'Lampu Rem', 'Lampu Klakson', 'Cek Aki'
+        'Oli Mesin', 'Oli Power Steering', 'Oli Transmisi',
+        'Minyak Rem', 'Lampu Utama', 'Lampu Sein',
+        'Lampu Rem', 'Lampu Klakson', 'Cek Aki'
     ];
 
     foreach ($komponenList as $komponen) {
