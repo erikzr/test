@@ -50,9 +50,9 @@ while ($row = $resultInspection->fetch_assoc()) {
     $komponenBuruk = 0;
 
     $komponenList = [
-        'oli_mesin', 'oli_power_steering', 'oli_transmisi',
-        'minyak_rem', 'lampu_utama', 'lampu_sein',
-        'lampu_rem', 'lampu_klakson', 'cek_aki'
+        'Oli Mesin', 'Oli Power Steering', 'Oli Transmisi',
+        'Minyak Rem', 'Lampu Utama', 'Lampu Sein',
+        'Lampu Rem', 'Lampu Klakson', 'Cek Aki'
     ];
 
     foreach ($komponenList as $komponen) {
@@ -134,6 +134,7 @@ $conn->close();
     
     <!-- PDF Export Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- <script src="https://unpkg.com/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <!-- SweetAlert for notifications -->
@@ -281,24 +282,13 @@ $conn->close();
     height: calc(100vh - 50px);
 }
 
+
 /* CSS untuk Tombol Logout - Diperbarui */
 .logout-btn {
     position: absolute;
     bottom: 20px;
     left: 15px;
     width: calc(100% - 30px);
-    min-height: 28px;
-    padding: 3px 8px;
-    border: none;
-    border-radius: 4px;
-    background-color: #dc3545;
-    color: white;
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
 }
 
 /* Ketika sidebar diciutkan */
@@ -549,13 +539,6 @@ button.btn.btn-danger.ms-2:hover {
                         <span class="item-name">Users</span>
                              </a>
                 </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-cog"></i>
-                            <span class="item-name">Settings</span>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -574,137 +557,6 @@ button.btn.btn-danger.ms-2:hover {
         </div>
     </nav>
     
-    <div class="container-fluid content-inner mt-5 py-0">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card card-stats bg-info text-white">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="card-title text-uppercase text-white mb-0">Total Inspeksi</h5>
-                                <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo $totalInspeksi; ?></span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape bg-white text-info rounded-circle shadow">
-                                    <i class="fas fa-clipboard-list"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-stats bg-success text-white">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="card-title text-uppercase text-white mb-0">Persentase Aman</h5>
-                                <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo number_format($mobilAman); ?></span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape bg-white text-success rounded-circle shadow">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-stats bg-danger text-white">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="card-title text-uppercase text-white mb-0">Perlu Perhatian</h5>
-                                <span class="h2 font-weight-bold mb-0" style="color:white;"><?php echo $perluPerhatian; ?></span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape bg-white text-danger rounded-circle shadow">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Kondisi Komponen per Kendaraan</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <?php foreach ($currentPageItems as $stat): ?>
-                            <div class="col-md-4 mb-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title mb-0">
-                                            <?php echo htmlspecialchars($stat['car_name']); ?> (<?php echo htmlspecialchars($stat['plat_mobil']); ?>)
-                                        </h5>
-                                        <small class="text-muted">
-                                            Tanggal Inspeksi: <?php echo date("d/m/Y H:i", strtotime($stat['inspection_date'])); ?>
-                                        </small>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="component-chart">
-                                            <canvas id="chart-<?php echo str_replace(' ', '-', $stat['plat_mobil']); ?>"></canvas>
-                                        </div>
-                                        <div class="text-center mt-3">
-                                            <span class="badge bg-success me-2">Baik: <?php echo $stat['komponen_baik']; ?></span>
-                                            <span class="badge bg-danger">Perlu Perbaikan: <?php echo $stat['komponen_buruk']; ?></span>
-                                        </div>
-                                        <div class="mt-3">
-                                            <small class="text-muted">Detail Komponen:</small>
-                                            <ul class="list-unstyled small">
-                                                <?php foreach ($stat['detail_komponen'] as $detail): ?>
-                                                <li>
-                                                    <?php echo htmlspecialchars($detail['nama']); ?>: 
-                                                    <span class="badge <?php echo strtolower($detail['nilai']) === 'baik' ? 'bg-success' : 'bg-danger'; ?>">
-                                                        <?php echo htmlspecialchars($detail['nilai']); ?>
-                                                    </span>
-                                                </li>
-                                                <?php endforeach; ?>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php endforeach; ?>
-                        </div>
-                        
-                        <!-- Pagination controls -->
-                        <nav aria-label="Page navigation" class="mt-4">
-                            <ul class="pagination justify-content-center">
-                                <?php if ($currentPage > 1): ?>
-                                <li class="page-item">
-                                    <a class="page-link" href="?page=<?php echo $currentPage - 1; ?>" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <?php endif; ?>
-                                
-                                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                                <li class="page-item <?php echo $i === $currentPage ? 'active' : ''; ?>">
-                                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                                </li>
-                                <?php endfor; ?>
-                                
-                                <?php if ($currentPage < $totalPages): ?>
-                                <li class="page-item">
-                                    <a class="page-link" href="?page=<?php echo $currentPage + 1; ?>" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                                <?php endif; ?>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
 
                 
                
@@ -819,8 +671,8 @@ button.btn.btn-danger.ms-2:hover {
                                                 'Sistem' => [
                                                     'Air Radiator' => ['status' => $row['cek_air_radiator'], 'foto' => $row['air_radiator_foto']],
                                                     'Bahan Bakar' => ['status' => $row['cek_bahan_bakar'], 'foto' => $row['bahan_bakar_foto']],
-                                                    'Tekanan Ban' => ['status' => $row['cek_tekanan_ban'], 'foto' => $row['tekanan_ban_foto']],
-                                                    'Rem' => ['status' => $row['cek_rem'], 'foto' => $row['cek_rem']]
+                                                    'Tekanan Ban' => ['status' => $row['cek_tekanan_ban'], 'foto' => $row['ban_foto']],
+                                                    'Rem' => ['status' => $row['cek_rem'], 'foto' => $row['rem_foto']]
 
                                                 ]
                                             ];
@@ -935,10 +787,10 @@ button.btn.btn-danger.ms-2:hover {
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="card-title mb-0">Data Service Rutin Kendaraan</h4>
                 <div>
-                    <button class="btn btn-primary" onclick="exportToExcel()">
+                    <button class="btn btn-primary" onclick="exportServisToExcel()">
                         <i class="fas fa-file-excel me-2"></i>Export Excel
                     </button>
-                    <button class="btn btn-danger ms-2" onclick="exportToPDF()">
+                    <button class="btn btn-danger ms-2" onclick="exportServisToPDF()">
                         <i class="fas fa-file-pdf me-2"></i>Export PDF
                     </button>
                 </div>
@@ -947,15 +799,15 @@ button.btn.btn-danger.ms-2:hover {
                 <form id="filterForm" class="row g-3 align-items-end">
                     <div class="col-md-3">
                         <label class="form-label">Tanggal Mulai</label>
-                        <input type="date" class="form-control" id="startDate" name="startDate">
+                        <input type="date" class="form-control" id="startDate1" name="startDate">
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Tanggal Akhir</label>
-                        <input type="date" class="form-control" id="endDate" name="endDate">
+                        <input type="date" class="form-control" id="endDate1" name="endDate">
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Jenis Mobil</label>
-                        <select class="form-select" id="carType" name="carType">
+                        <select class="form-select" id="carType1" name="carType">
                             <option value="">Semua Mobil</option>
                             <option value="W 1740 NP">Inova Lama</option>
                             <option value="W 1507 NP">Inova Reborn</option>
@@ -963,7 +815,7 @@ button.btn.btn-danger.ms-2:hover {
                         </select>
                     </div>
                     <div class="col-md-3 d-flex justify-content-between">
-                        <button type="button" class="btn btn-primary w-50" onclick="applyFilters()">
+                        <button type="button" class="btn btn-primary w-50" onclick="applyFiltersServisRutin()">
                             <i class="fas fa-filter me-2"></i>Terapkan Filter
                         </button>
                         <button id="resetButton" type="button" class="btn btn-secondary w-50" onclick="resetFilters()">Reset</button>
@@ -974,7 +826,7 @@ button.btn.btn-danger.ms-2:hover {
                 <div class="card mb-3">
                     <div class="card-body p-2">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover mb-0" id="inspectionTable">
+                            <table class="table table-striped table-hover mb-0" id="ServisRutin">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -1063,10 +915,6 @@ button.btn.btn-danger.ms-2:hover {
         </div>
     </div>
 </div>
-
-
-
-
 <!-- Image Preview Modal -->
 <div class="modal fade" id="imagePreviewModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -1134,6 +982,40 @@ document.addEventListener('DOMContentLoaded', function() {
     originalTableState = table.innerHTML;
 });
 
+//ServisRutin
+function applyFiltersServisRutin() {
+    const startDate = document.getElementById('startDate1').value;
+    const endDate = document.getElementById('endDate1').value;
+    const carType = document.getElementById('carType1').value;
+    
+    const table = document.getElementById('ServisRutin');
+    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    
+    let visibleCount = 0;
+    
+    for (let i = 0; i < rows.length; i++) {
+        const plateCell = rows[i].getElementsByTagName('td')[1]; // Plat Mobil column
+        const dateCell = rows[i].getElementsByTagName('td')[3];  // Tanggal Pemeriksaan column
+        
+        if (plateCell && dateCell) {
+            const plateText = plateCell.textContent.trim();
+            const dateText = dateCell.textContent.trim();
+            
+            const matchesCarType = !carType || plateText === carType;
+            const matchesDate = isDateInRange(dateText, startDate, endDate);
+            
+            if (matchesCarType && matchesDate) {
+                rows[i].style.display = '';
+                visibleCount++;
+                // Update nomor baris
+                rows[i].getElementsByTagName('td')[0].textContent = visibleCount;
+            } else {
+                rows[i].style.display = 'none'; //or block
+            }
+        }
+    }
+}
+
 // Function filter utama
 function applyFilters() {
     const startDate = document.getElementById('startDate').value;
@@ -1162,7 +1044,7 @@ function applyFilters() {
                 // Update nomor baris
                 rows[i].getElementsByTagName('td')[0].textContent = visibleCount;
             } else {
-                rows[i].style.display = 'none';
+                rows[i].style.display = 'none'; //or block
             }
         }
     }
@@ -1217,59 +1099,6 @@ document.getElementById('filterForm').addEventListener('submit', function(e) {
     e.preventDefault();
     applyFilters();
 });
-
-function exportToExcel() {
-    try {
-        // Ambil tabel dan semua baris yang visible
-        const table = document.getElementById('inspectionTable');
-        const visibleRows = Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'))
-            .filter(row => row.style.display !== 'none');
-
-        // Ambil header (kecuali kolom Aksi)
-        const headers = Array.from(table.getElementsByTagName('thead')[0].getElementsByTagName('th'))
-            .slice(0, -1)
-            .map(th => th.textContent.trim());
-
-        // Siapkan data dalam format yang benar untuk XLSX
-        const filteredData = visibleRows.map(row => {
-            return Array.from(row.getElementsByTagName('td'))
-                .slice(0, -1)
-                .map(td => {
-                    // Bersihkan data dari karakter khusus dan format yang tidak perlu
-                    let value = td.textContent.trim();
-
-                    // Jika ini adalah tanggal, format dengan benar
-                    if (value.includes('/')) {
-                        const [date, time] = value.split(' ');
-                        const [day, month, year] = date.split('/');
-                        value = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-                        if (time) {
-                            value += ' ' + time;
-                        }
-                    }
-
-                    return value;
-                });
-        });
-
-        // Buat workbook dan worksheet
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.aoa_to_sheet([headers, ...filteredData]);
-
-        // Tambahkan worksheet ke workbook
-        XLSX.utils.book_append_sheet(wb, ws, "Filtered Data");
-
-        // Simpan file Excel
-        const timestamp = new Date().toISOString().replace(/[-:T]/g, '_').slice(0, 15);
-        const filename = `Filtered_Inspection_Data_${timestamp}.xlsx`;
-        XLSX.writeFile(wb, filename);
-
-        console.log('Export berhasil!');
-    } catch (error) {
-        console.error('Error saat export:', error);
-        alert('Terjadi kesalahan saat mengekspor data. Detail: ' + error.message);
-    }
-}
 
             // Bootstrap Components Initialization
             function initializeBootstrapComponents() {
@@ -1666,206 +1495,426 @@ function exportToExcel() {
                 }
             });
         }
-            function exportToExcel() {
-            try {
-                // Initialize workbook
-                const wb = XLSX.utils.book_new();
-                const fileName = `Laporan_Pemeriksaan_Kendaraan_${new Date().toISOString().slice(0,10)}.xlsx`;
 
-                // Get current date formatted in Indonesian format
-                const currentDate = new Date().toLocaleDateString('id-ID', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit'
-                }).split('/').join('-');
+function exportServisToExcel() {
+    try {
+        // Ambil tabel dan semua baris yang visible
+        const table = document.getElementById('ServisRutin');
+        const visibleRows = Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'))
+            .filter(row => row.style.display !== 'none');
 
-                // Prepare data structure
-                const data = [];
-                const table = document.getElementById("inspectionTable");
-                const rows = Array.from(table.querySelectorAll('tr')).slice(1);
+        // Ambil header (kecuali kolom Aksi)
+        const headers = Array.from(table.getElementsByTagName('thead')[0].getElementsByTagName('th'))
+            .slice(0, -2)
+            .map(th => th.textContent.trim());
 
-                // Process each row
-                rows.forEach(row => {
-                    const id = row.cells[0].textContent.trim();
-                    const nama = row.cells[1].textContent.trim();
-                    const platMobil = row.cells[2].textContent.trim();
-                    let tanggalPemeriksaan = row.cells[row.cells.length - 2].textContent.trim() || currentDate;
-                    let tanggalUpdate = row.cells[row.cells.length - 1].textContent.trim() || currentDate;
+        // Siapkan data dalam format yang benar untuk XLSX
+        const filteredData = visibleRows.map(row => {
+            return Array.from(row.getElementsByTagName('td'))
+                .slice(0, -2)
+                .map(td => {
+                    // Bersihkan data dari karakter khusus dan format yang tidak perlu
+                    let value = td.textContent.trim();
 
-                    // Get modal data
-                    const detailsButton = row.querySelector('button[data-bs-toggle="modal"]');
-                    if (detailsButton) {
-                        const modalId = detailsButton.getAttribute('data-bs-target');
-                        const modal = document.querySelector(modalId);
-                        
-                        if (modal) {
-                            const vehicleData = {
-                                'ID': id,
-                                'Nama': nama,
-                                'Plat Mobil': platMobil,
-                                'Tanggal Pemeriksaan': tanggalPemeriksaan,
-                                'Tanggal Update': tanggalUpdate
-                            };
-
-                            // Get component statuses
-                            const modalRows = modal.querySelectorAll('tbody tr');
-                            modalRows.forEach(modalRow => {
-                                const cells = modalRow.querySelectorAll('td');
-                                if (cells.length >= 2) {
-                                    const componentName = cells[0].textContent.trim();
-                                    const status = cells[1].textContent.trim();
-                                    if (!componentName.toLowerCase().includes('foto')) {
-                                        vehicleData[componentName] = status;
-                                    }
-                                }
-                            });
-
-                            data.push(vehicleData);
+                    // Jika ini adalah tanggal, format dengan benar
+                    if (value.includes('/')) {
+                        const [date, time] = value.split(' ');
+                        const [day, month, year] = date.split('/');
+                        value = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                        if (time) {
+                            value += ' ' + time;
                         }
                     }
+
+                    return value;
                 });
+        });
 
-                // Create worksheet with enhanced header styling
-                const ws = XLSX.utils.json_to_sheet(data, {
-                    header: [
-                        'ID', 'Nama', 'Plat Mobil', 'Tanggal Pemeriksaan', 'Tanggal Update',
-                        'Oli Mesin', 'Oli Power Steering', 'Oli Transmisi', 'Minyak Rem',
-                        'Lampu Utama', 'Lampu Sein', 'Lampu Rem', 'Klakson', 'Aki',
-                        'Kursi', 'Lantai', 'Dinding', 'Kap',
-                        'STNK', 'APAR', 'P3K', 'Kunci Roda',
-                        'Air Radiator', 'Bahan Bakar', 'Tekanan Ban', 'Rem'
-                    ]
-                });
+        // Buat workbook dan worksheet
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet([headers, ...filteredData]);
+        // Define column widths (set the width for each column based on the content or header)
+        ws['!cols'] = headers.map((header, index) => {
+            if (index === 0) return { wch: 8 }; // Example: First column (ID) gets width of 8
+            if (header.toLowerCase().includes('mobil')) return { wch: 22 }; // Example: Name-related columns
+            if (header.toLowerCase().includes('kilometer')) return { wch: 15 }; // Example: Date-related columns
+            if (header.toLowerCase().includes('tanggal perbaikan')) return { wch: 18 }; // Example: Date-related columns
+            if (header.toLowerCase().includes('tanggal selesai')) return { wch: 18 }; // Example: Date-related columns
+            if (header.toLowerCase().includes('jenis service')) return { wch: 22 }; // Example: Date-related columns
+            if (header.toLowerCase().includes('item service')) return { wch: 18 }; // Example: Date-related columns
+            if (header.toLowerCase().includes('keterangan')) return { wch: 20 }; // Example: Date-related columns
+            return { wch: 15 }; // Default width for other columns
+        });
+        // Tambahkan worksheet ke workbook
+        XLSX.utils.book_append_sheet(wb, ws, "Filtered Data");
 
-                // Enhanced column widths
-                ws['!cols'] = [
-                    { wch: 8 },   // ID
-                    { wch: 20 },  // Nama
-                    { wch: 15 },  // Plat Mobil
-                    { wch: 18 },  // Tanggal Pemeriksaan
-                    { wch: 18 },  // Tanggal Update
-                    ...Array(21).fill({ wch: 16 }) // Component columns
-                ];
+        // Simpan file Excel
+        const timestamp = new Date().toISOString().replace(/[-:T]/g, '_').slice(0, 15);
+        const filename = `Filtered_Servis_Rutin_Data_${timestamp}.xlsx`;
+        XLSX.writeFile(wb, filename);
 
-                // Apply professional styling
-                const range = XLSX.utils.decode_range(ws['!ref']);
-                for (let R = range.s.r; R <= range.e.r; R++) {
-                    for (let C = range.s.c; C <= range.e.c; C++) {
-                        const cell_address = { c: C, r: R };
-                        const cell_ref = XLSX.utils.encode_cell(cell_address);
-                        
-                        if (!ws[cell_ref]) continue;
+        console.log('Export berhasil!');
+    } catch (error) {
+        console.error('Error saat export:', error);
+        alert('Terjadi kesalahan saat mengekspor data. Detail: ' + error.message);
+    }
+}
+function exportServisToPDF() {
+        try {
+        // Import jsPDF and AutoTable (ensure these libraries are included in your project)
+        const { jsPDF } = window.jspdf;
+        // require("jspdf-autotable");
 
-                        // Header row styling
-                        if (R === 0) {
-                            ws[cell_ref].s = {
-                                font: { 
-                                    bold: true, 
-                                    color: { rgb: "FFFFFF" },
-                                    name: "Arial",
-                                    sz: 12
-                                },
-                                fill: { 
-                                    patternType: "solid",
-                                    fgColor: { rgb: "1F4E78" } // Darker blue for headers
-                                },
-                                alignment: { 
-                                    horizontal: "center",
-                                    vertical: "center",
-                                    wrapText: true
-                                },
-                                border: {
-                                    top: { style: "medium", color: { rgb: "B4C6E7" } },
-                                    bottom: { style: "medium", color: { rgb: "B4C6E7" } },
-                                    left: { style: "medium", color: { rgb: "B4C6E7" } },
-                                    right: { style: "medium", color: { rgb: "B4C6E7" } }
-                                }
-                            };
-                        } 
-                        // Data rows styling
-                        else {
-                            const value = ws[cell_ref].v;
-                            ws[cell_ref].s = {
-                                font: {
-                                    name: "Arial",
-                                    sz: 11,
-                                    color: { rgb: "000000" }
-                                },
-                                alignment: {
-                                    horizontal: C <= 4 ? "left" : "center",
-                                    vertical: "center"
-                                },
-                                border: {
-                                    top: { style: "thin", color: { rgb: "B4C6E7" } },
-                                    bottom: { style: "thin", color: { rgb: "B4C6E7" } },
-                                    left: { style: "thin", color: { rgb: "B4C6E7" } },
-                                    right: { style: "thin", color: { rgb: "B4C6E7" } }
-                                },
-                                fill: {
-                                    patternType: "solid",
-                                    fgColor: { rgb: R % 2 === 0 ? "EDF3FA" : "FFFFFF" } // Light blue alternating rows
-                                }
-                            };
+        // Get table and visible rows
+        const table = document.getElementById('ServisRutin');
+        const visibleRows = Array.from(
+            table.getElementsByTagName('tbody')[0].getElementsByTagName('tr')
+        ).filter(row => row.style.display !== 'none');
 
-                            // Status styling with improved colors
-                            if (C >= 5) {
-                                if (value === 'baik') {
-                                    ws[cell_ref].s.font.color = { rgb: "1E6C41" }; // Darker green
-                                    ws[cell_ref].s.fill = {
-                                        patternType: "solid",
-                                        fgColor: { rgb: "E2EFDA" }
-                                    };
-                                } else if (value === 'tidak_baik') {
-                                    ws[cell_ref].s.font.color = { rgb: "843C39" }; // Darker red
-                                    ws[cell_ref].s.fill = {
-                                        patternType: "solid",
-                                        fgColor: { rgb: "FFE6E6" }
-                                    };
-                                }
-                            }
+        // Get headers (excluding "Aksi" column)
+        const headers = Array.from(
+            table.getElementsByTagName('thead')[0].getElementsByTagName('th')
+        ).slice(0, -2).map(th => th.textContent.trim());
 
-                            // Date columns formatting
-                            if (C === 3 || C === 4) {
-                                ws[cell_ref].z = 'dd-mm-yyyy';
-                            }
+        // Prepare filtered data
+        const filteredData = visibleRows.map(row => {
+            return Array.from(row.getElementsByTagName('td'))
+                .slice(0, -2) // Exclude "Aksi" column
+                .map(td => {
+                    let value = td.textContent.trim();
+
+                    // Format dates correctly
+                    if (value.includes('/')) {
+                        const [date, time] = value.split(' ');
+                        const [day, month, year] = date.split('/');
+                        value = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                        if (time) {
+                            value += ' ' + time;
                         }
                     }
+
+                    // Replace "Baik" and "Tidak Baik" with abbreviations
+                    if (value.toLowerCase() === 'baik') value = 'B';
+                    if (value.toLowerCase() === 'tidak baik') value = 'TB';
+
+                    return value;
+                });
+        });
+
+        // Initialize jsPDF
+        const doc = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'a4' });
+
+        // AutoTable column widths (adjust manually for a better layout)
+        const columnWidths = headers.map(header => {
+            if (header.toLowerCase().includes('mobil')) return 100;
+            if (header.toLowerCase().includes('kilometer')) return 70;
+            if (header.toLowerCase().includes('tanggal')) return 80;
+            if (header.toLowerCase().includes('jenis service')) return 90;
+            if (header.toLowerCase().includes('item service')) return 80;
+            if (header.toLowerCase().includes('keterangan')) return 100;
+            return 60; // Default width for other columns
+        });
+
+        // Add AutoTable
+        doc.autoTable({
+            head: [headers], // Table headers
+            body: filteredData, // Table body
+            startY: 30, // Start position from top
+            styles: {
+                fontSize: 10,
+                cellWidth: 'wrap', // Adjust cell width
+            },
+            columnStyles: headers.reduce((acc, _, i) => {
+                acc[i] = { cellWidth: columnWidths[i] || 'auto' };
+                return acc;
+            }, {}),
+            didParseCell: function (data) {
+                // Apply background colors for "B" and "TB"
+                if (data.row.raw[data.column.index] === 'B') {
+                    data.cell.styles.fillColor = [173, 216, 230]; // Light blue
+                } else if (data.row.raw[data.column.index] === 'TB') {
+                    data.cell.styles.fillColor = [255, 99, 71]; // Light red
                 }
-
-                // Set row heights
-                ws['!rows'] = [
-                    { hpt: 30 }, // Header row
-                    ...Array(range.e.r).fill({ hpt: 25 }) // Data rows
-                ];
-
-                // Add worksheet to workbook
-                XLSX.utils.book_append_sheet(wb, ws, "Laporan Pemeriksaan");
-                
-                // Export file
-                XLSX.writeFile(wb, fileName);
-                
-                // Success notification
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Ekspor Berhasil',
-                    text: 'File Excel berhasil diunduh!',
-                    confirmButtonColor: '#28a745',
-                    timer: 2000,
-                    timerProgressBar: true
-                });
-                
-            } catch (error) {
-                console.error('Error saat mengekspor Excel:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Ekspor Gagal',
-                    text: 'Terjadi kesalahan saat mengekspor data ke Excel!',
-                    confirmButtonColor: '#dc3545'
-                });
             }
+        });
+
+        // Add title and other decorations
+        doc.setFontSize(14);
+        doc.text('Laporan Servis Rutin', 40, 20);
+
+        // Save PDF file
+        const timestamp = new Date().toISOString().replace(/[-:T]/g, '_').slice(0, 15);
+        const filename = `Filtered_Servis_Rutin_Data_${timestamp}.pdf`;
+        doc.save(filename);
+
+        console.log('PDF export successful!');
+    } catch (error) {
+        console.error('Error exporting PDF:', error);
+        alert('An error occurred while exporting the data. Details: ' + error.message);
+    }
+}
+function exportToExcel() {
+    try {
+        // Initialize workbook
+        const wb = XLSX.utils.book_new();
+        const fileName = `Laporan_Pemeriksaan_Kendaraan_${new Date().toISOString().slice(0, 10)}.xlsx`;
+
+        // Get current date formatted in Indonesian format
+        const currentDate = new Date().toLocaleDateString('id-ID', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).split('/').join('-');
+
+        // Prepare data structure
+        const data = [];
+        const table = document.getElementById("inspectionTable");
+        const rows = Array.from(
+            table.querySelectorAll('tbody tr')
+        ).filter(row => row.style.display !== 'none'); // Only visible rows
+
+        // Process each visible row
+        rows.forEach(row => {
+            const id = row.cells[0].textContent.trim();
+            const nama = row.cells[1].textContent.trim();
+            const platMobil = row.cells[2].textContent.trim();
+            let namaMobil = row.cells[3] ? row.cells[3].textContent.trim() : '';
+            let tanggalPemeriksaan = row.cells[row.cells.length - 3].textContent.trim() || currentDate;
+
+            // Get modal data
+            const detailsButton = row.querySelector('button[data-bs-toggle="modal"]');
+            if (detailsButton) {
+                const modalId = detailsButton.getAttribute('data-bs-target');
+                const modal = document.querySelector(modalId);
+
+                if (modal) {
+                    const vehicleData = {
+                        'ID': id,
+                        'Nama': nama,
+                        'Plat Mobil': platMobil,
+                        'Tanggal Pemeriksaan': tanggalPemeriksaan,
+                        'Nama Mobil': namaMobil
+                    };
+
+                    // Get component statuses
+                    const modalRows = modal.querySelectorAll('tbody tr');
+                    modalRows.forEach(modalRow => {
+                        const cells = modalRow.querySelectorAll('td');
+                        if (cells.length >= 2) {
+                            const componentName = cells[0].textContent.trim();
+                            const status = cells[1].textContent.trim();
+                            if (!componentName.toLowerCase().includes('foto')) {
+                                vehicleData[componentName] = status;
+                            }
+                        }
+                    });
+
+                    data.push(vehicleData);
+                }
             }
+        });
+
+        // Create worksheet with enhanced header styling
+        const ws = XLSX.utils.json_to_sheet(data, {
+            header: [
+                'ID', 'Nama', 'Plat Mobil', 'Tanggal Pemeriksaan', 'Nama Mobil',
+                'Oli Mesin', 'Oli Power Steering', 'Oli Transmisi', 'Minyak Rem',
+                'Lampu Utama', 'Lampu Sein', 'Lampu Rem', 'Klakson', 'Aki',
+                'Kursi', 'Lantai', 'Dinding', 'Kap',
+                'STNK', 'APAR', 'P3K', 'Kunci Roda',
+                'Air Radiator', 'Bahan Bakar', 'Tekanan Ban', 'Rem'
+            ]
+        });
+
+        // Enhanced column widths
+        ws['!cols'] = [
+            { wch: 8 },  // ID
+            { wch: 20 }, // Nama
+            { wch: 15 }, // Plat Mobil
+            { wch: 18 }, // Tanggal Pemeriksaan
+            { wch: 18 }, // Tanggal Update
+            ...Array(21).fill({ wch: 16 }) // Component columns
+        ];
+
+        // Add worksheet to workbook
+        XLSX.utils.book_append_sheet(wb, ws, "Laporan Pemeriksaan");
+
+        // Export file
+        XLSX.writeFile(wb, fileName);
+
+        // Success notification
+        Swal.fire({
+            icon: 'success',
+            title: 'Ekspor Berhasil',
+            text: 'File Excel berhasil diunduh!',
+            confirmButtonColor: '#28a745',
+            timer: 2000,
+            timerProgressBar: true
+        });
+
+    } catch (error) {
+        console.error('Error saat mengekspor Excel:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Ekspor Gagal',
+            text: 'Terjadi kesalahan saat mengekspor data ke Excel!',
+            confirmButtonColor: '#dc3545'
+        });
+    }
+}
+
+async function exportToPDF() {
+    try {
+        const { jsPDF } = window.jspdf;
+
+        // Initialize PDF in landscape mode
+        const pdf = new jsPDF('landscape');
+        const fileName = `Laporan_Pemeriksaan_Kendaraan_${new Date().toISOString().slice(0, 10)}.pdf`;
+
+        // Get current date formatted in Indonesian format
+        const currentDate = new Date().toLocaleDateString('id-ID', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).split('/').join('-');
+
+        // Prepare data structure
+        const data = [];
+        const table = document.getElementById("inspectionTable");
+        const rows = Array.from(table.querySelectorAll('tbody tr')).filter(
+            row => row.style.display !== 'none' // Only visible rows
+        );
+
+        // Process visible rows
+        rows.forEach(row => {
+            const id = row.cells[0].textContent.trim();
+            const nama = row.cells[1].textContent.trim();
+            const platMobil = row.cells[2].textContent.trim();
+            const namaMobil = row.cells[3] ? row.cells[3].textContent.trim() : '';
+            const tanggalPemeriksaan = row.cells[row.cells.length - 3].textContent.trim() || currentDate;
+
+            // Get modal data
+            const detailsButton = row.querySelector('button[data-bs-toggle="modal"]');
+            if (detailsButton) {
+                const modalId = detailsButton.getAttribute('data-bs-target');
+                const modal = document.querySelector(modalId);
+
+                if (modal) {
+                    const vehicleData = {
+                        'ID': id,
+                        'Nama': nama,
+                        'Plat Mobil': platMobil,
+                        'Nama Mobil': namaMobil,
+                        'Tanggal Pemeriksaan': tanggalPemeriksaan
+                    };
+
+                    // Get component statuses
+                    const modalRows = modal.querySelectorAll('tbody tr');
+                    modalRows.forEach(modalRow => {
+                        const cells = modalRow.querySelectorAll('td');
+                        if (cells.length >= 2) {
+                            const componentName = cells[0].textContent.trim();
+                            const status = cells[1].textContent.trim();
+                            if (!componentName.toLowerCase().includes('foto')) {
+                               vehicleData[componentName] = status === "baik" ? "B" : status === "tidak_baik" ? "TB" : status;
+                            }
+                        }
+                    });
+
+                    data.push(vehicleData);
+                }
+            }
+        });
+
+        // Define headers
+        const headers = [
+            'ID', 'Nama', 'Plat Mobil', 'Nama Mobil', 'Tanggal Pemeriksaan',
+            'Oli Mesin', 'Oli Power Steering', 'Oli Transmisi', 'Minyak Rem',
+            'Lampu Utama', 'Lampu Sein', 'Lampu Rem', 'Klakson', 'Aki',
+            'Kursi', 'Lantai', 'Dinding', 'Kap',
+            'STNK', 'APAR', 'P3K', 'Kunci Roda',
+            'Air Radiator', 'Bahan Bakar', 'Tekanan Ban', 'Rem'
+        ];
+
+        // Convert data to array of arrays for autoTable
+        const pdfData = data.map(row =>
+            headers.map(header => row[header] || '')
+        );
+
+        // Add the table to the PDF with rotated headers and conditional styling
+        pdf.autoTable({
+            head: [headers],
+            body: pdfData,
+            startY: 10,
+            startX: 4,
+            theme: 'striped',
+            styles: {
+                font: 'helvetica',
+                fontSize: 7,
+                fontStyle: 'bold',
+                valign: 'middle',
+                halign: 'center'
+            },
+            headStyles: {
+                fillColor: [31, 78, 120],
+                textColor: [255, 255, 255],
+                fontSize: 8,
+                fontStyle: 'bold',
+                halign: 'center',
+                valign: 'middle',
+                cellWidth: 10.4,
+                minCellHeight: 10,
+                cellPadding:1
+            },
+            tableLineColor: [200, 200, 200],
+            alternateRowStyles: {
+                fillColor: [237, 243, 250]
+            },
+            margin: { top: 20 },
+            horizontalPageBreak: false,
+            // didDrawCell: function (data) {
+            //     const cell = data.cell;
+            //     const content = cell.raw; // Use raw cell content
+            //     if (data.section === 'body') {
+            //         if (content === 'B') {
+            //             cell.styles.fillColor = [0, 102, 204]; // Blue background
+            //             cell.styles.textColor = [255, 255, 255]; // White text
+            //         } else if (content === 'TB') {
+            //             cell.styles.fillColor = [255, 51, 51]; // Red background
+            //             cell.styles.textColor = [255, 255, 255]; // White text
+            //         }
+            //     }
+            // },
+        });
+
+        // Add title and save the file
+        pdf.setFontSize(14);
+        pdf.text('Laporan Pemeriksaan Kendaraan', pdf.internal.pageSize.getWidth() / 2, 7, { align: 'center' });
+        pdf.save(fileName);
+
+        // Success notification
+        Swal.fire({
+            icon: 'success',
+            title: 'Ekspor Berhasil',
+            text: 'File PDF berhasil diunduh!',
+            confirmButtonColor: '#28a745',
+            timer: 2000,
+            timerProgressBar: true
+        });
+    } catch (error) {
+        console.error('Error saat mengekspor PDF:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Ekspor Gagal',
+            text: 'Terjadi kesalahan saat mengekspor data ke PDF!',
+            confirmButtonColor: '#dc3545'
+        });
+    }
+}
+
+
             // Fungsi untuk mengekspor ke PDF
-            function exportToPDF() {
+            function exportToPDFs() {
                 try {
                     const table = document.getElementById('inspectionTable');
                     const today = new Date().toISOString().slice(0,10);
@@ -1932,7 +1981,7 @@ function exportToExcel() {
                         columnStyles: {
                             0: {cellWidth: 60}, // Informasi Kendaraan
                             1: {cellWidth: 60}, // Status Komponen
-                            2: {cellWidth: 30}, // Foto
+                            2: {cellWidth: 1}, // Foto
                             3: {cellWidth: 40}  // Waktu
                         },
                         didDrawPage: function(data) {

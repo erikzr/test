@@ -32,6 +32,11 @@ function getCarName($platNomor) {
             return 'Unknown';
     }
 }
+
+// tampilan button gambar
+
+// tampilan button gambar
+
 ?>
 
 <!DOCTYPE html>
@@ -87,7 +92,7 @@ function getCarName($platNomor) {
                     <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100/50 transition-colors">
                         <div class="flex items-center gap-3">
                             <span class="font-medium text-gray-900"><?php echo $label; ?></span>
-                            <?php if ($data[$key] === 'tidak_baik'): ?>
+                            <?php if ($data[$key] === 'Tidak Baik'): ?>
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700">
                                     Perlu Perhatian
                                 </span>
@@ -97,15 +102,15 @@ function getCarName($platNomor) {
                         <div class="flex items-center gap-4">
                             <select 
                                 class="px-4 py-2 rounded-lg text-sm border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer
-                                <?php echo ($data[$key] === 'baik') 
+                                <?php echo ($data[$key] === 'Baik') 
                                     ? 'bg-emerald-50 text-emerald-700' 
                                     : 'bg-red-50 text-red-700'; ?>"
                                 onchange="updateStatus('<?php echo $key; ?>', this.value, <?php echo $data['id']; ?>)"
                             >
-                                <option value="baik" <?php echo ($data[$key] === 'baik') ? 'selected' : ''; ?>>
+                                <option value="Baik" <?php echo ($data[$key] === 'Baik') ? 'selected' : ''; ?>>
                                     Baik
                                 </option>
-                                <option value="tidak_baik" <?php echo ($data[$key] === 'tidak_baik') ? 'selected' : ''; ?>>
+                                <option value="Tidak Baik" <?php echo ($data[$key] === 'Tidak Baik') ? 'selected' : ''; ?>>
                                     Tidak Baik
                                 </option>
                             </select>
@@ -183,7 +188,7 @@ function getCarName($platNomor) {
                                 <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100/50 transition-colors">
                                     <div class="flex items-center gap-3">
                                         <span class="font-medium text-gray-900"><?php echo $label; ?></span>
-                                        <?php if ($data[$key] === 'tidak_baik'): ?>
+                                        <?php if ($data[$key] === 'Tidak Baik'): ?>
                                             <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700">
                                                 Perlu Perhatian
                                             </span>
@@ -193,15 +198,15 @@ function getCarName($platNomor) {
                                     <div class="flex items-center gap-4">
                                         <select 
                                             class="px-4 py-2 rounded-lg text-sm border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer
-                                            <?php echo ($data[$key] === 'baik') 
+                                            <?php echo ($data[$key] === 'Baik') 
                                                 ? 'bg-emerald-50 text-emerald-700' 
                                                 : 'bg-red-50 text-red-700'; ?>"
                                             onchange="updateStatus('<?php echo $key; ?>', this.value, <?php echo $data['id']; ?>)"
                                         >
-                                            <option value="baik" <?php echo ($data[$key] === 'baik') ? 'selected' : ''; ?>>
+                                            <option value="Baik" <?php echo ($data[$key] === 'Baik') ? 'selected' : ''; ?>>
                                                 Baik
                                             </option>
-                                            <option value="tidak_baik" <?php echo ($data[$key] === 'tidak_baik') ? 'selected' : ''; ?>>
+                                            <option value="Tidak Baik" <?php echo ($data[$key] === 'Tidak Baik') ? 'selected' : ''; ?>>
                                                 Tidak Baik
                                             </option>
                                         </select>
@@ -244,18 +249,18 @@ function getCarName($platNomor) {
                         <div class="p-4 space-y-3">
                             <?php
                             $interiorComponents = [
-                                'cek_aki' => 'Cek Aki',
-                                'cek_kursi' => 'Cek Kursi',
-                                'cek_lantai' => 'Cek Lantai',
-                                'cek_dinding' => 'Cek Dinding',
-                                'cek_kap' => 'Cek Kap'
+                                'cek_aki' => ['label' => 'Cek Aki', 'foto' => 'aki_foto'],
+                                'cek_kursi' => ['label' => 'Cek Kursi', 'foto' => 'kursi_foto'], 
+                                'cek_lantai' => ['label' => 'Cek Lantai', 'foto' => 'lantai_foto'],
+                                'cek_dinding' => ['label' => 'Cek Dinding', 'foto' => 'dinding_foto'],
+                                'cek_kap' => ['label' => 'Cek Kap', 'foto' => 'kap_foto']
                             ];
 
-                            foreach ($interiorComponents as $key => $label): ?>
+                            foreach ($interiorComponents as $key => $details): ?>
                                 <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100/50 transition-colors">
                                     <div class="flex items-center gap-3">
-                                        <span class="font-medium text-gray-900"><?php echo $label; ?></span>
-                                        <?php if ($data[$key] === 'tidak_baik'): ?>
+                                        <span class="font-medium text-gray-900"><?php echo $details['label']; ?></span>
+                                        <?php if ($data[$key] === 'Tidak Baik'): ?>
                                             <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700">
                                                 Perlu Perhatian
                                             </span>
@@ -265,27 +270,27 @@ function getCarName($platNomor) {
                                     <div class="flex items-center gap-4">
                                         <select 
                                             class="px-4 py-2 rounded-lg text-sm border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer
-                                            <?php echo ($data[$key] === 'baik') 
+                                            <?php echo ($data[$key] === 'Baik') 
                                                 ? 'bg-emerald-50 text-emerald-700' 
                                                 : 'bg-red-50 text-red-700'; ?>"
                                             onchange="updateStatus('<?php echo $key; ?>', this.value, <?php echo $data['id']; ?>)"
                                         >
-                                            <option value="baik" <?php echo ($data[$key] === 'baik') ? 'selected' : ''; ?>>
+                                            <option value="Baik" <?php echo ($data[$key] === 'Baik') ? 'selected' : ''; ?>>
                                                 Baik
                                             </option>
-                                            <option value="tidak_baik" <?php echo ($data[$key] === 'tidak_baik') ? 'selected' : ''; ?>>
+                                            <option value="Tidak Baik" <?php echo ($data[$key] === 'Tidak Baik') ? 'selected' : ''; ?>>
                                                 Tidak Baik
                                             </option>
                                         </select>
                                         
-                                        <?php if (!empty($data[$key.'_foto'])): ?>
+                                        <?php if (!empty($data[$details['foto']])): ?>
                                             <button 
-                                                onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data[$key.'_foto'])); ?>')"
+                                                onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data[$details['foto']])); ?>')"
                                                 class="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
                                             >
                                                 <img 
-                                                    src="../form/uploads/<?php echo basename(htmlspecialchars($data[$key.'_foto'])); ?>" 
-                                                    alt="Foto <?php echo $label; ?>" 
+                                                    src="../form/uploads/<?php echo basename(htmlspecialchars($data[$details['foto']])); ?>" 
+                                                    alt="Foto <?php echo $details['label']; ?>" 
                                                     class="w-6 h-6 rounded object-cover"
                                                 >
                                             </button>
@@ -320,11 +325,11 @@ function getCarName($platNomor) {
                                 <div class="flex items-center gap-4">
                                     <select 
                                         class="px-4 py-2 rounded-lg text-sm border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer
-                                        <?php echo strtolower($data['cek_stnk']) === 'baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
+                                        <?php echo($data['cek_stnk']) === 'Baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
                                         onchange="updateStatus('cek_stnk', this.value, <?php echo $data['id']; ?>)"
                                     >
-                                        <option value="baik" <?php echo ($data['cek_stnk'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
-                                        <option value="tidak_baik" <?php echo ($data['cek_stnk'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                        <option value="Baik" <?php echo ($data['cek_stnk'] === 'Baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="Tidak Baik" <?php echo ($data['cek_stnk'] === 'Tidak Baik') ? 'selected' : ''; ?>>Tidak Baik</option>
                                     </select>
                                     <?php if (!empty($data['stnk_foto'])): ?>
                                         <button 
@@ -347,11 +352,11 @@ function getCarName($platNomor) {
                                 <div class="flex items-center gap-4">
                                     <select 
                                         class="px-4 py-2 rounded-lg text-sm border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer
-                                        <?php echo strtolower($data['cek_apar']) === 'baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
+                                        <?php echo($data['cek_apar']) === 'Baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
                                         onchange="updateStatus('cek_apar', this.value, <?php echo $data['id']; ?>)"
                                     >
-                                        <option value="baik" <?php echo ($data['cek_apar'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
-                                        <option value="tidak_baik" <?php echo ($data['cek_apar'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                        <option value="Baik" <?php echo ($data['cek_apar'] === 'Baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="Tidak Baik" <?php echo ($data['cek_apar'] === 'Tidak Baik') ? 'selected' : ''; ?>>Tidak Baik</option>
                                     </select>
                                     <?php if (!empty($data['apar_foto'])): ?>
                                         <button 
@@ -374,11 +379,11 @@ function getCarName($platNomor) {
                                 <div class="flex items-center gap-4">
                                     <select 
                                         class="px-4 py-2 rounded-lg text-sm border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer
-                                        <?php echo strtolower($data['cek_p3k']) === 'baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
+                                        <?php echo($data['cek_p3k']) === 'Baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
                                         onchange="updateStatus('cek_p3k', this.value, <?php echo $data['id']; ?>)"
                                     >
-                                        <option value="baik" <?php echo ($data['cek_p3k'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
-                                        <option value="tidak_baik" <?php echo ($data['cek_p3k'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                        <option value="Baik" <?php echo ($data['cek_p3k'] === 'Baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="Tidak Baik" <?php echo ($data['cek_p3k'] === 'Tidak Baik') ? 'selected' : ''; ?>>Tidak Baik</option>
                                     </select>
                                     <?php if (!empty($data['p3k_foto'])): ?>
                                         <button 
@@ -401,11 +406,11 @@ function getCarName($platNomor) {
                                 <div class="flex items-center gap-4">
                                     <select 
                                         class="px-4 py-2 rounded-lg text-sm border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer
-                                        <?php echo strtolower($data['cek_kunci_roda']) === 'baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
+                                        <?php echo($data['cek_kunci_roda']) === 'Baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
                                         onchange="updateStatus('cek_kunci_roda', this.value, <?php echo $data['id']; ?>)"
                                     >
-                                        <option value="baik" <?php echo ($data['cek_kunci_roda'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
-                                        <option value="tidak_baik" <?php echo ($data['cek_kunci_roda'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                        <option value="Baik" <?php echo ($data['cek_kunci_roda'] === 'Baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="Tidak Baik" <?php echo ($data['cek_kunci_roda'] === 'Tidak Baik') ? 'selected' : ''; ?>>Tidak Baik</option>
                                     </select>
                                     <?php if (!empty($data['kunci_roda_foto'])): ?>
                                         <button 
@@ -450,11 +455,11 @@ function getCarName($platNomor) {
                                 <div class="flex items-center gap-4">
                                     <select 
                                         class="px-4 py-2 rounded-lg text-sm border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer
-                                        <?php echo strtolower($data['cek_air_radiator']) === 'baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
+                                        <?php echo($data['cek_air_radiator']) === 'Baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
                                         onchange="updateStatus('cek_air_radiator', this.value, <?php echo $data['id']; ?>)"
                                     >
-                                        <option value="baik" <?php echo ($data['cek_air_radiator'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
-                                        <option value="tidak_baik" <?php echo ($data['cek_air_radiator'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                        <option value="Baik" <?php echo ($data['cek_air_radiator'] === 'Baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="Tidak Baik" <?php echo ($data['cek_air_radiator'] === 'Tidak Baik') ? 'selected' : ''; ?>>Tidak Baik</option>
                                     </select>
                                     <?php if (!empty($data['air_radiator_foto'])): ?>
                                         <button 
@@ -477,11 +482,11 @@ function getCarName($platNomor) {
                                 <div class="flex items-center gap-4">
                                     <select 
                                         class="px-4 py-2 rounded-lg text-sm border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer
-                                        <?php echo strtolower($data['cek_bahan_bakar']) === 'baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
+                                        <?php echo($data['cek_bahan_bakar']) === 'Baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
                                         onchange="updateStatus('cek_bahan_bakar', this.value, <?php echo $data['id']; ?>)"
                                     >
-                                        <option value="baik" <?php echo ($data['cek_bahan_bakar'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
-                                        <option value="tidak_baik" <?php echo ($data['cek_bahan_bakar'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                        <option value="Baik" <?php echo ($data['cek_bahan_bakar'] === 'Baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="Tidak Baik" <?php echo ($data['cek_bahan_bakar'] === 'Tidak Baik') ? 'selected' : ''; ?>>Tidak Baik</option>
                                     </select>
                                     <?php if (!empty($data['bahan_bakar_foto'])): ?>
                                         <button 
@@ -504,19 +509,19 @@ function getCarName($platNomor) {
                                 <div class="flex items-center gap-4">
                                     <select 
                                         class="px-4 py-2 rounded-lg text-sm border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer
-                                        <?php echo strtolower($data['cek_tekanan_ban']) === 'baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
+                                        <?php echo($data['cek_tekanan_ban']) === 'Baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
                                         onchange="updateStatus('cek_tekanan_ban', this.value, <?php echo $data['id']; ?>)"
                                     >
-                                        <option value="baik" <?php echo ($data['cek_tekanan_ban'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
-                                        <option value="tidak_baik" <?php echo ($data['cek_tekanan_ban'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                        <option value="Baik" <?php echo ($data['cek_tekanan_ban'] === 'Baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="Tidak Baik" <?php echo ($data['cek_tekanan_ban'] === 'Tidak Baik') ? 'selected' : ''; ?>>Tidak Baik</option>
                                     </select>
-                                    <?php if (!empty($data['tekanan_ban_foto'])): ?>
+                                    <?php if (!empty($data['ban_foto'])): ?>
                                         <button 
-                                            onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['tekanan_ban_foto'])); ?>')"
+                                            onclick="viewImage('../form/uploads/<?php echo basename(htmlspecialchars($data['ban_foto'])); ?>')"
                                             class="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
                                         >
                                             <img 
-                                                src="../form/uploads/<?php echo basename(htmlspecialchars($data['tekanan_ban_foto'])); ?>" 
+                                                src="../form/uploads/<?php echo basename(htmlspecialchars($data['ban_foto'])); ?>" 
                                                 alt="Foto Tekanan Ban" 
                                                 class="w-6 h-6 rounded object-cover"
                                             >
@@ -531,11 +536,11 @@ function getCarName($platNomor) {
                                 <div class="flex items-center gap-4">
                                     <select 
                                         class="px-4 py-2 rounded-lg text-sm border-0 focus:ring-2 focus:ring-blue-500 cursor-pointer
-                                        <?php echo strtolower($data['cek_rem']) === 'baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
+                                        <?php echo($data['cek_rem']) === 'Baik' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'; ?>"
                                         onchange="updateStatus('cek_rem', this.value, <?php echo $data['id']; ?>)"
                                     >
-                                        <option value="baik" <?php echo ($data['cek_rem'] === 'baik') ? 'selected' : ''; ?>>Baik</option>
-                                        <option value="tidak_baik" <?php echo ($data['cek_rem'] === 'tidak_baik') ? 'selected' : ''; ?>>Tidak Baik</option>
+                                        <option value="Baik" <?php echo ($data['cek_rem'] === 'Baik') ? 'selected' : ''; ?>>Baik</option>
+                                        <option value="Tidak Baik" <?php echo ($data['cek_rem'] === 'Tidak Baik') ? 'selected' : ''; ?>>Tidak Baik</option>
                                     </select>
                                     <?php if (!empty($data['rem_foto'])): ?>
                                         <button 
@@ -632,7 +637,7 @@ function updateStatus(field, newStatus, id) {
                 try {
                     const data = JSON.parse(rawText);
                     if (data.success) {
-                        if (newStatus === 'baik') {
+                        if (newStatus === 'Baik') {
                             selectElement.className = selectElement.className.replace('bg-red-50 text-red-700', 'bg-emerald-50 text-emerald-700');
                         } else {
                             selectElement.className = selectElement.className.replace('bg-emerald-50 text-emerald-700', 'bg-red-50 text-red-700');
@@ -800,5 +805,20 @@ document.addEventListener('keydown', function(e) {
     }
 });
 </script>
+<!-- tampilan gambar -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<script>
+    lightbox.option({
+        'resizeDuration': 200,
+        'wrapAround': true,
+        'fadeDuration': 200,
+        'imageFadeDuration': 200,
+        'disableScrolling': true,
+        'showImageNumberLabel': false,
+        'albumLabel': "Foto %1 dari %2"
+    });
+</script>
+<!-- tampilan gambar -->
+
 </body>
 </html>
