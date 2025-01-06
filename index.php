@@ -1,4 +1,7 @@
 <?php
+header('ngrok-skip-browser-warning: true');
+// Tambahkan header lain yang mungkin diperlukan
+header('User-Agent: CustomAgent');
 session_start(); // Start the session
 
 // Initialize alert message variable
@@ -63,6 +66,9 @@ $conn->close();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="ngrok-skip-browser-warning" content="true">
+    <!-- Tambahkan header ini -->
+    <meta http-equiv="ngrok-skip-browser-warning" content="true">
     <title>BMN-Operasional BPSDMP Kominfo Surabaya</title>
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <link rel="stylesheet" href="assets/css/core/libs.min.css">
@@ -70,6 +76,19 @@ $conn->close();
     <link rel="stylesheet" href="assets/css/custom.min.css?v=5.0.0">
     <link rel="stylesheet" href="assets/css/customizer.min.css?v=5.0.0">
     <link rel="stylesheet" href="assets/css/rtl.min.css?v=5.0.0">
+    <script>
+        // Tambahkan script inline ini
+        window.addEventListener('load', function() {
+            if (window.location.hostname.includes('ngrok')) {
+                fetch(window.location.href, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true'
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="assets\js\skip-warning.js"></script>
     <style>
         html, body {
             height: 100%;
@@ -106,9 +125,9 @@ $conn->close();
                         <a href="index.html" class="navbar-brand d-flex justify-content-center mb-3">
                             <img src="kmnf.png" alt="Logo Kominfo" style="width: 50px; height: auto;">
                         </a>
-                        <h2 class="mb-2 text-center">Masukk
+                        <h2 class="mb-2 text-center">Login
                         </h2>
-                        <p class="text-center">Masuk untuk melanjutkan.</p>
+                        <p class="text-center">Login untuk melanjutkan</p>
                         
                         <!-- Alert Message -->
                         <?php if ($alertMessage): ?>
